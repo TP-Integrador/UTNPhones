@@ -1,34 +1,34 @@
 package edu.utn.utnphones.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
+@Builder
+@Entity
+@Table(name = "cities")
 public class City {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    int cityId;
 
     @NotNull
-    private String name;
-
-    //Prefijo asociado a la ciudad
-    @NotNull
-    private String prefix;
+    String cityName;
 
     @NotNull
-    @OneToMany(mappedBy = "cities") //tabla que mapeamos
-    private Province province;
+    String cityPrefix;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    @JoinColumn(name = "city_province_id")
+    Province province;
 }
-
