@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/province")
+@RequestMapping("/provinces")
 public class ProvinceController {
 
     private ProvinceService provinceService;
@@ -29,9 +29,4 @@ public class ProvinceController {
     public void addProvince(@RequestBody @Valid Province p) throws ProvinceAlreadyExistsException {
         provinceService.add(p);
     }
-
-
-
-
-
 }

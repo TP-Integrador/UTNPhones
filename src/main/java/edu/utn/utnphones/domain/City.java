@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,4 +32,8 @@ public class City {
     @JsonBackReference
     @JoinColumn(name = "city_province_id")
     Province province;
+
+    @OneToMany(mappedBy = "city")
+    @JsonBackReference
+    private List<Client> clients;
 }

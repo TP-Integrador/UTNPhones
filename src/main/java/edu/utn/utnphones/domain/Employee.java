@@ -1,9 +1,12 @@
 package edu.utn.utnphones.domain;
 
-import javax.persistence.Table;
+import javax.persistence.*;
 
 //Sin annotations porque las tiene la clase padre
-@Table(name = "employees")
+//@Entity
+//@Table(name = "employees")
 public class Employee extends Person {
 
+
+    private City city;
 }

@@ -1,28 +1,33 @@
 package edu.utn.utnphones.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JacksonStdImpl;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
+import java.util.List;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
+@Entity
 @Table(name = "line_types")
 public class LineType {
+
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "line_type_id")
     private Integer id;
 
-    //En la BD no esta como NotNull - VER si es necesario
+    //@Column(name = "line_type")  //no hace falta, ya lo reconoce
     private String lineType;
+
+    @OneToMany(mappedBy = "lineType")
+    @JsonBackReference
+    private List<LinePhone> linePhones;
 
 }
