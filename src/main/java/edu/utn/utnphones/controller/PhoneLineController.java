@@ -1,8 +1,10 @@
 package edu.utn.utnphones.controller;
 
-import edu.utn.utnphones.domain.LinePhone;
-import edu.utn.utnphones.service.LinePhoneService;
-import net.bytebuddy.asm.Advice;
+
+
+import edu.utn.utnphones.domain.PhoneLine;
+import edu.utn.utnphones.service.PhoneLineService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,22 +13,22 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/linePhones")
-public class LinePhoneController {
+public class PhoneLineController {
 
-    private LinePhoneService linePhoneService;
+    private PhoneLineService linePhoneService;
 
     @Autowired
-    public LinePhoneController(LinePhoneService linePhoneService) {
+    public PhoneLineController(PhoneLineService linePhoneService) {
         this.linePhoneService = linePhoneService;
     }
 
     @GetMapping("/")
-    public List<LinePhone> getLinePhones(){
+    public List<PhoneLine> getLinePhones(){
         return linePhoneService.getAll();
     }
 
     @PostMapping("/")
-    public void addLinePhone(LinePhone linePhone){
+    public void addLinePhone(PhoneLine linePhone){
         linePhoneService.add(linePhone);
     }
     

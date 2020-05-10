@@ -1,6 +1,6 @@
 package edu.utn.utnphones.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +21,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "client_id")
-    private Integer id;
+    private int id;
 
     @NotNull
     @Column(name = "client_name")
@@ -45,9 +45,10 @@ public class Client {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_city_id")
-    City city;
+    private City city;
 
+    //Realizar pruebas con client y clients, y ver diferencia (client=nombre Clase | clients=nombre Tabla)
     @OneToMany(mappedBy = "client")
-    private List<LinePhone> linePhones;
+    private List<PhoneLine> linePhones;
 
 }

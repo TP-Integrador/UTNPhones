@@ -22,7 +22,7 @@ public class Province {
     int provinceId;
 
     @NotNull
-    String provinceName;
+    private String provinceName;
 
     @OneToMany(mappedBy = "province")
     private List<City> cities;

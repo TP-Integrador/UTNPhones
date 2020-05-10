@@ -30,9 +30,9 @@ public class Rate {
     @JoinColumn(name = "city_id")
     private City cityTo;
 
-    @NotNull //En la base de datos no está como NULL
+    //@NotNull //En la base de datos no está como NULL
     private Float value;
 
-    @NotNull //En la base de datos no está como NULL
+    //@NotNull //En la base de datos no está como NULL
     private Float cost;
 }

@@ -1,27 +1,28 @@
 package edu.utn.utnphones.service;
 
-import edu.utn.utnphones.dao.LinePhoneDao;
-import edu.utn.utnphones.domain.LinePhone;
+
+import edu.utn.utnphones.dao.PhoneLineDao;
+import edu.utn.utnphones.domain.PhoneLine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class LinePhoneService {
+public class PhoneLineService {
 
-    private LinePhoneDao linePhoneDao;
+    private PhoneLineDao linePhoneDao;
 
     @Autowired
-    public LinePhoneService(LinePhoneDao linePhoneDao) {
+    public PhoneLineService(PhoneLineDao linePhoneDao) {
         this.linePhoneDao = linePhoneDao;
     }
 
-    public List<LinePhone> getAll(){
+    public List<PhoneLine> getAll(){
         return linePhoneDao.findAll();
     }
 
-    public void add(LinePhone linePhone){
+    public void add(PhoneLine linePhone){
         linePhoneDao.save(linePhone);
     }
 }

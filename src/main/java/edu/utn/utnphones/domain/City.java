@@ -20,18 +20,18 @@ public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int cityId;
+    private int cityId;
 
     @NotNull
-    String cityName;
+    private String cityName;
 
     @NotNull
-    String cityPrefix;
+    private String cityPrefix;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference
     @JoinColumn(name = "city_province_id")
-    Province province;
+    private Province province;
 
     @OneToMany(mappedBy = "city")
     @JsonBackReference
