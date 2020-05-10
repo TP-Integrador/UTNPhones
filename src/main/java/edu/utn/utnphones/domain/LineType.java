@@ -23,11 +23,11 @@ public class LineType {
     @Column(name = "line_type_id")
     private Integer id;
 
-    //@Column(name = "line_type")  //no hace falta, ya lo reconoce
+    @Column(name = "line_type")
     private String lineType;
 
     @OneToMany(mappedBy = "lineType")
     @JsonBackReference
-    private List<LinePhone> linePhones;
+    private List<PhoneLine> linePhones;
 
 }

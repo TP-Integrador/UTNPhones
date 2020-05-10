@@ -20,12 +20,15 @@ public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "city_id")
     private int cityId;
 
     @NotNull
+    @Column(name = "city_name")
     private String cityName;
 
     @NotNull
+    @Column(name = "city_prefix")
     private String cityPrefix;
     
     @ManyToOne(fetch = FetchType.EAGER)

@@ -19,10 +19,12 @@ public class Province {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int provinceId;
+    @Column(name = "province_id")
+    private int id;
 
     @NotNull
-    private String provinceName;
+    @Column(name = "province_name")
+    private String name;
 
     @OneToMany(mappedBy = "province")
     private List<City> cities;

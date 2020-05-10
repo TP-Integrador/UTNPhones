@@ -31,8 +31,10 @@ public class Rate {
     private City cityTo;
 
     //@NotNull //En la base de datos no está como NULL
+    @Column(name = "rate_value")
     private Float value;
 
     //@NotNull //En la base de datos no está como NULL
+    @Column(name = "rate_cost")
     private Float cost;
 }

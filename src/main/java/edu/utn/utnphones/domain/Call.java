@@ -33,14 +33,6 @@ public class Call {
     private PhoneLine lineIdFrom;
 
     @NotNull
-    @Column(name = "call_city_id_to")
-    private City cityTo;
-
-    @NotNull
-    @Column(name = "call_city_id_from")
-    private City cityFrom;
-
-    @NotNull
     @Column(name = "call_minute_price")
     private float minutePrice;
 
