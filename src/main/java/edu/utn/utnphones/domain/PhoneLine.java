@@ -42,11 +42,15 @@ public class PhoneLine {
     @JoinColumn(name = "line_client_id")
     private Client client;
 
-    @OneToMany(mappedBy = "phone_lines")
+
+    /* TODO se comenta porque tira error de relacion
+    @OneToMany(mappedBy = "phone_line")  //TODO se mapean clases no tablas, deberia ser phoneLine
     private List<Invoice> invoices;
 
-    @OneToMany(mappedBy = "phone_lines")
+
+    @OneToMany(mappedBy = "phoneLine")  //TODO se mapean clases no tablas, deberia ser phoneLine
     private List<Call> calls;
+     */
 
     public enum Status{
         Active,

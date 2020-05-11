@@ -25,7 +25,7 @@ public class Invoice {
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "line_id")
+    @JoinColumn(name = "invoice_line_id")   //TODO tiene que ir el nombre de la FK, no el id de la otra tabla, Antes "line_id"
     private PhoneLine lineId;
 
     @NotNull

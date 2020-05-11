@@ -27,6 +27,4 @@ public class ProvinceService {
     public List<Province> getAll() {
         return provinceDao.findAll();
     }
-
-
 }
