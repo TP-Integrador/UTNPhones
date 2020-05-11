@@ -39,4 +39,5 @@ public class City {
     @OneToMany(mappedBy = "city")
     @JsonBackReference
     private List<Client> clients;
+
 }
