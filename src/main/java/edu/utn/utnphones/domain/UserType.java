@@ -14,19 +14,18 @@ import java.util.List;
 @Data
 @Builder
 @Entity
-@Table(name = "provinces")
-public class Province {
+@Table(name = "user_types")
+public class UserType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "province_id")
-    private int id;
+    @Column(name = "type_id")
+    private int Id;
 
     @NotNull
-    @Column(name = "province_name")
-    private String name;
+    @Column(name = "type_name")
+    private String type;
 
-    @OneToMany(mappedBy = "province")
-    private List<City> cities;
-
+    @OneToMany(mappedBy = "userType")
+    private List<User> users;
 }

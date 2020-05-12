@@ -26,14 +26,13 @@ public class Call {
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "call_line_id_from")   //TODO tiene que ir el nombre de la FK, no el id de la otra tabla, Antes "line_id"
+    @JoinColumn(name = "call_line_id_from")
     private PhoneLine lineIdFrom;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "call_line_id_to")   //TODO tiene que ir el nombre de la FK, no el id de la otra tabla, Antes "line_id"
+    @JoinColumn(name = "call_line_id_to")
     private PhoneLine lineIdTo;
-
 
     @NotNull
     @Column(name = "call_minute_price")

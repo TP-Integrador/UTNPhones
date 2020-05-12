@@ -4,13 +4,13 @@ import edu.utn.utnphones.domain.Province;
 import edu.utn.utnphones.exception.ProvinceAlreadyExistsException;
 import edu.utn.utnphones.service.ProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
-@RequestMapping("/provinces")
+@Controller
 public class ProvinceController {
 
     private ProvinceService provinceService;
@@ -20,13 +20,11 @@ public class ProvinceController {
         this.provinceService = provinceService;
     }
 
-    @GetMapping("/")
     public List<Province> getAllProvinces(){
         return provinceService.getAll();
     }
 
-    @PostMapping("/")
-    public void addProvince(@RequestBody @Valid Province p) throws ProvinceAlreadyExistsException {
+    public void addProvince(Province p) throws ProvinceAlreadyExistsException {
         provinceService.add(p);
     }
 }

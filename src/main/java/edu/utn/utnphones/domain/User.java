@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,39 +18,34 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "user_id")
+    private Integer userId;
 
-    @Column(name = "name")
+    @Column(name = "user_name")
     private String name;
 
-    @Column(name = "lastname")
+    @Column(name = "user_lastname")
     private String lastname;
 
-    @Column(name = "dni")
+    @Column(name = "user_dni")
     private String DNI;
 
     @Column(name = "username")
     private String username;
 
-    @Column(name = "pass")
+    @Column(name = "userpass")
     private String password;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "user_city_id")
     private City city;
 
-    @Column(name = "user_type")
-    @Enumerated
-    private Type type;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_type_id")
+    private UserType userType;
 
-    private enum Type{
-        Empleado,
-        Cliente,
-        Infraestructura
-    }
-
-
+    @OneToMany(mappedBy = "user")
+    private List<PhoneLine> linePhones;
 
 }
 

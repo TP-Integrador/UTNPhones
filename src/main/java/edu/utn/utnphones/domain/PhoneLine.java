@@ -37,20 +37,11 @@ public class PhoneLine {
     @JoinColumn(name = "line_type_id")
     private LineType lineType;
 
+
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "line_client_id")
-    private Client client;
-
-
-    /* TODO se comenta porque tira error de relacion
-    @OneToMany(mappedBy = "phone_line")  //TODO se mapean clases no tablas, deberia ser phoneLine
-    private List<Invoice> invoices;
-
-
-    @OneToMany(mappedBy = "phoneLine")  //TODO se mapean clases no tablas, deberia ser phoneLine
-    private List<Call> calls;
-     */
+    @JoinColumn(name = "line_user_id")
+    private User user;
 
     public enum Status{
         Active,
