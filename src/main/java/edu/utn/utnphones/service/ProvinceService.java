@@ -2,6 +2,7 @@ package edu.utn.utnphones.service;
 
 import edu.utn.utnphones.dao.ProvinceDao;
 import edu.utn.utnphones.domain.Province;
+import edu.utn.utnphones.exception.ResourceAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class ProvinceService {
         this.provinceDao = provinceDao;
     }
 
-    public void add(Province province) throws ProvinceAlreadyExistsException {
+    public void add(Province province) throws ResourceAlreadyExistsException {
         provinceDao.save(province);
     }
 

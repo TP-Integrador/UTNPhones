@@ -2,6 +2,7 @@ package edu.utn.utnphones.controller.web;
 
 import edu.utn.utnphones.dto.ErrorResponseDto;
 import edu.utn.utnphones.exception.InvalidLoginException;
+import edu.utn.utnphones.exception.ResourceAlreadyExistsException;
 import edu.utn.utnphones.exception.UserNotexistException;
 import edu.utn.utnphones.exception.ValidationException;
 import org.springframework.http.HttpStatus;
@@ -31,4 +32,9 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
         return new ErrorResponseDto(3, "User not exists");
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ErrorResponseDto handleResourceAlreadyExistsException() {
+        return new ErrorResponseDto(4, "Resource already exists");
+    }
 }
