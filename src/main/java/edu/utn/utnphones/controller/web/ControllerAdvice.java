@@ -2,7 +2,6 @@ package edu.utn.utnphones.controller.web;
 
 import edu.utn.utnphones.dto.ErrorResponseDto;
 import edu.utn.utnphones.exception.InvalidLoginException;
-import edu.utn.utnphones.exception.UserExistsException;
 import edu.utn.utnphones.exception.UserNotexistException;
 import edu.utn.utnphones.exception.ValidationException;
 import org.springframework.http.HttpStatus;
@@ -31,12 +30,5 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     public ErrorResponseDto handleUserNotExists() {
         return new ErrorResponseDto(3, "User not exists");
     }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(UserExistsException.class)
-    public ErrorResponseDto handleUserExists() {
-        return new ErrorResponseDto(4, "User exists");
-    }
-
 
 }
