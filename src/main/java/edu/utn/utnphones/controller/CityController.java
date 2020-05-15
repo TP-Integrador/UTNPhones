@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CityController {
@@ -27,4 +28,7 @@ public class CityController {
         cityService.add(city);
     }
 
+    public City getById(int cityId) {
+        return cityService.getById(cityId);
+    }
 }

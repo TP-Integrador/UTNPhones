@@ -16,17 +16,6 @@ import java.io.Serializable;
 @Builder
 public class RateCompositeKey implements Serializable {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference
-    @JoinColumn(name = "city_from_id")
     private City cityFrom;
-
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference
-    @JoinColumn(name = "city_to_id")
     private City cityTo;
 }

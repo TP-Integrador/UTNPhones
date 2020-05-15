@@ -36,8 +36,8 @@ public class City {
     @JoinColumn(name = "city_province_id")
     private Province province;
 
-    @OneToMany(mappedBy = "city")
+    /*@OneToMany(mappedBy = "city")
     @JsonBackReference
     private List<User> users;
-
+     */
 }
