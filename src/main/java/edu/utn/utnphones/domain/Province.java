@@ -26,7 +26,7 @@ public class Province {
     @Column(name = "province_name")
     private String name;
 
-    @OneToMany(mappedBy = "province")
+    /*@OneToMany(mappedBy = "province")
     private List<City> cities;
-
+    */
 }

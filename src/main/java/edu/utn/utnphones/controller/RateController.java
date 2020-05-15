@@ -19,7 +19,7 @@ public class RateController {
         return rateService.getAll();
     }
 
-    public Rate addRate(Rate rate){
-        return rateService.add(rate);
+    public void addRate(Rate rate){
+         rateService.add(rate);
     }
 }

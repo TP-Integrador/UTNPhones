@@ -33,12 +33,9 @@ public class RateControllerWeb {
     }
 
     @PostMapping
-    public ResponseEntity addRate(@RequestHeader("Authorization") String sessionToken, @RequestBody Rate rate ){
-        City cityfrom = cityController.getById(rate.getCityFrom().getCityId());
-        rate.setCityFrom(cityfrom);
-        City cityTo = cityController.getById(rate.getCityTo().getCityId());
-        rate.setCityTo(cityTo);
-        return ResponseEntity.status(HttpStatus.CREATED).body(rateController.addRate(rate));
+    public void addRate(@RequestHeader("Authorization") String sessionToken, @RequestBody Rate rate ){
+        rateController.addRate(rate);
+        //return ResponseEntity.status(HttpStatus.CREATED).body();
     }
 
 }
