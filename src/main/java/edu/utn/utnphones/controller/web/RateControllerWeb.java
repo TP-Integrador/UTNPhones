@@ -2,7 +2,6 @@ package edu.utn.utnphones.controller.web;
 
 import edu.utn.utnphones.controller.CityController;
 import edu.utn.utnphones.controller.RateController;
-import edu.utn.utnphones.domain.City;
 import edu.utn.utnphones.domain.Rate;
 import edu.utn.utnphones.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +32,9 @@ public class RateControllerWeb {
     }
 
     @PostMapping
-    public void addRate(@RequestHeader("Authorization") String sessionToken, @RequestBody Rate rate ){
-        rateController.addRate(rate);
-        //return ResponseEntity.status(HttpStatus.CREATED).body();
+    public ResponseEntity addRate(@RequestHeader("Authorization") String sessionToken, @RequestBody Rate rate ){
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(rateController.addRate(rate));
     }
 
 }

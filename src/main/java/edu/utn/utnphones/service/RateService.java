@@ -19,7 +19,7 @@ public class RateService {
         return rateDao.findAll();
     }
 
-    public void add(Rate rate){
-        rateDao.save(rate);
+    public Rate add(Rate rate){
+        return rateDao.save(rate);
     }
 }
