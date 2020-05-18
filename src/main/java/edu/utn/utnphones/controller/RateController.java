@@ -20,6 +20,10 @@ public class RateController {
     }
 
     public Rate addRate(Rate rate){
-         return rateService.add(rate);
+        return rateService.add(rate);
+    }
+
+    public List<Rate> getByIdFrom(int idFrom) {
+        return rateService.getByIdFrom(idFrom);
     }
 }
