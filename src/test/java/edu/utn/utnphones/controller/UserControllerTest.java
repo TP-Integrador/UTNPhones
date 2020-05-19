@@ -10,11 +10,7 @@ import edu.utn.utnphones.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 
@@ -75,33 +71,4 @@ public class UserControllerTest {
         userController.removeUser(userToRemove);
         verify(service, times(1)).removeUser(userToRemove);
     }
-
-    @Test
-    public void testRemoveUsersOk() throws UserNotexistException {
-        List<User> usersToRemove = new ArrayList<>();
-
-        usersToRemove.add(new User(1, "nme", "lastname", "12345678", "username", "password", City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null));
-        usersToRemove.add(new User(2, "nme", "lastname", "12345678", "username", "password", City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null));
-        usersToRemove.add(new User(3, "nme", "lastname", "12345678", "username", "password", City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null));
-        doNothing().when(service).removeUser(any());
-        userController.removeUsers(usersToRemove);
-        verify(service, times(usersToRemove.size())).removeUser(any());
-    }
-
-
-    /*TAREA PARA EL HOGAR : Verificar que falle y que uno de los usuarios no exista , el primero y el segundo existen
-    * y el tercero no .
-    * */
-    @Test
-    public void testRemoveUsersUserNotExists() throws UserNotexistException {
-        List<User> usersToRemove = new ArrayList<>();
-        usersToRemove.add(new User(1, "nme", "lastname", "12345678", "username", "password", City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null));
-        usersToRemove.add(new User(2, "nme", "lastname", "12345678", "username", "password", City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null));
-        usersToRemove.add(new User(3, "nme", "lastname", "12345678", "username", "password", City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null));
-        doNothing().when(service).removeUser(any());
-        userController.removeUsers(usersToRemove);
-        verify(service, times(usersToRemove.size())).removeUser(any());
-    }
-
-
 }
