@@ -52,14 +52,14 @@ public class UserControllerTest {
     }
 
     @Test
-    public void TestGetUserByIdOk() throws UserNotexistException {
+    public void testGetUserByIdOk() throws UserNotexistException {
         User user = new User(1, "name", "lastname", "12345678", "username", "password", City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null);
         when(service.getUser(1)).thenReturn(user);
         userController.getUserById(1);
     }
 
     @Test
-    public void TestGetUserByIdNotExists() throws UserNotexistException {
+    public void testGetUserByIdNotExists() throws UserNotexistException {
         when(service.getUser(1)).thenReturn(null).thenThrow(new UserNotexistException());
         userController.getUserById(1);
     }

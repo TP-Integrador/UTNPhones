@@ -54,14 +54,14 @@ public class UserServiceTest {
     }
 
     @Test
-    public void TestGetUserOK() throws UserNotexistException {
+    public void testGetUserOK() throws UserNotexistException {
         User user = new User(1, "nme", "lastname", "12345678", "username", "password", City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null);
         when(dao.findById(1)).thenReturn(Optional.of(user));
         service.getUser(1);
     }
 
     @Test(expected = UserNotexistException.class)
-    public void TestGetUserNotExists() throws UserNotexistException {
+    public void testGetUserNotExists() throws UserNotexistException {
         when(dao.findById(1)).thenReturn(null);
         service.getUser(1);
     }
