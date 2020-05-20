@@ -62,12 +62,7 @@ public class UserService {
     }
 
     public User getUser(Integer userId) throws UserNotexistException {
-        Optional<User> us = userDao.findById(userId);
-        if (us != null) {
-            return us.get();
-        }else{
-            throw new UserNotexistException();
-        }
+       return userDao.findById(userId).orElseThrow(UserNotexistException::new);
     }
 
 }

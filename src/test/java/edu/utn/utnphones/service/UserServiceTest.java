@@ -62,7 +62,8 @@ public class UserServiceTest {
 
     @Test(expected = UserNotexistException.class)
     public void testGetUserNotExists() throws UserNotexistException {
-        when(dao.findById(1)).thenReturn(null);
+        User user = null;
+        when(dao.findById(1)).thenReturn(Optional.ofNullable(user));
         service.getUser(1);
     }
 

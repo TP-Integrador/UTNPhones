@@ -10,6 +10,8 @@ import edu.utn.utnphones.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -58,9 +60,9 @@ public class UserControllerTest {
         userController.getUserById(1);
     }
 
-    @Test
+    @Test(expected = UserNotexistException.class)
     public void testGetUserByIdNotExists() throws UserNotexistException {
-        when(service.getUser(1)).thenReturn(null).thenThrow(new UserNotexistException());
+        when(service.getUser(1)).thenThrow(new UserNotexistException());
         userController.getUserById(1);
     }
 
