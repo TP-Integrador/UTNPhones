@@ -30,4 +30,8 @@ public class RateController {
         return rateService.getByIdFrom(idFrom);
 
     }
+
+    public List<Rate> getByIdTo(int idTo) {
+        return rateService.getByIdTo(idTo);
+    }
 }

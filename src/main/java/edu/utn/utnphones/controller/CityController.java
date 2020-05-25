@@ -24,8 +24,8 @@ public class CityController {
         return cityService.getAll();
     }
 
-    public void addCity(City city){
-        cityService.add(city);
+    public City addCity(City city){
+        return cityService.add(city);
     }
 
     public City getById(int cityId) {

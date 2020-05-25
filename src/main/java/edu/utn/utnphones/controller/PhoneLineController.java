@@ -1,6 +1,7 @@
 package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.domain.PhoneLine;
+import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.service.PhoneLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,12 +20,15 @@ public class PhoneLineController {
         this.linePhoneService = linePhoneService;
     }
 
-    public List<PhoneLine> getLinePhones(){
+    public List<PhoneLine> getAllLinePhones(){
         return linePhoneService.getAll();
     }
 
-    public void addLinePhone(PhoneLine linePhone){
-        linePhoneService.add(linePhone);
+    public PhoneLine getById(int id) throws ResourcesNotExistException {
+        return linePhoneService.getById(id);
+    }
+    public PhoneLine addLinePhone(PhoneLine linePhone){
+        return linePhoneService.add(linePhone);
     }
     
 }

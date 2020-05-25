@@ -31,4 +31,8 @@ public class RateService {
         return rateDao.getByIdFrom(idFrom);
 
     }
+
+    public List<Rate> getByIdTo(int idTo) {
+        return rateDao.getByIdTo(idTo);
+    }
 }

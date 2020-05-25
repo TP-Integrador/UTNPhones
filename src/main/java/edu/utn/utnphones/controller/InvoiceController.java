@@ -1,6 +1,7 @@
 package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.domain.Invoice;
+import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,12 +21,16 @@ public class InvoiceController {
         this.invoiceService = invoiceService;
     }
 
-    public List<Invoice> getInvoice(){
+    public List<Invoice> getAllInvoice(){
         return invoiceService.getAll();
     }
 
-    public void addInvoice(Invoice invoice){
-        invoiceService.add(invoice);
+    public Invoice getById(int id) throws ResourcesNotExistException {
+        return invoiceService.getById(id);
+    }
+
+    public Invoice addInvoice(Invoice invoice){
+        return invoiceService.add(invoice);
     }
 
 }

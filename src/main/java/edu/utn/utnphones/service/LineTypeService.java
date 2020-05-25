@@ -2,6 +2,7 @@ package edu.utn.utnphones.service;
 
 import edu.utn.utnphones.dao.LineTypeDao;
 import edu.utn.utnphones.domain.LineType;
+import edu.utn.utnphones.exception.ResourcesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,11 @@ public class LineTypeService {
         return lineTypeDao.findAll();
     }
 
-    public void add(LineType lineType){
-        lineTypeDao.save(lineType);
+    public LineType add(LineType lineType){
+        return lineTypeDao.save(lineType);
     }
 
+    public LineType getById(int id) throws ResourcesNotExistException {
+        return lineTypeDao.findById(id).orElseThrow(ResourcesNotExistException::new);
+    }
 }

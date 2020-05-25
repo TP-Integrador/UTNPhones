@@ -3,6 +3,7 @@ package edu.utn.utnphones.service;
 
 import edu.utn.utnphones.dao.PhoneLineDao;
 import edu.utn.utnphones.domain.PhoneLine;
+import edu.utn.utnphones.exception.ResourcesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,11 @@ public class PhoneLineService {
         return linePhoneDao.findAll();
     }
 
-    public void add(PhoneLine linePhone){
-        linePhoneDao.save(linePhone);
+    public PhoneLine getById(int id) throws ResourcesNotExistException {
+        return linePhoneDao.findById(id).orElseThrow(ResourcesNotExistException::new);
+    }
+
+    public PhoneLine add(PhoneLine linePhone){
+       return linePhoneDao.save(linePhone);
     }
 }

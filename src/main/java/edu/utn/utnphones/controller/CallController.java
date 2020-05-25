@@ -2,6 +2,7 @@ package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.domain.Call;
 
+import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.service.CallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,8 +23,11 @@ public class CallController {
         return callService.getAll();
     }
 
-    public void addCall(Call call){
-        callService.add(call);
+    public Call addCall(Call call){
+        return callService.add(call);
     }
 
+    public Call getById(int id) throws ResourcesNotExistException {
+        return callService.getById(id);
+    }
 }

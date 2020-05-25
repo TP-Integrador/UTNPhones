@@ -27,6 +27,10 @@ public class UserController {
         }
     }
 
+    public List<User> getAllUser(){
+        return userService.getAll();
+    }
+
     public User getUserById(Integer userId) throws UserNotexistException {
         return userService.getUser(userId);
     }
@@ -46,7 +50,7 @@ public class UserController {
         }
     }
 
-    public void updateUser(User user) throws UserNotexistException {
-        userService.updateUser(user);
+    public User updateUser(User user) throws UserNotexistException {
+        return userService.updateUser(user);
     }
 }

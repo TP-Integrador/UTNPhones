@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class ProvinceService {
 
-    ProvinceDao provinceDao;
+    private ProvinceDao provinceDao;
 
     @Autowired
     public ProvinceService(ProvinceDao provinceDao) {

@@ -23,8 +23,8 @@ public class CityService {
         return cityDao.findAll();
     }
 
-    public void add(City city) {
-        cityDao.save(city);
+    public City add(City city) {
+        return cityDao.save(city);
     }
 
     public City getById(int cityId) {
