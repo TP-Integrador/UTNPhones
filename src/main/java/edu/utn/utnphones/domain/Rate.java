@@ -18,6 +18,7 @@ import java.util.Objects;
 @IdClass(value = RateCompositeKey.class)
 public class Rate{
 
+
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,17 +39,4 @@ public class Rate{
     @Column(name = "rate_cost")
     private Float cost;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Rate rate = (Rate) o;
-        return Objects.equals(cityFrom, rate.cityFrom) &&
-                Objects.equals(cityTo, rate.cityTo);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cityFrom, cityTo);
-    }
 }

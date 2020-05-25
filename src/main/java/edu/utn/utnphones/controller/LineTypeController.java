@@ -23,7 +23,7 @@ public class LineTypeController {
         return lineTypeService.getAll();
     }
 
-    public void add(@RequestBody @Valid LineType lineType){
+    public void add(LineType lineType){
         lineTypeService.add(lineType);
     }
 }

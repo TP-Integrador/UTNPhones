@@ -2,6 +2,7 @@ package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.domain.Rate;
 import edu.utn.utnphones.service.RateService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
@@ -11,6 +12,8 @@ public class RateController {
 
     private RateService rateService;
 
+
+    @Autowired
     public RateController(RateService rateService) {
         this.rateService = rateService;
     }
@@ -25,5 +28,6 @@ public class RateController {
 
     public List<Rate> getByIdFrom(int idFrom) {
         return rateService.getByIdFrom(idFrom);
+
     }
 }

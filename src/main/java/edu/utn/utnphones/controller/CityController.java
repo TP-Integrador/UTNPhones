@@ -24,7 +24,7 @@ public class CityController {
         return cityService.getAll();
     }
 
-    public void addCity(@RequestBody @Valid City city){
+    public void addCity(City city){
         cityService.add(city);
     }
 
