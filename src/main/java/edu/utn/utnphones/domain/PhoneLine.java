@@ -37,11 +37,22 @@ public class PhoneLine {
     @JoinColumn(name = "line_type_id")
     private LineType lineType;
 
-
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "line_user_id")
     private User user;
+
+    @OneToMany(mappedBy = "lineId")
+    @JsonBackReference
+    private List<Invoice> invoices;
+
+    @OneToMany(mappedBy = "lineIdTo")
+    @JsonBackReference
+    private List<Call> callsTo;
+
+    @OneToMany(mappedBy = "lineIdFrom")
+    @JsonBackReference
+    private List<Call> callsFrom;
 
     public enum Status{
         Active,

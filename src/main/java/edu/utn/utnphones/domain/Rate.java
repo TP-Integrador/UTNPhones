@@ -13,20 +13,21 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Data
 @Builder
+@Entity
 @Table(name = "rates")
 public class Rate {
 
+
+    //@JsonBackReference
     @Id
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference
     @JoinColumn(name = "city_id")
     private City cityFrom;
-
+    //@JsonBackReference
     @Id
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference
     @JoinColumn(name = "city_id")
     private City cityTo;
 

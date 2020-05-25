@@ -35,6 +35,11 @@ public class Call {
     private PhoneLine lineIdTo;
 
     @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "call_invoice_id")
+    private Invoice invoiceId;
+
+    @NotNull
     @Column(name = "call_minute_price")
     private float minutePrice;
 
@@ -45,7 +50,4 @@ public class Call {
     @NotNull
     @Column(name = "call_date")
     private Date date;
-
-    @Column(name = "call_invoice_id")
-    private int invoiceId;
 }

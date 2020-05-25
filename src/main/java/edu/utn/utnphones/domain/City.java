@@ -40,4 +40,12 @@ public class City {
     @JsonBackReference
     private List<User> users;
 
+    @OneToMany(mappedBy = "cityTo")
+    @JsonBackReference
+    private List<Rate> ratesTo;
+
+    /*@OneToMany(mappedBy = "cityFrom")
+    @JsonBackReference
+    private List<Rate> ratesFrom;*/
+
 }
