@@ -1,5 +1,6 @@
 package edu.utn.utnphones.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +27,8 @@ public class Province {
     @Column(name = "province_name")
     private String name;
 
-    /*@OneToMany(mappedBy = "province")
+    @OneToMany(mappedBy = "province")
+    @JsonBackReference
     private List<City> cities;
-    */
+
 }

@@ -1,5 +1,6 @@
 package edu.utn.utnphones.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,5 +28,6 @@ public class UserType {
     private String type;
 
     @OneToMany(mappedBy = "userType")
+    @JsonBackReference
     private List<User> users;
 }
