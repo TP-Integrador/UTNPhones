@@ -37,7 +37,7 @@ public class Call {
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "call_invoice_id")
-    private Invoice invoiceId;
+    private Invoice invoice;
 
     @NotNull
     @Column(name = "call_minute_price")

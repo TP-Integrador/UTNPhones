@@ -27,7 +27,7 @@ public class LineType {
     private String lineType;
 
     @OneToMany(mappedBy = "lineType")
-    @JsonBackReference
+    @JsonBackReference(value = "linetype")
     private List<PhoneLine> linePhones;
 
 }

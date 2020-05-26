@@ -46,7 +46,7 @@ public class User {
     private UserType userType;
 
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
+    @JsonBackReference(value = "linePhones")
     private List<PhoneLine> linePhones;
 
 }

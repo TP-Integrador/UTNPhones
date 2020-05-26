@@ -50,8 +50,8 @@ public class Invoice {
     @Column(name = "invoice_due_date")
     private Date dueDate;
 
-    @OneToMany(mappedBy = "invoiceId")
-    @JsonBackReference
+    @OneToMany(mappedBy = "invoice")
+    @JsonBackReference(value = "invoice")
     private List<Call> calls;
 
 }

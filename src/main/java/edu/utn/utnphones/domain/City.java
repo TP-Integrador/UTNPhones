@@ -30,21 +30,22 @@ public class City {
     @NotNull
     @Column(name = "city_prefix")
     private String cityPrefix;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "city_province_id")
     private Province province;
 
     @OneToMany(mappedBy = "city")
-    @JsonBackReference
+    @JsonBackReference(value = "city")
     private List<User> users;
 
+
     @OneToMany(mappedBy = "cityTo")
-    @JsonBackReference
+    @JsonBackReference(value = "cityTo")
     private List<Rate> ratesTo;
 
     @OneToMany(mappedBy = "cityFrom")
-    @JsonBackReference
+    @JsonBackReference(value = "cityFrom")
     private List<Rate> ratesFrom;
 
 }
