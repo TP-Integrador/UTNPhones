@@ -27,13 +27,11 @@ public class PhoneLine {
     @Column(name = "line_number")
     private String lineNumber;
 
-    //ver porque tira error con el enum al hacer get o post de phoneline
-/*
     @Enumerated(EnumType.STRING)
     @NotNull
     @Column(name = "line_status")
     private Status lineStatus;
-*/
+
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "line_type_id")
