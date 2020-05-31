@@ -27,12 +27,13 @@ public class RateService {
         return rateDao.save(rate);
     }
 
-    public List<Rate> getByIdFrom(int idFrom){
-        return rateDao.getByIdFrom(idFrom);
+    public Rate getRate (int idFrom, int idTo){
+        return rateDao.getRate(idFrom, idTo);
 
     }
 
-    public List<Rate> getByIdTo(int idTo) {
-        return rateDao.getByIdTo(idTo);
+    public List<Rate> getByIdFrom(int idFrom){
+        return rateDao.getByIdFrom(idFrom);
+
     }
 }

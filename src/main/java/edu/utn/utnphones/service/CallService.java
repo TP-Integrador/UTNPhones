@@ -2,9 +2,13 @@ package edu.utn.utnphones.service;
 
 import edu.utn.utnphones.dao.CallDao;
 import edu.utn.utnphones.domain.Call;
+import edu.utn.utnphones.dto.CallDto;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,11 +22,12 @@ public class CallService {
         return callDao.findAll();
     }
 
-    public Call add(Call call) {
-        return callDao.save(call);
+    public void add(String lineFrom, String lineTo, int seg , Date dateTime) {
+         callDao.addCall(lineFrom,lineTo,seg,dateTime);
     }
 
     public Call getById(int id) throws ResourcesNotExistException {
         return callDao.findById(id).orElseThrow(ResourcesNotExistException::new);
     }
+
 }

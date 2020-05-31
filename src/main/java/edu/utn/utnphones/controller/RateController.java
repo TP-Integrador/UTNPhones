@@ -26,12 +26,17 @@ public class RateController {
         return rateService.add(rate);
     }
 
+    public Rate getRate(int idFrom, int idTo) {
+        return rateService.getRate(idFrom, idTo);
+    }
+
     public List<Rate> getByIdFrom(int idFrom) {
         return rateService.getByIdFrom(idFrom);
-
     }
 
-    public List<Rate> getByIdTo(int idTo) {
+   /* public List<Rate> getByIdTo(int idTo) {
         return rateService.getByIdTo(idTo);
     }
+
+    */
 }
