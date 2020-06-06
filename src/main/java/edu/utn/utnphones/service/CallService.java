@@ -22,12 +22,14 @@ public class CallService {
         return callDao.findAll();
     }
 
-    public void add(String lineFrom, String lineTo, int seg , Date dateTime) {
-         callDao.addCall(lineFrom,lineTo,seg,dateTime);
+    public CallDto add(String lineFrom, String lineTo, int seg , Date dateTime) {
+        callDao.addCall(lineFrom,lineTo,seg,dateTime);
+        return null;
     }
 
     public Call getById(int id) throws ResourcesNotExistException {
         return callDao.findById(id).orElseThrow(ResourcesNotExistException::new);
     }
 
+    //TODO Test
 }

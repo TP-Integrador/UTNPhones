@@ -10,8 +10,6 @@ import edu.utn.utnphones.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Optional;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -66,11 +64,26 @@ public class UserControllerTest {
         userController.getUserById(1);
     }
 
+
     @Test
     public void testRemoveUserOk() throws UserNotexistException {
         User userToRemove = new User(1, "nme", "lastname", "12345678", "username", "password", City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null);
         doNothing().when(service).removeUser(userToRemove);
         userController.removeUser(userToRemove);
         verify(service, times(1)).removeUser(userToRemove);
+    }
+
+    @Test
+    public void testUpdateUserOk() throws UserNotexistException {
+        User userToUpdate = new User(1, "nme", "lastname", "12345678", "username", "password", City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null);
+        when(service.updateUser(userToUpdate)).thenReturn(userToUpdate);
+        userController.updateUser(userToUpdate);
+        verify(service, times(1)).updateUser(userToUpdate);
+    }
+
+    @Test(expected = UserNotexistException.class)
+    public void testUpdateUserNotExists() throws UserNotexistException {
+        when(service.getUser(1)).thenThrow(new UserNotexistException());
+        userController.getUserById(1);
     }
 }
