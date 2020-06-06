@@ -32,4 +32,8 @@ public class CallService {
     }
 
     //TODO Test
+
+    public List<Call> getCallsByDate(Date dateFrom, Date dateTo, int userId){
+        return callDao.getCallsByDate(dateFrom,dateTo,userId);
+    }
 }
