@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -33,4 +34,7 @@ public class InvoiceController {
         return invoiceService.add(invoice);
     }
 
+    public List<Invoice> getInvoicesByDate(Date from, Date to, int userId){
+        return invoiceService.getInvoicesByDate(from,to,userId);
+    }
 }
