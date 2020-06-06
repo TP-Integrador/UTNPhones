@@ -30,4 +30,7 @@ public class CallService {
         return callDao.findById(id).orElseThrow(ResourcesNotExistException::new);
     }
 
+    public List<Call> getCallsByDate(Date dateFrom, Date dateTo, int userId){
+        return callDao.getCallsByDate(dateFrom,dateTo,userId);
+    }
 }

@@ -34,4 +34,8 @@ public class CallController {
     public Call getById(int id) throws ResourcesNotExistException {
         return callService.getById(id);
     }
+
+    public List<Call> getCallsByDate(Date dateFrom, Date dateTo, int userId){
+        return callService.getCallsByDate(dateFrom,dateTo,userId);
+    }
 }
