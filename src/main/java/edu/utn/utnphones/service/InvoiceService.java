@@ -6,6 +6,7 @@ import edu.utn.utnphones.exception.ResourcesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,5 +29,9 @@ public class InvoiceService {
 
     public Invoice getById(int id) throws ResourcesNotExistException {
         return invoiceDao.findById(id).orElseThrow(ResourcesNotExistException::new);
+    }
+
+    public List<Invoice> getInvoicesByDate(Date from, Date to, int userId){
+        return invoiceDao.getInvoicesByDate(from,to,userId);
     }
 }
