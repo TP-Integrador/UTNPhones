@@ -34,4 +34,5 @@ public class InvoiceService {
     public List<Invoice> getInvoicesByDate(Date from, Date to, int userId){
         return invoiceDao.getInvoicesByDate(from,to,userId);
     }
+    
 }
