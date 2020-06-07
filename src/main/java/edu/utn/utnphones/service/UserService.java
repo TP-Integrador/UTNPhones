@@ -36,7 +36,7 @@ public class UserService {
     }
 
     public User createUser(User user) throws UserAlreadyExistsException {
-        Optional<User> us = userDao.findById(user.getUserId()); //TODO cambiar la busqueda
+        Optional<User> us = userDao.findByDni(user.getDNI());
         if (us == null) {
             return userDao.save(user);
         }else {

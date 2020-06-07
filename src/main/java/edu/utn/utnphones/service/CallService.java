@@ -5,8 +5,10 @@ import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.dto.CallDto;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.support.xml.SqlXmlFeatureNotImplementedException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -21,9 +23,12 @@ public class CallService {
         return callDao.findAll();
     }
 
-    public CallDto add(String lineFrom, String lineTo, int seg , Date dateTime) {
-        callDao.addCall(lineFrom,lineTo,seg,dateTime);
-        return null;
+    public void add(String lineFrom, String lineTo, int seg , Date dateTime) throws SQLException {
+        try {
+            callDao.addCall(lineFrom, lineTo, seg, dateTime);
+        }catch (Exception e){
+            throw new SQLException();
+        }
     }
 
     public Call getById(int id) throws ResourcesNotExistException {
