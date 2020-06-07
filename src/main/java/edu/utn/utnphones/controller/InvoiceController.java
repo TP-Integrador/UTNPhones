@@ -32,5 +32,9 @@ public class InvoiceController {
     public Invoice addInvoice(Invoice invoice){
         return invoiceService.add(invoice);
     }
+    
+    public List<Invoice> getInvoicesByDate(Date from, Date to, int userId){
+        return invoiceService.getInvoicesByDate(from,to,userId);
+    } 
 
 }
