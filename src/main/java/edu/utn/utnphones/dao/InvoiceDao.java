@@ -15,4 +15,5 @@ public interface InvoiceDao extends JpaRepository<Invoice,Integer>{
             "inner join users u on pl.line_user_id = u.user_id\n" +
             "where i.invoice_date  >= ?1 and i.invoice_date <= ?2 and u.user_id = ?3",nativeQuery = true)
     List<Invoice> getInvoicesByDate(Date dateFrom, Date dateTo, int userId);
+    
 }
