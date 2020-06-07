@@ -1,8 +1,7 @@
-package edu.utn.utnphones.controller.web;
+package edu.utn.utnphones.controller.client;
 
-import edu.utn.utnphones.controller.InvoiceController;
+import edu.utn.utnphones.controller.CallController;
 import edu.utn.utnphones.domain.Call;
-import edu.utn.utnphones.domain.Invoice;
 import edu.utn.utnphones.domain.User;
 import edu.utn.utnphones.exception.UserNotexistException;
 import edu.utn.utnphones.session.SessionManager;
@@ -18,28 +17,29 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/invoices")
-public class CheckInvoicesController {
-    private InvoiceController invoiceController;
+@RequestMapping("api/calls")
+public class CheckCallsController {
+
+    private CallController callController;
     private SessionManager sessionManager;
 
     @Autowired
-    public CheckInvoicesController(InvoiceController invoiceController, SessionManager sessionManager) {
-        this.invoiceController = invoiceController;
+    public CheckCallsController(CallController callController, SessionManager sessionManager) {
+        this.callController = callController;
         this.sessionManager = sessionManager;
     }
 
     @GetMapping
-    public ResponseEntity<List<Invoice>> getInvoicesByDate(@RequestHeader("Authorization") String sessionToken,@RequestParam(value = "from") String from, @RequestParam(value = "to") String to) throws UserNotexistException, ParseException {
-        ResponseEntity<List<Invoice>> responseEntity = null;
+    public ResponseEntity<List<Call>> getCallsByDate(@RequestHeader ("Authorization") String sessionToken, @RequestParam(value = "from") String from, @RequestParam(value = "to") String to) throws UserNotexistException, ParseException {
+        ResponseEntity<List<Call>> responseEntity = null;
         User currentUser = getCurrentUser(sessionToken);
         if ( currentUser.getUserType().getType().matches("Client")) {
             if ((from != null) && (to != null)) {
                 Date dateFrom = new SimpleDateFormat("yyyy/MM/dd").parse(from);
                 Date dateTo = new SimpleDateFormat("yyyy/MM/dd").parse(to);
-                List<Invoice> invoicesList = invoiceController.getInvoicesByDate(dateFrom, dateTo, currentUser.getUserId());
-                if (!invoicesList.isEmpty()) {
-                    responseEntity = ResponseEntity.ok().body(invoicesList);
+                List<Call> callList = callController.getCallsByDate(dateFrom, dateTo, currentUser.getUserId());
+                if (!callList.isEmpty()) {
+                    responseEntity = ResponseEntity.ok().body(callList);
                 } else {
                     responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
                 }
@@ -55,4 +55,5 @@ public class CheckInvoicesController {
     private User getCurrentUser(String sessionToken) throws UserNotexistException {
         return Optional.ofNullable(sessionManager.getCurrentUser(sessionToken)).orElseThrow(UserNotexistException::new);
     }
+
 }

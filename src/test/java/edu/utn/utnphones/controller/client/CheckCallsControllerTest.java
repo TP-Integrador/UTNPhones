@@ -1,6 +1,7 @@
-package edu.utn.utnphones.controller;
+package edu.utn.utnphones.controller.client;
 
-import edu.utn.utnphones.controller.web.CheckCallsController;
+import edu.utn.utnphones.controller.CallController;
+import edu.utn.utnphones.controller.client.CheckCallsController;
 import edu.utn.utnphones.domain.*;
 import edu.utn.utnphones.exception.UserNotexistException;
 import edu.utn.utnphones.session.SessionManager;
@@ -11,16 +12,11 @@ import org.springframework.http.ResponseEntity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyByte;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

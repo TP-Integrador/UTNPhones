@@ -1,7 +1,7 @@
-package edu.utn.utnphones.controller;
+package edu.utn.utnphones.controller.client;
 
-import edu.utn.utnphones.controller.web.CheckInvoicesController;
-import edu.utn.utnphones.domain.Call;
+import edu.utn.utnphones.controller.InvoiceController;
+import edu.utn.utnphones.controller.client.CheckInvoicesController;
 import edu.utn.utnphones.domain.Invoice;
 import edu.utn.utnphones.domain.User;
 import edu.utn.utnphones.domain.UserType;

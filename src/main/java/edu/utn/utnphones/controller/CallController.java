@@ -2,15 +2,13 @@ package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.domain.Call;
 
-import edu.utn.utnphones.dto.CallDto;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.service.CallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 
-import javax.print.DocFlavor;
-import java.time.LocalDateTime;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class CallController {
         return callService.getAll();
     }
 
-    public void addCall(String lineFrom, String lineTo, int seg , Date dateTime){
+    public void addCall(String lineFrom, String lineTo, int seg , Date dateTime) throws SQLException {
         callService.add(lineFrom,lineTo,seg,dateTime);
     }
 

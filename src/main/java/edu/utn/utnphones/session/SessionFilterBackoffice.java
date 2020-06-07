@@ -1,5 +1,6 @@
 package edu.utn.utnphones.session;
 
+import edu.utn.utnphones.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Service
-public class SessionFilter extends OncePerRequestFilter {
+public class SessionFilterBackoffice extends OncePerRequestFilter {
 
     @Autowired
     private SessionManager sessionManager;
@@ -25,7 +26,12 @@ public class SessionFilter extends OncePerRequestFilter {
         String sessionToken = request.getHeader("Authorization");
         Session session = sessionManager.getSession(sessionToken);
         if (null != session) {
-            filterChain.doFilter(request, response);
+            User u = sessionManager.getCurrentUser(sessionToken);
+            if (u.getUserType().getType().matches("Employee")) {
+                filterChain.doFilter(request, response);
+            }else {
+                response.setStatus(HttpStatus.FORBIDDEN.value());
+            }
         } else {
             response.setStatus(HttpStatus.FORBIDDEN.value());
         }
