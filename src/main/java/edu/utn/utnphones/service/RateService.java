@@ -22,11 +22,6 @@ public class RateService {
         return rateDao.findAll();
     }
 
-
-    public Rate add(Rate rate) {
-        return rateDao.save(rate);
-    }
-
     public Rate getRate (int idFrom, int idTo){
         return rateDao.getRate(idFrom, idTo);
 

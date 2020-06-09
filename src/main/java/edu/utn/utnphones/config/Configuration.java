@@ -21,7 +21,6 @@ public class Configuration {
     SessionFilterBackoffice sessionFilterBackOffice;
 
 
-
     @Bean
     public FilterRegistrationBean FilterClient() {
         FilterRegistrationBean registration = new FilterRegistrationBean();

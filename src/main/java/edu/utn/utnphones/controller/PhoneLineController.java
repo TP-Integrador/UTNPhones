@@ -19,6 +19,7 @@ public class PhoneLineController {
         this.linePhoneService = linePhoneService;
     }
 
+    /* //TODO validar si se usan
     public List<PhoneLine> getAllLinePhones(){
         return linePhoneService.getAll();
     }
@@ -29,6 +30,7 @@ public class PhoneLineController {
     public PhoneLine addLinePhone(PhoneLine linePhone){
         return linePhoneService.add(linePhone);
     }
+     */
 
     public PhoneLine getByNumber(String line) throws PhoneLineNotExistException {
         return linePhoneService.getByNumber(line);

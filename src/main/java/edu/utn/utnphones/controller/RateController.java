@@ -22,10 +22,6 @@ public class RateController {
         return rateService.getAll();
     }
 
-    public Rate addRate(Rate rate){
-        return rateService.add(rate);
-    }
-
     public Rate getRate(int idFrom, int idTo) {
         return rateService.getRate(idFrom, idTo);
     }
@@ -34,9 +30,4 @@ public class RateController {
         return rateService.getByIdFrom(idFrom);
     }
 
-   /* public List<Rate> getByIdTo(int idTo) {
-        return rateService.getByIdTo(idTo);
-    }
-
-    */
 }

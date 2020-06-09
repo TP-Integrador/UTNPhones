@@ -1,6 +1,7 @@
 package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.domain.City;
+import edu.utn.utnphones.exception.CityNotexistException;
 import edu.utn.utnphones.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,8 @@ public class CityController {
         this.cityService = cityService;
     }
 
+    //TODO validar si se usar
+    /*
     public List<City> getAllCities(){
         return cityService.getAll();
     }
@@ -27,8 +30,9 @@ public class CityController {
     public City addCity(City city){
         return cityService.add(city);
     }
+     */
 
-    public City getById(int cityId) {
+    public City getById(int cityId) throws CityNotexistException {
         return cityService.getById(cityId);
     }
 }
