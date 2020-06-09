@@ -19,8 +19,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CheckRateControllerTest {
-
-    //TODO Test
+    
     private RateController rateController;
     private SessionManager sessionManager;
     private CityController cityController;
