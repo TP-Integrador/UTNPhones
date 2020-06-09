@@ -21,6 +21,8 @@ public class PhoneLineService {
         this.linePhoneDao = linePhoneDao;
     }
 
+    //TODO validar si se usan
+    /*
     public List<PhoneLine> getAll() {
         return linePhoneDao.findAll();
     }
@@ -33,9 +35,10 @@ public class PhoneLineService {
         return linePhoneDao.save(linePhone);
     }
 
+     */
+
     public PhoneLine getByNumber(String line) throws PhoneLineNotExistException {
-        PhoneLine phoneLine = null;
-        phoneLine = linePhoneDao.findByNumber(line);
+        PhoneLine phoneLine = linePhoneDao.findByNumber(line);
         if(phoneLine  == null){
             throw new PhoneLineNotExistException(line);
         }

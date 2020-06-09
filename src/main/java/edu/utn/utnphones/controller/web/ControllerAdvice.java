@@ -1,10 +1,7 @@
 package edu.utn.utnphones.controller.web;
 
 import edu.utn.utnphones.dto.ErrorResponseDto;
-import edu.utn.utnphones.exception.InvalidLoginException;
-import edu.utn.utnphones.exception.PhoneLineNotExistException;
-import edu.utn.utnphones.exception.UserNotexistException;
-import edu.utn.utnphones.exception.ValidationException;
+import edu.utn.utnphones.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -51,6 +48,12 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(SQLException.class)
     public ErrorResponseDto handleSQLException(SQLException exc) {
         return new ErrorResponseDto(5, "Internal error server");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CityNotexistException.class)
+    public ErrorResponseDto handleCityNotexistException(CityNotexistException exc) {
+        return new ErrorResponseDto(4, "PhoneLine not exists: " + exc.getMessage());
     }
 
 }
