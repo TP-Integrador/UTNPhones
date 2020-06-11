@@ -21,17 +21,6 @@ public class CityController {
         this.cityService = cityService;
     }
 
-    //TODO validar si se usar
-    /*
-    public List<City> getAllCities(){
-        return cityService.getAll();
-    }
-
-    public City addCity(City city){
-        return cityService.add(city);
-    }
-     */
-
     public City getById(int cityId) throws CityNotexistException {
         return cityService.getById(cityId);
     }

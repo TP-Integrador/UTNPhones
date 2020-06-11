@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -58,5 +59,18 @@ public class PhoneLine {
         Active,
         Inactive,
         Suspended
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PhoneLine phoneLine = (PhoneLine) o;
+        return lineStatus == phoneLine.lineStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lineStatus);
     }
 }
