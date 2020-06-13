@@ -4,11 +4,14 @@ import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.domain.Invoice;
 import edu.utn.utnphones.exception.PhoneLineNotExistException;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
+import edu.utn.utnphones.projections.GetCalls;
 import edu.utn.utnphones.service.InvoiceService;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,8 +53,29 @@ public class InvoicesControllerTest {
 
     @Test
     public void testAddInvoiceOk() throws SQLException {
-        when(invoiceController.addInvoice(invoice)).thenReturn(invoice);
-        assertEquals(invoice,invoice);
+        when(invoiceService.add(invoice)).thenReturn(invoice);
+        invoiceController.addInvoice(invoice);
+
+        verify(invoiceService,times(1)).add(invoice);
+
+    }
+
+    @Test
+    public void testGetInvoicesByDate() throws ParseException {
+        List<Invoice> listInvoices = new ArrayList<>();
+        Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-28");
+        Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
+        when(invoiceService.getInvoicesByDate(from,to,1)).thenReturn(listInvoices);
+        invoiceController.getInvoicesByDate(from,to,1);
+        verify(invoiceService,times(1)).getInvoicesByDate(from,to,1);
+    }
+
+    @Test
+    public void testGetInvoicesByClient(){
+        List<Invoice> listInvoices = new ArrayList<>();
+        when(invoiceService.getInvoicesByClient(1)).thenReturn(listInvoices);
+        invoiceController.getInvoicesByClient(1);
+        verify(invoiceService,times(1)).getInvoicesByClient(1);
     }
 
 }

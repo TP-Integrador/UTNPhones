@@ -1,6 +1,7 @@
 package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.domain.Call;
+import edu.utn.utnphones.exception.PhoneLineNotExistException;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.projections.GetCalls;
 import edu.utn.utnphones.projections.MostCalledCities;
@@ -37,15 +38,21 @@ public class CallControllerTest {
     @Test
     public void testGetAllCalls(){
         List<Call> listCall = new ArrayList<>();
-        when(callController.getAllCalls()).thenReturn(listCall);
+        when(callService.getAll()).thenReturn(listCall);
 
-        assertEquals(listCall,listCall);
+        assertEquals(listCall,callController.getAllCalls());
     }
 
     @Test
     public void testGetCallsByIdOk() throws ResourcesNotExistException {
-        when(callController.getById(1)).thenReturn(call);
-        assertEquals(call,call);
+        when(callService.getById(1)).thenReturn(call);
+        assertEquals(call,callController.getById(1));
+    }
+
+    @Test(expected = ResourcesNotExistException.class)
+    public void testGetCallsByIdNotExists() throws ResourcesNotExistException {
+        when(callService.getById(1)).thenThrow(new ResourcesNotExistException());
+        callController.getById(1);
     }
 
     @Test

@@ -2,6 +2,7 @@ package edu.utn.utnphones.service;
 
 import edu.utn.utnphones.dao.CallDao;
 import edu.utn.utnphones.domain.Call;
+import edu.utn.utnphones.domain.PhoneLine;
 import edu.utn.utnphones.exception.PhoneLineAlreadyExistsException;
 import edu.utn.utnphones.projections.MostCalledCities;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
@@ -39,9 +40,9 @@ public class CallServiceTest {
     @Test
     public void testGetAll(){
         List<Call> listCall = new ArrayList<>();
-        when(callService.getAll()).thenReturn(listCall);
+        when(callDao.findAll()).thenReturn(listCall);
 
-        assertEquals(listCall,listCall);
+        assertEquals(listCall,callService.getAll());
     }
 
     @Test
@@ -49,17 +50,21 @@ public class CallServiceTest {
         Optional<Call> call = Optional.ofNullable(Call.builder().Id(1).build());
         when(callDao.findById(1)).thenReturn(call);
 
-        assertEquals(call,call);
+        assertEquals(call,Optional.of(callService.getById(1)));
     }
 
     @Test(expected = ResourcesNotExistException.class)
     public void testGetByIdNull() throws ResourcesNotExistException {
-        when(callService.getById(1)).thenReturn(null);
-
+        when(callDao.findById(1)).thenReturn(Optional.ofNullable(null));
+        callService.getById(1);
     }
 
     @Test
     public void testAddOk() throws SQLException {
+        PhoneLine phoneLineFrom = PhoneLine.builder().id(123).build();
+        PhoneLine phoneLineTo = PhoneLine.builder().id(456).build();
+        Call call = Call.builder().Id(1).lineIdFrom(phoneLineFrom).lineIdTo(phoneLineTo).duration(60).date(new Date()).build();
+        when(callDao.save(call)).thenReturn(call);
         callService.add("123","456",60,new Date());
     }
 
@@ -68,18 +73,18 @@ public class CallServiceTest {
         List<Call> listCall = new ArrayList<>();
         Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-28");
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
-        when(callService.getCallsByDate(from,to,1)).thenReturn(listCall);
+        when(callDao.getCallsByDate(from,to,1)).thenReturn(listCall);
 
-        assertEquals(listCall,listCall);
+        assertEquals(listCall,callService.getCallsByDate(from,to,1));
     }
 
     @Test
     public void testGetCallsByClient(){
         List<GetCalls> listCall = new ArrayList<>();
         listCall.add(getCalls);
-        when(callService.getCallsByClient(1)).thenReturn(listCall);
+        when(callDao.getCallsByClient(1)).thenReturn(listCall);
 
-        assertEquals(listCall,listCall);
+        assertEquals(listCall,callService.getCallsByClient(1));
     }
 
     @Test(expected = SQLException.class)
