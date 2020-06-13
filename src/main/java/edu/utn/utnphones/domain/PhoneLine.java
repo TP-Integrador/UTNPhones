@@ -29,7 +29,7 @@ public class PhoneLine {
     private String lineNumber;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
+    //@NotNull
     @Column(name = "line_status")
     private Status lineStatus;
 

@@ -6,7 +6,6 @@ import edu.utn.utnphones.exception.PhoneLineAlreadyExistsException;
 import edu.utn.utnphones.exception.PhoneLineNotExistException;
 import edu.utn.utnphones.exception.PhoneLineRemovedException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,34 +26,20 @@ public class PhoneLinesABMController {
     }
 
     @GetMapping("/{idphone}")
-    public ResponseEntity<PhoneLine> getPhonelineById(@RequestHeader("Authorization") String sessionToken, @PathVariable int idphone) throws PhoneLineNotExistException {
-
+    public ResponseEntity<PhoneLine> getPhonelineById(@PathVariable int idphone) throws PhoneLineNotExistException {
         ResponseEntity<PhoneLine> responseEntity = null;
         PhoneLine phoneLine = phoneLineController.getById(idphone);
-        if (!(phoneLine == null)) {
-            responseEntity = ResponseEntity.ok().body(phoneLine);
-        } else {
-            responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return responseEntity;
+        return ResponseEntity.ok().body(phoneLine);
     }
 
-    //TODO agregar triggers para Status "Active" al agregar
-    // agregar Tests
-
     @PostMapping
-    public ResponseEntity addPhoneLine(@RequestHeader("Authorization") String sessionToken, @RequestBody @Valid PhoneLine phoneLine) throws PhoneLineAlreadyExistsException, SQLException {
-        ResponseEntity responseEntity = null;
+    public ResponseEntity addPhoneLine(@RequestBody @Valid PhoneLine phoneLine) throws PhoneLineAlreadyExistsException, SQLException {
         PhoneLine ph = phoneLineController.addPhone(phoneLine);
-        if (!(ph == null)) {
-            responseEntity = ResponseEntity.created(getLocation(ph)).build();
-        } else
-            responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        return responseEntity;
+        return ResponseEntity.created(getLocation(ph)).build();
     }
 
     @PutMapping("/{idphone}")
-    public ResponseEntity UpdatePhoneline(@RequestHeader("Authorization") String sessionToken, @PathVariable int idphone, @RequestBody PhoneLine phoneLine) throws PhoneLineNotExistException {
+    public ResponseEntity UpdatePhoneline(@PathVariable int idphone, @RequestBody PhoneLine phoneLine) throws PhoneLineNotExistException, PhoneLineRemovedException {
         phoneLineController.updateStatus(phoneLine,idphone);
         return ResponseEntity.ok().build();
      }
@@ -66,7 +51,7 @@ public class PhoneLinesABMController {
     }
 
 
-    private URI getLocation(PhoneLine phoneLine) {
+    public URI getLocation(PhoneLine phoneLine) {
         return ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")

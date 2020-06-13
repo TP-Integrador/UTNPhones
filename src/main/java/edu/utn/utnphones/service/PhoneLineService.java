@@ -46,10 +46,10 @@ public class PhoneLineService {
         return phoneLine;
     }
 
-    public void updateStatus(PhoneLine phoneLine, int idphone) throws PhoneLineNotExistException {
+    public void updateStatus(PhoneLine phoneLine, int idphone) throws PhoneLineNotExistException, PhoneLineRemovedException {
         PhoneLine ph = linePhoneDao.findById(idphone).orElseThrow(() -> new PhoneLineNotExistException(""));
         if(ph.getLineStatus() == PhoneLine.Status.Inactive){
-            throw new PhoneLineNotExistException("");
+            throw new PhoneLineRemovedException();
         }
         linePhoneDao.updateStatus(phoneLine.getLineStatus().toString(),idphone);
     }

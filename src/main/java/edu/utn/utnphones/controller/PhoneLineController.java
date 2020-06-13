@@ -21,10 +21,6 @@ public class PhoneLineController {
     }
 
 
-    public PhoneLine addPhone(PhoneLine phoneLine) throws PhoneLineAlreadyExistsException, SQLException {
-        return linePhoneService.addPhone(phoneLine);
-    }
-
     public PhoneLine getById(int id) throws PhoneLineNotExistException {
         return linePhoneService.getById(id);
     }
@@ -33,7 +29,11 @@ public class PhoneLineController {
         return linePhoneService.getByNumber(line);
     }
 
-    public void updateStatus(PhoneLine phoneLine, int idphone) throws PhoneLineNotExistException{
+    public PhoneLine addPhone(PhoneLine phoneLine) throws PhoneLineAlreadyExistsException, SQLException {
+        return linePhoneService.addPhone(phoneLine);
+    }
+
+    public void updateStatus(PhoneLine phoneLine, int idphone) throws PhoneLineNotExistException, PhoneLineRemovedException {
         linePhoneService.updateStatus(phoneLine,idphone);
     }
 
