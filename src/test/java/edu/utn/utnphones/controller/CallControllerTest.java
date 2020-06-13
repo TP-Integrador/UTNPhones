@@ -3,6 +3,7 @@ package edu.utn.utnphones.controller;
 import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.projections.GetCalls;
+import edu.utn.utnphones.projections.MostCalledCities;
 import edu.utn.utnphones.service.CallService;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +24,7 @@ public class CallControllerTest {
     private CallController callController;
     private Call call;
     private GetCalls getCalls;
+    private MostCalledCities mostCalledCities;
 
     @Before
     public void setUp(){
@@ -45,8 +47,6 @@ public class CallControllerTest {
         when(callController.getById(1)).thenReturn(call);
         assertEquals(call,call);
     }
-
-
 
     @Test
     public void testAddCallOk() throws SQLException {
@@ -71,4 +71,14 @@ public class CallControllerTest {
         callController.getCallsByClient(1);
         verify(callService,times(1)).getCallsByClient(1);
     }
+
+    @Test
+    public void getMostCalledCities(){
+
+        List<MostCalledCities> list = new ArrayList<>();
+        list.add(mostCalledCities);
+        when(callService.getMostCalledCities(1)).thenReturn(list);
+        callController.getMostCalledCities(1);
+    }
+
 }

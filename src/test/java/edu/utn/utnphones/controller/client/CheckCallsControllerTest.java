@@ -1,8 +1,8 @@
 package edu.utn.utnphones.controller.client;
 
 import edu.utn.utnphones.controller.CallController;
-import edu.utn.utnphones.controller.client.CheckCallsController;
 import edu.utn.utnphones.domain.*;
+import edu.utn.utnphones.projections.MostCalledCities;
 import edu.utn.utnphones.exception.UserNotexistException;
 import edu.utn.utnphones.session.SessionManager;
 import org.junit.Before;
@@ -18,20 +18,23 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CheckCallsControllerTest {
+
 
     private CheckCallsController checkCallsController;
     private CallController callController;
     private SessionManager sessionManager;
     private Call call;
+    private MostCalledCities mostCalledCities;
+
 
     @Before
     public void setUp() {
         callController = mock(CallController.class);
         sessionManager = mock(SessionManager.class);
+        mostCalledCities = mock(MostCalledCities.class);
         call = mock(Call.class);
         checkCallsController = new CheckCallsController(callController,sessionManager);
     }
@@ -80,6 +83,49 @@ public class CheckCallsControllerTest {
         ResponseEntity<List<Call>> responseEntity = checkCallsController.getCallsByDate("token",null,null);
         assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
 
+    }
+
+
+    @Test
+    public void getCallsByDateForbidden() throws UserNotexistException, ParseException {
+        User user = User.builder().userId(1).build();
+        user.setUserType(UserType.builder().type("Employee").build());
+        when(sessionManager.getCurrentUser("token")).thenReturn(user);
+
+        ResponseEntity<List<Call>> responseEntity = checkCallsController.getCallsByDate("token",null,null);
+        assertEquals(HttpStatus.FORBIDDEN,responseEntity.getStatusCode());
+
+    }
+
+
+    @Test
+    public void getMostCalledCitiesOk() throws UserNotexistException {
+        User user = User.builder().userId(1).build();
+        when(sessionManager.getCurrentUser("token")).thenReturn(user);
+
+        List<MostCalledCities> list = new ArrayList<>();
+        list.add(mostCalledCities);
+
+        when(callController.getMostCalledCities(user.getUserId())).thenReturn(list);
+
+        ResponseEntity<List<MostCalledCities>> responseEntity = checkCallsController.getMostCalledCities("token");
+        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
+        assertEquals(list,responseEntity.getBody());
+
+    }
+
+    @Test
+    public void getMostCalledCitiesNoContent() throws UserNotexistException {
+        User user = User.builder().userId(1).build();
+        when(sessionManager.getCurrentUser("token")).thenReturn(user);
+
+        List<MostCalledCities> list = new ArrayList<>();
+        list.clear();
+
+        when(callController.getMostCalledCities(user.getUserId())).thenReturn(list);
+
+        ResponseEntity<List<MostCalledCities>> responseEntity = checkCallsController.getMostCalledCities("token");
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
     }
 
 }
