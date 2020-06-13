@@ -1,6 +1,7 @@
 package edu.utn.utnphones.service;
 
 import edu.utn.utnphones.dao.InvoiceDao;
+import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.domain.Invoice;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,9 @@ public class InvoiceService {
 
     public List<Invoice> getInvoicesByDate(Date from, Date to, int userId){
         return invoiceDao.getInvoicesByDate(from,to,userId);
+    }
+
+    public List<Invoice> getInvoicesByClient(int id){
+        return invoiceDao.getInvoicesByClient(id);
     }
 }

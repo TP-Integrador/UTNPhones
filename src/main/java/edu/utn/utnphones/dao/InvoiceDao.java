@@ -15,4 +15,11 @@ public interface InvoiceDao extends JpaRepository<Invoice,Integer>{
             "inner join users u on pl.line_user_id = u.user_id\n" +
             "where i.invoice_date  >= ?1 and i.invoice_date <= ?2 and u.user_id = ?3",nativeQuery = true)
     List<Invoice> getInvoicesByDate(Date dateFrom, Date dateTo, int userId);
+
+    //TODO: Hacer QUERY, consulte todas las facturas del cliente "id"
+    @Query(value = "select * from invoices i inner join phone_lines pl on i.invoice_line_id = pl.line_id \n" +
+            "inner join users u on pl.line_user_id = u.user_id\n" +
+            "where u.user_id = ?1",nativeQuery = true)
+    List<Invoice> getInvoicesByClient(int id);
+
 }

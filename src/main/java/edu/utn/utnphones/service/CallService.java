@@ -2,10 +2,9 @@ package edu.utn.utnphones.service;
 
 import edu.utn.utnphones.dao.CallDao;
 import edu.utn.utnphones.domain.Call;
-import edu.utn.utnphones.dto.CallDto;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
+import edu.utn.utnphones.projections.GetCalls;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.support.xml.SqlXmlFeatureNotImplementedException;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -37,5 +36,9 @@ public class CallService {
 
     public List<Call> getCallsByDate(Date dateFrom, Date dateTo, int userId){
         return callDao.getCallsByDate(dateFrom,dateTo,userId);
+    }
+
+    public List<GetCalls> getCallsByClient(int id){
+        return callDao.getCallsByClient(id);
     }
 }

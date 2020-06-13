@@ -42,13 +42,13 @@ public class CheckInvoicesControllerTest {
         User user = User.builder().userId(1).build();
         user.setUserType(UserType.builder().type("Client").build());
         List<Invoice> invoiceList = new ArrayList<>();
-        Date from = new SimpleDateFormat("yyyy/MM/dd").parse("2020/05/28");
-        Date to = new SimpleDateFormat("yyyy/MM/dd").parse("2020/06/30");
+        Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-28");
+        Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
         invoiceList.add(invoice);
         when(invoiceController.getInvoicesByDate(from,to,1)).thenReturn(invoiceList);
 
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoicesByDate("token","2020/05/28","2020/06/30");
+        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoicesByDate("token","2020-05-28","2020-06-30");
 
         assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
         assertEquals(invoiceList,responseEntity.getBody());
@@ -65,7 +65,7 @@ public class CheckInvoicesControllerTest {
 
         when(invoiceController.getInvoicesByDate(from,to,1)).thenReturn(invoiceList);
 
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoicesByDate("token","2020/05/28","2020/06/30");
+        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoicesByDate("token","2020-05-28","2020-06-30");
 
         assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
     }
@@ -82,14 +82,4 @@ public class CheckInvoicesControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
     }
 
-    @Test
-    public void getInvoicesByDateForbidden() throws UserNotexistException, ParseException {
-        User user = User.builder().userId(1).build();
-        user.setUserType(UserType.builder().type("Employee").build());
-        when(sessionManager.getCurrentUser("token")).thenReturn(user);
-
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoicesByDate("token",null,null);
-        assertEquals(HttpStatus.FORBIDDEN,responseEntity.getStatusCode());
-
-    }
 }

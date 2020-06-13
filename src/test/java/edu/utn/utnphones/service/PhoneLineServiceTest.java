@@ -2,14 +2,23 @@ package edu.utn.utnphones.service;
 
 import edu.utn.utnphones.dao.PhoneLineDao;
 import edu.utn.utnphones.domain.PhoneLine;
+import edu.utn.utnphones.exception.PhoneLineAlreadyExistsException;
 import edu.utn.utnphones.exception.PhoneLineNotExistException;
+import edu.utn.utnphones.exception.PhoneLineRemovedException;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.platform.commons.util.ExceptionUtils;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.stubbing.OngoingStubbing;
 
 import java.awt.*;
+import java.sql.SQLException;
+import java.time.OffsetDateTime;
+import java.util.Optional;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class PhoneLineServiceTest {
 
@@ -21,7 +30,21 @@ public class PhoneLineServiceTest {
         phoneLineDao = mock(PhoneLineDao.class);
         phoneLineService = new PhoneLineService(phoneLineDao);
     }
-    
+
+    @Test
+    public void testGetByIdOk() throws PhoneLineNotExistException {
+        Optional phoneLine = Optional.ofNullable(PhoneLine.builder().id(1).build());
+        when(phoneLineDao.findById(1)).thenReturn(phoneLine);
+        Assert.assertEquals(phoneLine, Optional.of(phoneLineService.getById(1)));
+    }
+
+    @Test(expected = PhoneLineNotExistException.class)
+    public void testGetByIdNotExists() throws PhoneLineNotExistException {
+        PhoneLine phoneLine = null;
+        when(phoneLineDao.findById(1)).thenReturn(Optional.ofNullable(phoneLine));
+        phoneLineService.getById(1);
+    }
+
     @Test
     public void testGetByNumberOk() throws PhoneLineNotExistException {
         PhoneLine phoneLine = PhoneLine.builder().id(1).build();
@@ -32,8 +55,101 @@ public class PhoneLineServiceTest {
 
     @Test(expected = PhoneLineNotExistException.class)
     public void testGetByNumberNotExists() throws PhoneLineNotExistException {
-        when(phoneLineDao.findByNumber("123")).thenReturn(null);
-
+        PhoneLine phoneLine = null;
+        when(phoneLineDao.findByNumber("123")).thenReturn(phoneLine);
         phoneLineService.getByNumber("123");
     }
+
+    /*
+    public PhoneLine addPhone(PhoneLine phoneLine) throws PhoneLineAlreadyExistsException, SQLException {
+        try {
+            PhoneLine ph = linePhoneDao.findByNumber(phoneLine.getLineNumber());
+            if (ph != null) {
+                throw new PhoneLineAlreadyExistsException();
+            }
+            return linePhoneDao.save(phoneLine);
+        }catch (Exception e){
+            throw new SQLException(e);
+        }
+    }
+     */
+
+    @Test
+    public void testAddPhoneOk() throws PhoneLineAlreadyExistsException, SQLException {
+        PhoneLine phoneLine = PhoneLine.builder().id(1).build();
+        when(phoneLineDao.findByNumber("123")).thenReturn(null);
+        when(phoneLineDao.save(phoneLine)).thenReturn(phoneLine);
+        phoneLineService.addPhone(phoneLine);
+    }
+
+    @Test(expected = PhoneLineAlreadyExistsException.class)
+    public void testAddPhoneAlreadyExists() throws PhoneLineAlreadyExistsException, SQLException {
+        PhoneLine phoneLine = PhoneLine.builder().lineNumber("123").build();
+        when(phoneLineDao.findByNumber("123")).thenReturn(phoneLine);
+        phoneLineService.addPhone(phoneLine);
+    }
+
+    @Test(expected = SQLException.class)
+    public void testAddPhoneSQLException() throws PhoneLineAlreadyExistsException, SQLException {
+        PhoneLine phoneLine = PhoneLine.builder().lineNumber("123").build();
+        doThrow(new SQLException()).doNothing();
+        phoneLineService.addPhone(phoneLine);
+    }
+
+
+    @Test
+    public void testUpdateStatusOk() throws PhoneLineNotExistException, PhoneLineRemovedException {
+        PhoneLine phoneLine = PhoneLine.builder().id(1).lineStatus(PhoneLine.Status.Active).build();
+        when(phoneLineDao.findById(1)).thenReturn(Optional.of(phoneLine));
+        Mockito.doNothing().when(phoneLineDao).updateStatus("Suspended",1);
+        phoneLineService.updateStatus(phoneLine,1);
+    }
+
+    @Test(expected = PhoneLineNotExistException.class)
+    public void testUpdateStatusNotExists() throws PhoneLineNotExistException, PhoneLineRemovedException {
+        PhoneLine phoneLine = null;
+        when(phoneLineDao.findById(1)).thenReturn(Optional.ofNullable(phoneLine));
+        phoneLineService.updateStatus(phoneLine,1);
+    }
+
+    @Test(expected = PhoneLineRemovedException.class)
+    public void testUpdateStatusRemoved() throws PhoneLineNotExistException, PhoneLineRemovedException {
+        PhoneLine phoneLine = PhoneLine.builder().id(1).lineStatus(PhoneLine.Status.Inactive).build();
+        when(phoneLineDao.findById(1)).thenReturn(Optional.of(phoneLine));
+        phoneLineService.updateStatus(phoneLine,1);
+    }
+
+    /*
+    public void delete(int idphone) throws PhoneLineNotExistException, PhoneLineRemovedException {
+        PhoneLine ph = linePhoneDao.findById(idphone).orElseThrow(() -> new PhoneLineNotExistException(""));
+        if(ph.getLineStatus() == PhoneLine.Status.Inactive){
+            throw new PhoneLineRemovedException();
+        }
+        String status = PhoneLine.Status.Inactive.toString();
+        linePhoneDao.updateStatus(status, idphone);
+    }
+     */
+
+    @Test
+    public void testdeleteOk() throws PhoneLineNotExistException, PhoneLineRemovedException {
+        PhoneLine phoneLine = PhoneLine.builder().id(1).lineStatus(PhoneLine.Status.Active).build();
+        when(phoneLineDao.findById(1)).thenReturn(Optional.of(phoneLine));
+        Mockito.doNothing().when(phoneLineDao).delete(phoneLine);
+        phoneLineService.delete(1);
+    }
+
+    @Test(expected = PhoneLineNotExistException.class)
+    public void testDeleteNotExists() throws PhoneLineNotExistException, PhoneLineRemovedException {
+        PhoneLine phoneLine = null;
+        when(phoneLineDao.findById(1)).thenReturn(Optional.ofNullable(phoneLine));
+        phoneLineService.delete(1);
+    }
+
+    @Test(expected = PhoneLineRemovedException.class)
+    public void testDeleteRemoved() throws PhoneLineNotExistException, PhoneLineRemovedException {
+        PhoneLine phoneLine = PhoneLine.builder().id(1).lineStatus(PhoneLine.Status.Inactive).build();
+        when(phoneLineDao.findById(1)).thenReturn(Optional.of(phoneLine));
+        phoneLineService.delete(1);
+    }
+
 }

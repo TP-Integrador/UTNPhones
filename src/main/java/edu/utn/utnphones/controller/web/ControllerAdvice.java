@@ -41,19 +41,24 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(PhoneLineNotExistException.class)
     public ErrorResponseDto handlePhoneLineNotFoundException(PhoneLineNotExistException exc) {
-        return new ErrorResponseDto(4, "PhoneLine not exists: " + exc.getMessage());
+        return new ErrorResponseDto(5, "PhoneLine not exists" + exc.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(PhoneLineRemovedException.class)
+    public ErrorResponseDto handlePhoneLineRemovedException(PhoneLineRemovedException exc) {
+        return new ErrorResponseDto(6, "PhoneLine already removed");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(PhoneLineAlreadyExistsException.class)
+    public ErrorResponseDto handlePhoneLineAlreadyExistsException(PhoneLineAlreadyExistsException exc) {
+        return new ErrorResponseDto(7, "PhoneLine already exists");
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(SQLException.class)
     public ErrorResponseDto handleSQLException(SQLException exc) {
-        return new ErrorResponseDto(5, "Internal error server");
+        return new ErrorResponseDto(8, "Internal error server");
     }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(CityNotexistException.class)
-    public ErrorResponseDto handleCityNotexistException(CityNotexistException exc) {
-        return new ErrorResponseDto(4, "PhoneLine not exists: " + exc.getMessage());
-    }
-
 }

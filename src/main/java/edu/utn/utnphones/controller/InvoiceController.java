@@ -1,5 +1,6 @@
 package edu.utn.utnphones.controller;
 
+import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.domain.Invoice;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.service.InvoiceService;
@@ -36,6 +37,10 @@ public class InvoiceController {
     
     public List<Invoice> getInvoicesByDate(Date from, Date to, int userId){
         return invoiceService.getInvoicesByDate(from,to,userId);
+    }
+
+    public List<Invoice> getInvoicesByClient(int id){
+        return invoiceService.getInvoicesByClient(id);
     }
 
 }

@@ -29,25 +29,21 @@ public class CheckInvoicesController {
         this.sessionManager = sessionManager;
     }
 
-    @GetMapping
+    @GetMapping("/date")
     public ResponseEntity<List<Invoice>> getInvoicesByDate(@RequestHeader("Authorization") String sessionToken,@RequestParam(value = "from") String from, @RequestParam(value = "to") String to) throws UserNotexistException, ParseException {
         ResponseEntity<List<Invoice>> responseEntity = null;
         User currentUser = getCurrentUser(sessionToken);
-        if ( currentUser.getUserType().getType().matches("Client")) {
-            if ((from != null) && (to != null)) {
-                Date dateFrom = new SimpleDateFormat("yyyy/MM/dd").parse(from);
-                Date dateTo = new SimpleDateFormat("yyyy/MM/dd").parse(to);
-                List<Invoice> invoicesList = invoiceController.getInvoicesByDate(dateFrom, dateTo, currentUser.getUserId());
-                if (!invoicesList.isEmpty()) {
-                    responseEntity = ResponseEntity.ok().body(invoicesList);
-                } else {
-                    responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-                }
+        if ((from != null) && (to != null)) {
+            Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(from);
+            Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse(to);
+            List<Invoice> invoicesList = invoiceController.getInvoicesByDate(dateFrom, dateTo, currentUser.getUserId());
+            if (!invoicesList.isEmpty()) {
+                responseEntity = ResponseEntity.ok().body(invoicesList);
             } else {
-                responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
-        }else{
-            responseEntity = ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        } else {
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return responseEntity;
     }
