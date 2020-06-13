@@ -23,10 +23,10 @@ import static org.mockito.Mockito.when;
 
 public class CheckCallsControllerTest {
 
-    CheckCallsController checkCallsController;
-    CallController callController;
-    SessionManager sessionManager;
-    Call call;
+    private CheckCallsController checkCallsController;
+    private CallController callController;
+    private SessionManager sessionManager;
+    private Call call;
 
     @Before
     public void setUp() {

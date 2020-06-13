@@ -22,11 +22,11 @@ import static org.mockito.Mockito.*;
 
 public class CheckCallsClientControllerTest {
 
-    CheckCallsClientController checkCallsClientController;
-    CallController callController;
-    SessionManager sessionManager;
-    GetCalls getCalls;
-    Call call;
+    private CheckCallsClientController checkCallsClientController;
+    private CallController callController;
+    private SessionManager sessionManager;
+    private GetCalls getCalls;
+    private Call call;
 
     @Before
     public void setUp(){
@@ -110,6 +110,32 @@ public class CheckCallsClientControllerTest {
         when(callController.getCallsByDate(null,null,1)).thenReturn(callList);
 
         ResponseEntity<List<Call>> responseEntity = checkCallsClientController.getCallsByDate("token",null,null,1);
+
+        assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
+
+    }
+
+    @Test
+    public void testGetCallsByDateNullFrom() throws ParseException, UserNotexistException {
+        List<Call> callList = new ArrayList<>();
+        Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
+        callList.add(call);
+        when(callController.getCallsByDate(null,to,1)).thenReturn(callList);
+
+        ResponseEntity<List<Call>> responseEntity = checkCallsClientController.getCallsByDate("token",null,"2020-06-30",1);
+
+        assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
+
+    }
+
+    @Test
+    public void testGetCallsByDateTo() throws ParseException, UserNotexistException {
+        List<Call> callList = new ArrayList<>();
+        Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-28");
+        callList.add(call);
+        when(callController.getCallsByDate(from,null,1)).thenReturn(callList);
+
+        ResponseEntity<List<Call>> responseEntity = checkCallsClientController.getCallsByDate("token","2020-05-28",null,1);
 
         assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
 

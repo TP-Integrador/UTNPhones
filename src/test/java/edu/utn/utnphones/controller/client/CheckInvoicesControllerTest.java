@@ -23,10 +23,10 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class CheckInvoicesControllerTest {
-    InvoiceController invoiceController;
-    CheckInvoicesController checkInvoicesController;
-    SessionManager sessionManager;
-    Invoice invoice;
+    private InvoiceController invoiceController;
+    private CheckInvoicesController checkInvoicesController;
+    private SessionManager sessionManager;
+    private Invoice invoice;
 
     @Before
     public void setUp(){
@@ -34,7 +34,6 @@ public class CheckInvoicesControllerTest {
         sessionManager = mock(SessionManager.class);
         invoice = mock(Invoice.class);
         checkInvoicesController = new CheckInvoicesController(invoiceController,sessionManager);
-
     }
 
     @Test

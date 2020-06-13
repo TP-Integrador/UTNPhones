@@ -32,8 +32,8 @@ public class CheckInvoicesClientController {
     @GetMapping("/client/{id}")
     public ResponseEntity<List<Invoice>> getInvoicesByClient(@RequestHeader("Authorization") String sessionToken, @PathVariable Integer id){
         ResponseEntity<List<Invoice>> responseEntity = null;
-        List<Invoice> callList = invoiceController.getInvoicesByClient(id);
         if (id != null) {
+            List<Invoice> callList = invoiceController.getInvoicesByClient(id);
             if (!callList.isEmpty()) {
                 responseEntity = ResponseEntity.ok().body(callList);
             } else {

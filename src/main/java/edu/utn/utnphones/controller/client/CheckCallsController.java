@@ -49,7 +49,6 @@ public class CheckCallsController {
         return responseEntity;
     }
 
-
     private User getCurrentUser(String sessionToken) throws UserNotexistException {
         return Optional.ofNullable(sessionManager.getCurrentUser(sessionToken)).orElseThrow(UserNotexistException::new);
     }

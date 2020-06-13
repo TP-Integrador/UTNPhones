@@ -31,5 +31,4 @@ public interface CallDao extends JpaRepository<Call,Integer> {
             "where uo.user_id = ?1\n",nativeQuery = true)
     List<GetCalls> getCallsByClient(int id);
 
-
 }
