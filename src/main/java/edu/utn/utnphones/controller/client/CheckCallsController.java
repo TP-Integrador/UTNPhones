@@ -3,8 +3,8 @@ package edu.utn.utnphones.controller.client;
 import edu.utn.utnphones.controller.CallController;
 import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.domain.User;
+import edu.utn.utnphones.projections.MostCalledCities;
 import edu.utn.utnphones.exception.UserNotexistException;
-import edu.utn.utnphones.exception.ValidationException;
 import edu.utn.utnphones.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +46,19 @@ public class CheckCallsController {
             } else {
                 responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
+        return responseEntity;
+    }
+
+    @GetMapping("/mostCalledCities")
+    public ResponseEntity<List<MostCalledCities>> getMostCalledCities(@RequestHeader ("Authorization") String sessionToken) throws UserNotexistException {
+        ResponseEntity<List<MostCalledCities>> responseEntity = null;
+        User currentUser = getCurrentUser(sessionToken);
+        List<MostCalledCities> mostCalledCities = callController.getMostCalledCities(currentUser.getUserId());
+        if(mostCalledCities.size() > 0){
+            responseEntity = ResponseEntity.ok(mostCalledCities);
+        }else {
+            responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
         return responseEntity;
     }
 

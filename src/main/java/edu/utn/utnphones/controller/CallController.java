@@ -2,6 +2,7 @@ package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.domain.Call;
 
+import edu.utn.utnphones.projections.MostCalledCities;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.projections.GetCalls;
 import edu.utn.utnphones.service.CallService;
@@ -38,7 +39,11 @@ public class CallController {
         return callService.getCallsByDate(dateFrom,dateTo,userId);
     }
 
-    public List<GetCalls> getCallsByClient(int id){
+    public List<GetCalls> getCallsByClient(int id) {
         return callService.getCallsByClient(id);
+    }
+
+    public List<MostCalledCities> getMostCalledCities(int userId){
+        return callService.getMostCalledCities(userId);
     }
 }

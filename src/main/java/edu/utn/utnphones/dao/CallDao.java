@@ -2,6 +2,7 @@ package edu.utn.utnphones.dao;
 
 import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.projections.GetCalls;
+import edu.utn.utnphones.projections.MostCalledCities;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
@@ -21,6 +22,7 @@ public interface CallDao extends JpaRepository<Call,Integer> {
             "where c.call_date >= ?1  and c.call_date <= ?2 and u.user_id = ?3",nativeQuery = true)
     List<Call> getCallsByDate(Date dateFrom, Date dateTo, int userId);
 
+
     @Query(value = "select plo.line_number as OriginNumber, cio.city_name as OriginCity, pld.line_number as DestinationNumber, cid.city_name as DestinationCity, (co.call_minute_price * (co.call_duration_seg/60)) as TotalPrice, co.call_duration_seg as Duration, co.call_date as CallDate\n" +
             "from users uo inner join phone_lines plo on plo.line_user_id = uo.user_id\n" +
             "inner join calls co on co.call_line_id_from = plo.line_id \n" +
@@ -31,5 +33,13 @@ public interface CallDao extends JpaRepository<Call,Integer> {
             "where uo.user_id = ?1\n",nativeQuery = true)
     List<GetCalls> getCallsByClient(int id);
 
+    @Query(value = "select ci.city_name City, count(ph.line_number) Calls from calls c\n" +
+            "inner join phone_lines ph on c.call_line_id_to = ph.line_id\n" +
+            "inner join cities ci on ci.city_id = (select city_id from cities where city_prefix = SUBSTRING(ph.line_number,1,LENGTH(ph.line_number)-7))\n" +
+            "where c.call_line_id_from in (select line_id from phone_lines where line_user_id = ?1)\n" +
+            "group by city_name\n" +
+            "order by count(ph.line_number) desc\n" +
+            "limit 10",nativeQuery = true)
+    List<MostCalledCities> getMostCalledCities(int userId);
 
 }

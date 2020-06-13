@@ -60,20 +60,6 @@ public class PhoneLineServiceTest {
         phoneLineService.getByNumber("123");
     }
 
-    /*
-    public PhoneLine addPhone(PhoneLine phoneLine) throws PhoneLineAlreadyExistsException, SQLException {
-        try {
-            PhoneLine ph = linePhoneDao.findByNumber(phoneLine.getLineNumber());
-            if (ph != null) {
-                throw new PhoneLineAlreadyExistsException();
-            }
-            return linePhoneDao.save(phoneLine);
-        }catch (Exception e){
-            throw new SQLException(e);
-        }
-    }
-     */
-
     @Test
     public void testAddPhoneOk() throws PhoneLineAlreadyExistsException, SQLException {
         PhoneLine phoneLine = PhoneLine.builder().id(1).build();
@@ -118,17 +104,6 @@ public class PhoneLineServiceTest {
         when(phoneLineDao.findById(1)).thenReturn(Optional.of(phoneLine));
         phoneLineService.updateStatus(phoneLine,1);
     }
-
-    /*
-    public void delete(int idphone) throws PhoneLineNotExistException, PhoneLineRemovedException {
-        PhoneLine ph = linePhoneDao.findById(idphone).orElseThrow(() -> new PhoneLineNotExistException(""));
-        if(ph.getLineStatus() == PhoneLine.Status.Inactive){
-            throw new PhoneLineRemovedException();
-        }
-        String status = PhoneLine.Status.Inactive.toString();
-        linePhoneDao.updateStatus(status, idphone);
-    }
-     */
 
     @Test
     public void testdeleteOk() throws PhoneLineNotExistException, PhoneLineRemovedException {

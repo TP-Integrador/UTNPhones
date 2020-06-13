@@ -2,6 +2,7 @@ package edu.utn.utnphones.service;
 
 import edu.utn.utnphones.dao.CallDao;
 import edu.utn.utnphones.domain.Call;
+import edu.utn.utnphones.projections.MostCalledCities;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.projections.GetCalls;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,11 @@ public class CallService {
         return callDao.getCallsByDate(dateFrom,dateTo,userId);
     }
 
-    public List<GetCalls> getCallsByClient(int id){
+    public List<GetCalls> getCallsByClient(int id) {
         return callDao.getCallsByClient(id);
+    }
+
+    public List<MostCalledCities> getMostCalledCities ( int userId){
+        return callDao.getMostCalledCities(userId);
     }
 }

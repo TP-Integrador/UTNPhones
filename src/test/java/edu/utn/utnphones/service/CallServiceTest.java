@@ -2,10 +2,8 @@ package edu.utn.utnphones.service;
 
 import edu.utn.utnphones.dao.CallDao;
 import edu.utn.utnphones.domain.Call;
-import edu.utn.utnphones.domain.City;
-import edu.utn.utnphones.domain.PhoneLine;
-import edu.utn.utnphones.exception.CityNotexistException;
-import edu.utn.utnphones.exception.PhoneLineNotExistException;
+import edu.utn.utnphones.exception.PhoneLineAlreadyExistsException;
+import edu.utn.utnphones.projections.MostCalledCities;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.projections.GetCalls;
 import org.junit.Before;
@@ -28,7 +26,7 @@ public class CallServiceTest {
     private CallService callService;
     //private Call call;
     private GetCalls getCalls;
-
+    private MostCalledCities mostCalledCities;
 
     @Before
     public void setUp(){
@@ -65,15 +63,6 @@ public class CallServiceTest {
         callService.add("123","456",60,new Date());
     }
 
-    //TODO: Falta simular crash en bd para que entre al catch
-    /*
-    @Test(expected = SQLException.class)
-    public void testAddNull() throws SQLException {
-        callService.add(null,null,60,null);
-    }
-
-     */
-
     @Test
     public void testGetCallsByDate() throws ParseException {
         List<Call> listCall = new ArrayList<>();
@@ -91,5 +80,19 @@ public class CallServiceTest {
         when(callService.getCallsByClient(1)).thenReturn(listCall);
 
         assertEquals(listCall,listCall);
+    }
+
+    @Test(expected = SQLException.class)
+    public void testAddSQLException() throws SQLException {
+        doThrow(new SQLException()).doNothing();
+        callService.add("123","456",60,new Date());
+    }
+
+    @Test
+    public void getMostCalledCities(){
+        List<MostCalledCities> list = new ArrayList<>();
+        list.add(mostCalledCities);
+        when(callDao.getMostCalledCities(1)).thenReturn(list);
+        callService.getMostCalledCities(1);
     }
 }
