@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @AllArgsConstructor
@@ -23,19 +24,27 @@ public class User {
     private Integer userId;
 
     @Column(name = "user_name")
+    @NotNull
     private String name;
 
     @Column(name = "user_lastname")
+    @NotNull
     private String lastname;
 
     @Column(name = "user_dni")
+    @NotNull
     private String DNI;
 
     @Column(name = "username")
+    @NotNull
     private String username;
 
     @Column(name = "userpass")
+    @NotNull
     private String password;
+
+    @Column(name = "user_active")
+    private Boolean active;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_city_id")

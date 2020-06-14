@@ -33,7 +33,7 @@ public class UserServiceTest {
 
     @Test
     public void testLoginOk() throws UserNotexistException, ValidationException {
-        User loggedUser = new User(1, "nme", "lastname", "12345678", "username", "password", City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null);
+        User loggedUser = new User(1, "nme", "lastname", "12345678", "username", "password", true, City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null);
         when(dao.getByUsername("user","pwd")).thenReturn(loggedUser);
         User returnedUser = service.login("user","pwd");
         assertEquals(loggedUser.getUserId(), returnedUser.getUserId());
@@ -55,7 +55,7 @@ public class UserServiceTest {
 
     @Test
     public void testGetUserOK() throws UserNotexistException {
-        User user = new User(1, "nme", "lastname", "12345678", "username", "password", City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null);
+        User user = new User(1, "nme", "lastname", "12345678", "username", "password", true, City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null);
         when(dao.findById(1)).thenReturn(Optional.of(user));
         service.getUser(1);
     }

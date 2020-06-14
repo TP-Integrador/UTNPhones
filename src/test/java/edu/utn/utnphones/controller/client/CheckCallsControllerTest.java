@@ -85,19 +85,6 @@ public class CheckCallsControllerTest {
 
     }
 
-
-    @Test
-    public void getCallsByDateForbidden() throws UserNotexistException, ParseException {
-        User user = User.builder().userId(1).build();
-        user.setUserType(UserType.builder().type("Employee").build());
-        when(sessionManager.getCurrentUser("token")).thenReturn(user);
-
-        ResponseEntity<List<Call>> responseEntity = checkCallsController.getCallsByDate("token",null,null);
-        assertEquals(HttpStatus.FORBIDDEN,responseEntity.getStatusCode());
-
-    }
-
-
     @Test
     public void getMostCalledCitiesOk() throws UserNotexistException {
         User user = User.builder().userId(1).build();

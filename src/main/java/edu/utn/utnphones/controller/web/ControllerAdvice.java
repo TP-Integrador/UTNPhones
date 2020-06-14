@@ -56,9 +56,33 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
         return new ErrorResponseDto(7, "PhoneLine already exists");
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ClientNotExistsException.class)
+    public ErrorResponseDto handleClientNotExistsException(ClientNotExistsException exc) {
+        return new ErrorResponseDto(8, "Client not exists");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ClientRemovedException.class)
+    public ErrorResponseDto handleClientRemovedException(ClientRemovedException exc) {
+        return new ErrorResponseDto(9, "Client already removed");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ClientDniAlreadyExists.class)
+    public ErrorResponseDto handleClientDniAlreadyExists(ClientDniAlreadyExists exc) {
+        return new ErrorResponseDto(10, "DNI already exists");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UserNameAlreadyExists.class)
+    public ErrorResponseDto handleUserNameAlreadyExists(UserNameAlreadyExists exc) {
+        return new ErrorResponseDto(11, "Username already exists");
+    }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(SQLException.class)
     public ErrorResponseDto handleSQLException(SQLException exc) {
-        return new ErrorResponseDto(8, "Internal error server");
+        return new ErrorResponseDto(12, "Internal error server");
     }
 }
