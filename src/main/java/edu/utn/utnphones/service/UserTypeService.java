@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class UserTypeService {
-
+/*
     private UserTypeDao userTypeDao;
 
     @Autowired
@@ -30,4 +30,6 @@ public class UserTypeService {
     public UserType add(UserType userType){
         return userTypeDao.save(userType);
     }
+
+ */
 }

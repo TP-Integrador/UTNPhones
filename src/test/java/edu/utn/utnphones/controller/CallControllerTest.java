@@ -1,7 +1,6 @@
 package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.domain.Call;
-import edu.utn.utnphones.exception.PhoneLineNotExistException;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.projections.GetCalls;
 import edu.utn.utnphones.projections.MostCalledCities;

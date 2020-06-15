@@ -8,14 +8,9 @@ import edu.utn.utnphones.exception.PhoneLineRemovedException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.platform.commons.util.ExceptionUtils;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.stubbing.OngoingStubbing;
 
-import java.awt.*;
 import java.sql.SQLException;
-import java.time.OffsetDateTime;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;

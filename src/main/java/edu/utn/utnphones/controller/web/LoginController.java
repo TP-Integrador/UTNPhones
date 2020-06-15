@@ -7,7 +7,6 @@ import edu.utn.utnphones.exception.InvalidLoginException;
 import edu.utn.utnphones.exception.UserNotexistException;
 import edu.utn.utnphones.exception.ValidationException;
 import edu.utn.utnphones.session.SessionManager;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +27,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @NotNull LoginRequestDto loginRequestDto) throws InvalidLoginException, ValidationException{
+    public ResponseEntity login(@RequestBody LoginRequestDto loginRequestDto) throws InvalidLoginException, ValidationException{
         ResponseEntity response;
         try {
             User u = userController.login(loginRequestDto.getUsername(), loginRequestDto.getPassword());

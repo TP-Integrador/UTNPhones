@@ -10,7 +10,7 @@ import java.util.List;
 
 @Controller
 public class ProvinceController {
-
+/*
     private ProvinceService provinceService;
 
     @Autowired
@@ -29,4 +29,6 @@ public class ProvinceController {
     public Province getById(int id) throws ResourcesNotExistException {
         return provinceService.getById(id);
     }
+
+ */
 }

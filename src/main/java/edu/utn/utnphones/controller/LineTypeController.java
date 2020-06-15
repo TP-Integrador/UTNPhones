@@ -12,7 +12,7 @@ import java.util.List;
 
 @Controller
 public class LineTypeController {
-
+/*
     private LineTypeService lineTypeService;
 
     @Autowired
@@ -31,4 +31,6 @@ public class LineTypeController {
     public LineType addLineType(LineType lineType){
         return lineTypeService.add(lineType);
     }
+
+ */
 }

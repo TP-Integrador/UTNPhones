@@ -1,12 +1,12 @@
 package edu.utn.utnphones.controller.backoffice;
 
-import com.mysql.cj.xdevapi.Client;
-import edu.utn.utnphones.controller.PhoneLineController;
 import edu.utn.utnphones.controller.UserController;
-import edu.utn.utnphones.domain.PhoneLine;
 import edu.utn.utnphones.domain.User;
 import edu.utn.utnphones.dto.ClientDto;
-import edu.utn.utnphones.exception.*;
+import edu.utn.utnphones.exception.ClientDniAlreadyExists;
+import edu.utn.utnphones.exception.ClientNotExistsException;
+import edu.utn.utnphones.exception.ClientRemovedException;
+import edu.utn.utnphones.exception.UserNameAlreadyExists;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,18 +14,15 @@ import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
-
 import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ClientsABMControllerTest {
 
@@ -127,14 +124,6 @@ public class ClientsABMControllerTest {
         when(userController.updateClient(1,clientDto)).thenThrow(new SQLException());
         ResponseEntity<User> responseEntity = clientsABMController.updateClient(1,clientDto);
     }
-
-    /*
-     @DeleteMapping("/{idClient}")
-    public ResponseEntity<User> deleteClient(@PathVariable int idClient) throws ClientNotExistsException, ClientRemovedException {
-        userController.deleteClient(idClient);
-        return ResponseEntity.ok().build();
-    }
-     */
 
     @Test
     public void testDeleteClient() throws ClientNotExistsException, ClientRemovedException {

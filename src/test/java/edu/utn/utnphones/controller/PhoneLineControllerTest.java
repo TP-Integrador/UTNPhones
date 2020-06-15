@@ -8,13 +8,9 @@ import edu.utn.utnphones.service.PhoneLineService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
-import java.awt.*;
 import java.sql.SQLException;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class PhoneLineControllerTest {

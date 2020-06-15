@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 public class LineTypeService {
 
+    /*
     private LineTypeDao lineTypeDao;
 
     @Autowired
@@ -29,4 +30,6 @@ public class LineTypeService {
     public LineType getById(int id) throws ResourcesNotExistException {
         return lineTypeDao.findById(id).orElseThrow(ResourcesNotExistException::new);
     }
+
+     */
 }

@@ -10,10 +10,7 @@ import edu.utn.utnphones.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import sun.nio.cs.US_ASCII;
 
-import javax.jws.soap.SOAPBinding;
-import java.awt.*;
 import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;

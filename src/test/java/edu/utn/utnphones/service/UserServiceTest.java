@@ -3,7 +3,6 @@ package edu.utn.utnphones.service;
 
 import edu.utn.utnphones.dao.UserDao;
 import edu.utn.utnphones.domain.City;
-import edu.utn.utnphones.domain.PhoneLine;
 import edu.utn.utnphones.domain.User;
 import edu.utn.utnphones.domain.UserType;
 import edu.utn.utnphones.dto.ClientDto;
@@ -12,9 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import sun.nio.cs.US_ASCII;
 
-import javax.jws.soap.SOAPBinding;
 import java.sql.SQLException;
 import java.util.Optional;
 

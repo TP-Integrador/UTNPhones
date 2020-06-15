@@ -3,10 +3,9 @@ package edu.utn.utnphones.service;
 import edu.utn.utnphones.dao.CallDao;
 import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.domain.PhoneLine;
-import edu.utn.utnphones.exception.PhoneLineAlreadyExistsException;
-import edu.utn.utnphones.projections.MostCalledCities;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.projections.GetCalls;
+import edu.utn.utnphones.projections.MostCalledCities;
 import org.junit.Before;
 import org.junit.Test;
 

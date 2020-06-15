@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class ProvinceService {
-
+/*
     private ProvinceDao provinceDao;
 
     @Autowired
@@ -30,4 +30,6 @@ public class ProvinceService {
     public Province getById(int id) throws ResourcesNotExistException {
         return provinceDao.findById(id).orElseThrow(ResourcesNotExistException::new);
     }
+
+ */
 }

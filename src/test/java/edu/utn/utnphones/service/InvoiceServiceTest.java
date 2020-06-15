@@ -1,13 +1,8 @@
 package edu.utn.utnphones.service;
 
 import edu.utn.utnphones.dao.InvoiceDao;
-import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.domain.Invoice;
-import edu.utn.utnphones.domain.PhoneLine;
-import edu.utn.utnphones.exception.PhoneLineNotExistException;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
-import edu.utn.utnphones.projections.GetCalls;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class InvoiceServiceTest {
     private InvoiceDao invoiceDao;

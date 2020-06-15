@@ -1,9 +1,11 @@
 package edu.utn.utnphones.controller.client;
 
 import edu.utn.utnphones.controller.CallController;
-import edu.utn.utnphones.domain.*;
-import edu.utn.utnphones.projections.MostCalledCities;
+import edu.utn.utnphones.domain.Call;
+import edu.utn.utnphones.domain.User;
+import edu.utn.utnphones.domain.UserType;
 import edu.utn.utnphones.exception.UserNotexistException;
+import edu.utn.utnphones.projections.MostCalledCities;
 import edu.utn.utnphones.session.SessionManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +20,8 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CheckCallsControllerTest {
 

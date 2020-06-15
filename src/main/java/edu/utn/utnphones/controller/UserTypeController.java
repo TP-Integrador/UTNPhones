@@ -11,6 +11,7 @@ import java.util.List;
 
 @Controller
 public class UserTypeController {
+    /*
     private UserTypeService userTypeService;
 
     @Autowired
@@ -29,4 +30,6 @@ public class UserTypeController {
     public UserType addUserType(UserType userType){
         return userTypeService.add(userType);
     }
+
+     */
 }

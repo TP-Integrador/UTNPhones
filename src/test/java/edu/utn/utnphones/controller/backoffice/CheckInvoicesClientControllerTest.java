@@ -1,7 +1,6 @@
 package edu.utn.utnphones.controller.backoffice;
 
 import edu.utn.utnphones.controller.InvoiceController;
-import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.domain.Invoice;
 import edu.utn.utnphones.exception.UserNotexistException;
 import edu.utn.utnphones.session.SessionManager;
@@ -18,7 +17,8 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CheckInvoicesClientControllerTest {
 
