@@ -4,13 +4,15 @@ import javax.validation.constraints.NotNull;
 
 import edu.utn.utnphones.domain.City;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientDTO {
+@Builder
+public class ClientDto {
 
     @NotNull
     private String name;

@@ -1,16 +1,13 @@
 package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.domain.User;
-import edu.utn.utnphones.domain.UserType;
-import edu.utn.utnphones.dto.ClientDTO;
+import edu.utn.utnphones.dto.ClientDto;
 import edu.utn.utnphones.exception.*;
 import edu.utn.utnphones.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import javax.jws.soap.SOAPBinding;
 import java.sql.SQLException;
-import java.util.List;
 
 @Controller
 public class UserController {
@@ -44,7 +41,7 @@ public class UserController {
         return userService.addClient(client);
     }
 
-    public User updateClient(Integer idClient, ClientDTO client) throws ClientNotExistsException, SQLException, UserNameAlreadyExists {
+    public User updateClient(Integer idClient, ClientDto client) throws ClientNotExistsException, SQLException, UserNameAlreadyExists {
         return userService.updateClient(idClient, client);
     }
 

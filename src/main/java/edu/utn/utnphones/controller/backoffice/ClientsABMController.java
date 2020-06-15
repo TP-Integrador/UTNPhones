@@ -1,17 +1,14 @@
 package edu.utn.utnphones.controller.backoffice;
 
 import edu.utn.utnphones.controller.UserController;
-import edu.utn.utnphones.domain.PhoneLine;
 import edu.utn.utnphones.domain.User;
-import edu.utn.utnphones.dto.ClientDTO;
+import edu.utn.utnphones.dto.ClientDto;
 import edu.utn.utnphones.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.jws.soap.SOAPBinding;
 import java.net.URI;
 import java.sql.SQLException;
 
@@ -25,8 +22,6 @@ public class ClientsABMController {
     public ClientsABMController(UserController userController) {
         this.userController = userController;
     }
-
-    //TODO CRUD: Falta Update and Delete. Agregar campo en tabla para estado.
 
     @GetMapping("/{idClient}")
     public ResponseEntity<User> getClient(@PathVariable int idClient) throws ClientNotExistsException {
@@ -43,7 +38,7 @@ public class ClientsABMController {
 
 
     @PutMapping("/{idClient}")
-    public ResponseEntity<User> updateClient(@PathVariable int idClient, @RequestBody ClientDTO client) throws ClientNotExistsException, UserNameAlreadyExists ,SQLException{
+    public ResponseEntity<User> updateClient(@PathVariable int idClient, @RequestBody ClientDto client) throws ClientNotExistsException, UserNameAlreadyExists ,SQLException{
         userController.updateClient(idClient,client);
         return ResponseEntity.ok().build();
     }

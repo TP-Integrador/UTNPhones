@@ -3,13 +3,12 @@ package edu.utn.utnphones.service;
 import edu.utn.utnphones.dao.UserDao;
 import edu.utn.utnphones.domain.User;
 import edu.utn.utnphones.domain.UserType;
-import edu.utn.utnphones.dto.ClientDTO;
+import edu.utn.utnphones.dto.ClientDto;
 import edu.utn.utnphones.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -65,7 +64,7 @@ public class UserService {
         }
     }
 
-    public User updateClient(Integer idClient, ClientDTO client) throws ClientNotExistsException, UserNameAlreadyExists, SQLException {
+    public User updateClient(Integer idClient, ClientDto client) throws ClientNotExistsException, UserNameAlreadyExists, SQLException {
         try {
             User clientAux = userDao.findById(idClient).orElseThrow(ClientNotExistsException::new);
             User client2 = userDao.findByUserName(client.getUsername());
