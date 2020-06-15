@@ -129,19 +129,9 @@
 									<element>BUNDLE</element>
 									<limits>
 										<limit>
-											<counter>INSTRUCTION</counter>
-											<value>COVEREDRATIO</value>
-											<minimum>70%</minimum>
-										</limit>
-									</limits>
-								</rule>
-								<rule>
-									<element>BUNDLE</element>
-									<limits>
-										<limit>
 											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>70%</minimum>
+											<minimum>0.70</minimum>
 										</limit>
 									</limits>
 								</rule>
