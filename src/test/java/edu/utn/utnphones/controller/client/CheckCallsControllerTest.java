@@ -5,6 +5,7 @@ import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.domain.User;
 import edu.utn.utnphones.domain.UserType;
 import edu.utn.utnphones.exception.UserNotexistException;
+import edu.utn.utnphones.projections.GetCalls;
 import edu.utn.utnphones.projections.MostCalledCities;
 import edu.utn.utnphones.session.SessionManager;
 import org.junit.Before;
@@ -30,6 +31,7 @@ public class CheckCallsControllerTest {
     private CallController callController;
     private SessionManager sessionManager;
     private Call call;
+    private GetCalls getCalls;
     private MostCalledCities mostCalledCities;
 
 
@@ -39,6 +41,7 @@ public class CheckCallsControllerTest {
         sessionManager = mock(SessionManager.class);
         mostCalledCities = mock(MostCalledCities.class);
         call = mock(Call.class);
+        getCalls = mock(GetCalls.class);
         checkCallsController = new CheckCallsController(callController,sessionManager);
     }
 
@@ -46,14 +49,14 @@ public class CheckCallsControllerTest {
     public void testGetCallsByDateOk() throws UserNotexistException, ParseException {
         User user = User.builder().userId(1).build();
         user.setUserType(UserType.builder().type("Client").build());
-        List<Call> callList = new ArrayList<>();
+        List<GetCalls> callList = new ArrayList<>();
         Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-28");
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
-        callList.add(call);
+        callList.add(getCalls);
         when(callController.getCallsByDate(from,to,1)).thenReturn(callList);
 
-        ResponseEntity<List<Call>> responseEntity = checkCallsController.getCallsByDate("token","2020-05-28","2020-06-30");
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCallsByDate("token","2020-05-28","2020-06-30");
 
         assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
         assertEquals(callList,responseEntity.getBody());
@@ -63,13 +66,13 @@ public class CheckCallsControllerTest {
     public void testGetCallsByDateNoContent() throws UserNotexistException, ParseException {
         User user = User.builder().userId(1).build();
         user.setUserType(UserType.builder().type("Client").build());
-        List<Call> callList = Collections.emptyList();
+        List<GetCalls> callList = Collections.emptyList();
         Date from = new Date();
         Date to = new Date(2) ;
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
         when(callController.getCallsByDate(from,to,1)).thenReturn(callList);
 
-        ResponseEntity<List<Call>> responseEntity = checkCallsController.getCallsByDate("token","2020-05-28","2020-06-30");
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCallsByDate("token","2020-05-28","2020-06-30");
 
         assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
 
@@ -79,11 +82,11 @@ public class CheckCallsControllerTest {
     public void testGetCallsByDateNull() throws UserNotexistException, ParseException {
         User user = User.builder().userId(1).build();
         user.setUserType(UserType.builder().type("Client").build());
-        List<Call> callList = new ArrayList<>();
+        List<GetCalls> callList = new ArrayList<>();
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
         when(callController.getCallsByDate(null,null,1)).thenReturn(callList);
 
-        ResponseEntity<List<Call>> responseEntity = checkCallsController.getCallsByDate("token",null,null);
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCallsByDate("token",null,null);
         assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
 
     }

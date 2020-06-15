@@ -75,13 +75,13 @@ public class CheckCallsClientControllerTest {
 
     @Test
     public void testGetCallsByDateOk() throws ParseException, UserNotexistException {
-        List<Call> callList = new ArrayList<>();
+        List<GetCalls> callList = new ArrayList<>();
         Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-28");
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
-        callList.add(call);
+        callList.add(getCalls);
         when(callController.getCallsByDate(from,to,1)).thenReturn(callList);
 
-        ResponseEntity<List<Call>> responseEntity = checkCallsClientController.getCallsByDate("token","2020-05-28","2020-06-30",1);
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCallsByDate("token","2020-05-28","2020-06-30",1);
 
         assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
         assertEquals(callList,responseEntity.getBody());
@@ -90,12 +90,12 @@ public class CheckCallsClientControllerTest {
 
     @Test
     public void testGetCallsByDateNoContent() throws ParseException, UserNotexistException {
-        List<Call> callList = Collections.emptyList();
+        List<GetCalls> callList = Collections.emptyList();
         Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-28");
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
         when(callController.getCallsByDate(from,to,1)).thenReturn(callList);
 
-        ResponseEntity<List<Call>> responseEntity = checkCallsClientController.getCallsByDate("token","2020-05-28","2020-06-30",1);
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCallsByDate("token","2020-05-28","2020-06-30",1);
 
         assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
 
@@ -103,13 +103,13 @@ public class CheckCallsClientControllerTest {
 
     @Test
     public void testGetCallsByDateNull() throws ParseException, UserNotexistException {
-        List<Call> callList = new ArrayList<>();
+        List<GetCalls> callList = new ArrayList<>();
         Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-28");
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
-        callList.add(call);
+        callList.add(getCalls);
         when(callController.getCallsByDate(null,null,1)).thenReturn(callList);
 
-        ResponseEntity<List<Call>> responseEntity = checkCallsClientController.getCallsByDate("token",null,null,1);
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCallsByDate("token",null,null,1);
 
         assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
 
@@ -117,12 +117,12 @@ public class CheckCallsClientControllerTest {
 
     @Test
     public void testGetCallsByDateNullFrom() throws ParseException, UserNotexistException {
-        List<Call> callList = new ArrayList<>();
+        List<GetCalls> callList = new ArrayList<>();
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
-        callList.add(call);
+        callList.add(getCalls);
         when(callController.getCallsByDate(null,to,1)).thenReturn(callList);
 
-        ResponseEntity<List<Call>> responseEntity = checkCallsClientController.getCallsByDate("token",null,"2020-06-30",1);
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCallsByDate("token",null,"2020-06-30",1);
 
         assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
 
@@ -130,12 +130,12 @@ public class CheckCallsClientControllerTest {
 
     @Test
     public void testGetCallsByDateTo() throws ParseException, UserNotexistException {
-        List<Call> callList = new ArrayList<>();
+        List<GetCalls> callList = new ArrayList<>();
         Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-28");
-        callList.add(call);
+        callList.add(getCalls);
         when(callController.getCallsByDate(from,null,1)).thenReturn(callList);
 
-        ResponseEntity<List<Call>> responseEntity = checkCallsClientController.getCallsByDate("token","2020-05-28",null,1);
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCallsByDate("token","2020-05-28",null,1);
 
         assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
 

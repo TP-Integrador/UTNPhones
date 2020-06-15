@@ -69,7 +69,8 @@ public class CallServiceTest {
 
     @Test
     public void testGetCallsByDate() throws ParseException {
-        List<Call> listCall = new ArrayList<>();
+        List<GetCalls> listCall = new ArrayList<>();
+        listCall.add(getCalls);
         Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-28");
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
         when(callDao.getCallsByDate(from,to,1)).thenReturn(listCall);

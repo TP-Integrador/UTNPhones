@@ -48,12 +48,12 @@ public class CheckCallsClientController {
     }
 
     @GetMapping("/client/{id}/date")
-    public ResponseEntity<List<Call>> getCallsByDate(@RequestHeader ("Authorization") String sessionToken, @RequestParam(value = "from" ) String from, @RequestParam(value = "to") String to, @PathVariable Integer id) throws UserNotexistException, ParseException {
-        ResponseEntity<List<Call>> responseEntity = null;
+    public ResponseEntity<List<GetCalls>> getCallsByDate(@RequestHeader ("Authorization") String sessionToken, @RequestParam(value = "from" ) String from, @RequestParam(value = "to") String to, @PathVariable Integer id) throws UserNotexistException, ParseException {
+        ResponseEntity<List<GetCalls>> responseEntity = null;
         if ((from != null) && (to != null)) {
             Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(from);
             Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse(to);
-            List<Call> callList = callController.getCallsByDate(dateFrom, dateTo, id);
+            List<GetCalls> callList = callController.getCallsByDate(dateFrom, dateTo, id);
             if (!callList.isEmpty()) {
                 responseEntity = ResponseEntity.ok().body(callList);
             } else {

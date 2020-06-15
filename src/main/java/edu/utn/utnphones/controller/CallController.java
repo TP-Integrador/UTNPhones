@@ -35,7 +35,7 @@ public class CallController {
         return callService.getById(id);
     }
 
-    public List<Call> getCallsByDate(Date dateFrom, Date dateTo, int userId){
+    public List<GetCalls> getCallsByDate(Date dateFrom, Date dateTo, int userId){
         return callService.getCallsByDate(dateFrom,dateTo,userId);
     }
 

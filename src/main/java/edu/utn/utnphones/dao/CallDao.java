@@ -17,11 +17,23 @@ public interface CallDao extends JpaRepository<Call,Integer> {
     @Procedure(value = "sp_insertcall")
     void addCall(String lineFrom, String lineTo, int seg, Date date);
 
+    /*
     @Query(value = "select * from calls c inner join phone_lines pl on c.call_line_id_from = pl.line_id \n" +
             "inner join users u on pl.line_user_id = u.user_id \n" +
             "where c.call_date >= ?1  and c.call_date <= ?2 and u.user_id = ?3",nativeQuery = true)
     List<Call> getCallsByDate(Date dateFrom, Date dateTo, int userId);
 
+     */
+
+    @Query(value = "plo.line_number as OriginNumber, cio.city_name as OriginCity, pld.line_number as DestinationNumber, cid.city_name as DestinationCity, (co.call_minute_price * (co.call_duration_seg/60)) as TotalPrice, co.call_duration_seg as Duration, co.call_date as CallDate\n" +
+            "from users uo inner join phone_lines plo on plo.line_user_id = uo.user_id\n" +
+            "inner join calls co on co.call_line_id_from = plo.line_id \n" +
+            "inner join cities cio on cio.city_id = uo.user_city_id \n" +
+            "left outer join phone_lines pld on pld.line_id = co.call_line_id_to\n" +
+            "left outer join users ud on ud.user_id = pld.line_user_id \n" +
+            "left outer join cities cid on cid.city_id = ud.user_city_id \n" +
+            "where uo.user_id = ?3 and co.call_date between ?2 and ?3",nativeQuery = true)
+    List<GetCalls> getCallsByDate(Date dateFrom, Date dateTo, int userId);
 
     @Query(value = "select plo.line_number as OriginNumber, cio.city_name as OriginCity, pld.line_number as DestinationNumber, cid.city_name as DestinationCity, (co.call_minute_price * (co.call_duration_seg/60)) as TotalPrice, co.call_duration_seg as Duration, co.call_date as CallDate\n" +
             "from users uo inner join phone_lines plo on plo.line_user_id = uo.user_id\n" +

@@ -3,6 +3,7 @@ package edu.utn.utnphones.controller.client;
 import edu.utn.utnphones.controller.CallController;
 import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.domain.User;
+import edu.utn.utnphones.projections.GetCalls;
 import edu.utn.utnphones.projections.MostCalledCities;
 import edu.utn.utnphones.exception.UserNotexistException;
 import edu.utn.utnphones.session.SessionManager;
@@ -31,13 +32,13 @@ public class CheckCallsController {
     }
 
     @GetMapping("/date")
-    public ResponseEntity<List<Call>> getCallsByDate(@RequestHeader ("Authorization") String sessionToken, @RequestParam(value = "from" ) String from, @RequestParam(value = "to") String to) throws UserNotexistException, ParseException {
-        ResponseEntity<List<Call>> responseEntity = null;
+    public ResponseEntity<List<GetCalls>> getCallsByDate(@RequestHeader ("Authorization") String sessionToken, @RequestParam(value = "from" ) String from, @RequestParam(value = "to") String to) throws UserNotexistException, ParseException {
+        ResponseEntity<List<GetCalls>> responseEntity = null;
         User currentUser = getCurrentUser(sessionToken);
             if ((from != null) && (to != null)) {
                 Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(from);
                 Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse(to);
-                List<Call> callList = callController.getCallsByDate(dateFrom, dateTo, currentUser.getUserId());
+                List<GetCalls> callList = callController.getCallsByDate(dateFrom, dateTo, currentUser.getUserId());
                 if (!callList.isEmpty()) {
                     responseEntity = ResponseEntity.ok().body(callList);
                 } else {
