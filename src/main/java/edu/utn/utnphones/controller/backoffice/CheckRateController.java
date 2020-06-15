@@ -18,18 +18,16 @@ import java.util.List;
 public class CheckRateController {
 
     private RateController rateController;
-    private SessionManager sessionManager;
     private CityController cityController;
 
     @Autowired
-    public CheckRateController(SessionManager sessionManager, RateController rateController, CityController cityController) {
+    public CheckRateController(RateController rateController, CityController cityController) {
         this.rateController = rateController;
-        this.sessionManager = sessionManager;
         this.cityController = cityController;
     }
 
     @GetMapping
-    public ResponseEntity<List<Rate>> getAllRates(@RequestHeader("Authorization") String sessionToken){
+    public ResponseEntity<List<Rate>> getAllRates(){
         ResponseEntity<List<Rate>> responseEntity = null;
         List<Rate> rateList = rateController.getAllRates();
         if (!rateList.isEmpty()) {
@@ -41,7 +39,7 @@ public class CheckRateController {
     }
 
     @GetMapping("/{idFrom}")
-    public ResponseEntity<List<Rate>> getByIdFrom(@RequestHeader("Authorization") String sessionToken, @PathVariable int idFrom) throws CityNotexistException {
+    public ResponseEntity<List<Rate>> getByIdFrom(@PathVariable int idFrom) throws CityNotexistException {
         ResponseEntity<List<Rate>> responseEntity = null;
         City from = cityController.getById(idFrom);
         List<Rate> rateList = rateController.getByIdFrom(idFrom);
@@ -54,7 +52,7 @@ public class CheckRateController {
     }
 
     @GetMapping("/{idFrom}/{idTo}")
-    public ResponseEntity<Rate> getRate(@RequestHeader("Authorization") String sessionToken, @PathVariable int idFrom, @PathVariable int idTo) throws CityNotexistException {
+    public ResponseEntity<Rate> getRate(@PathVariable int idFrom, @PathVariable int idTo) throws CityNotexistException {
         ResponseEntity<Rate> responseEntity = null;
         City from = cityController.getById(idFrom);
         City to = cityController.getById(idTo);

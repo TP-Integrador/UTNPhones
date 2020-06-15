@@ -21,18 +21,14 @@ import java.util.List;
 @RequestMapping("backoffice/calls")
 public class CheckCallsClientController {
     private CallController callController;
-    private SessionManager sessionManager;
 
     @Autowired
-    public CheckCallsClientController(CallController callController, SessionManager sessionManager) {
+    public CheckCallsClientController(CallController callController) {
         this.callController = callController;
-        this.sessionManager = sessionManager;
     }
 
-    //TODO: GetCalls (devolver todas las llamadas de todos los clientes) otro endpoint, ver si hace falta.
-
     @GetMapping("/client/{id}")
-    public ResponseEntity<List<GetCalls>> getCallsByClient(@RequestHeader("Authorization") String sessionToken, @PathVariable Integer id){
+    public ResponseEntity<List<GetCalls>> getCallsByClient(@PathVariable Integer id){
        ResponseEntity<List<GetCalls>> responseEntity = null;
        if (id != null) {
            List<GetCalls> callList = callController.getCallsByClient(id);
@@ -48,7 +44,7 @@ public class CheckCallsClientController {
     }
 
     @GetMapping("/client/{id}/date")
-    public ResponseEntity<List<GetCalls>> getCallsByDate(@RequestHeader ("Authorization") String sessionToken, @RequestParam(value = "from" ) String from, @RequestParam(value = "to") String to, @PathVariable Integer id) throws UserNotexistException, ParseException {
+    public ResponseEntity<List<GetCalls>> getCallsByDate(@RequestParam(value = "from" ) String from, @RequestParam(value = "to") String to, @PathVariable Integer id) throws UserNotexistException, ParseException {
         ResponseEntity<List<GetCalls>> responseEntity = null;
         if ((from != null) && (to != null)) {
             Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(from);

@@ -19,9 +19,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CheckRateControllerTest {
-    
+
     private RateController rateController;
-    private SessionManager sessionManager;
     private CityController cityController;
     private CheckRateController checkRateController;
 
@@ -29,9 +28,8 @@ public class CheckRateControllerTest {
     @Before
     public void setUp() {
         rateController = mock(RateController.class);
-        sessionManager = mock(SessionManager.class);
         cityController = mock(CityController.class);
-        checkRateController = new CheckRateController(sessionManager, rateController,cityController);
+        checkRateController = new CheckRateController(rateController,cityController);
     }
 
 
@@ -45,7 +43,7 @@ public class CheckRateControllerTest {
 
         when(rateController.getAllRates()).thenReturn(rateList);
 
-        ResponseEntity<List<Rate>> responseEntity = checkRateController.getAllRates("token");
+        ResponseEntity<List<Rate>> responseEntity = checkRateController.getAllRates();
 
 
         assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
@@ -59,24 +57,9 @@ public class CheckRateControllerTest {
         rateList.clear();
         when(rateController.getAllRates()).thenReturn(rateList);
 
-        ResponseEntity<List<Rate>> responseEntity = checkRateController.getAllRates("token");
+        ResponseEntity<List<Rate>> responseEntity = checkRateController.getAllRates();
         assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
     }
-
-    /*
-    @GetMapping("/{idFrom}")
-    public ResponseEntity<List<Rate>> getByIdFrom(@RequestHeader("Authorization") String sessionToken, @PathVariable int idFrom) throws CityNotexistException {
-        ResponseEntity<List<Rate>> responseEntity = null;
-        City from = cityController.getById(idFrom);
-        List<Rate> rateList = rateController.getByIdFrom(idFrom);
-        if (!rateList.isEmpty()) {
-            responseEntity = ResponseEntity.ok().body(rateList);
-        } else {
-            responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return responseEntity;
-    }
-    */
 
     @Test
     public void testGetByIdFromOk() throws CityNotexistException {
@@ -89,7 +72,7 @@ public class CheckRateControllerTest {
         when(cityController.getById(1)).thenReturn(from);
         when(rateController.getByIdFrom(1)).thenReturn(rateList);
 
-        ResponseEntity<List<Rate>> responseEntity = checkRateController.getByIdFrom("token",1);
+        ResponseEntity<List<Rate>> responseEntity = checkRateController.getByIdFrom(1);
 
         assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
         assertEquals(rateList,responseEntity.getBody());
@@ -108,7 +91,7 @@ public class CheckRateControllerTest {
         when(cityController.getById(2)).thenReturn(to);
         when(rateController.getByIdFrom(1)).thenReturn(rateList);
 
-        ResponseEntity<List<Rate>> responseEntity = checkRateController.getByIdFrom("token",1);
+        ResponseEntity<List<Rate>> responseEntity = checkRateController.getByIdFrom(1);
 
         assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
 
@@ -121,22 +104,8 @@ public class CheckRateControllerTest {
         when(cityController.getById(1)).thenThrow(new CityNotexistException());
         when(cityController.getById(2)).thenReturn(to);
 
-        ResponseEntity<List<Rate>> responseEntity = checkRateController.getByIdFrom("token",1);
+        ResponseEntity<List<Rate>> responseEntity = checkRateController.getByIdFrom(1);
     }
-
-    /*
-    @GetMapping("/{idFrom}/{idTo}")
-    public ResponseEntity<Rate> getRate(@RequestHeader("Authorization") String sessionToken, @PathVariable int idFrom, @PathVariable int idTo) throws UserNotexistException {
-        ResponseEntity<Rate> responseEntity = null;
-        Rate rate = rateController.getRate(idFrom, idTo);
-        if ((rate != null)) {
-            responseEntity = ResponseEntity.ok().body(rate);
-        } else {
-            responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return responseEntity;
-    }
-    */
 
     @Test
     public void testGetRateOk() throws CityNotexistException {
@@ -148,7 +117,7 @@ public class CheckRateControllerTest {
         when(cityController.getById(2)).thenReturn(to);
         when(rateController.getRate(1,2)).thenReturn(rate);
 
-        ResponseEntity<Rate> responseEntity = checkRateController.getRate("token",1,2);
+        ResponseEntity<Rate> responseEntity = checkRateController.getRate(1,2);
 
         assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
         assertEquals(rate,responseEntity.getBody());
@@ -164,7 +133,7 @@ public class CheckRateControllerTest {
         when(cityController.getById(2)).thenReturn(to);
         when(rateController.getRate(1,2)).thenReturn(null);
 
-        ResponseEntity<Rate> responseEntity = checkRateController.getRate("token",1,2);
+        ResponseEntity<Rate> responseEntity = checkRateController.getRate(1,2);
 
         assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
 
@@ -177,7 +146,7 @@ public class CheckRateControllerTest {
         when(cityController.getById(1)).thenThrow(new CityNotexistException());
         when(cityController.getById(2)).thenReturn(to);
 
-        ResponseEntity<Rate> responseEntity = checkRateController.getRate("token",1,2);
+        ResponseEntity<Rate> responseEntity = checkRateController.getRate(1,2);
     }
 
     @Test(expected = CityNotexistException.class)
@@ -187,6 +156,7 @@ public class CheckRateControllerTest {
         when(cityController.getById(1)).thenReturn(from);
         when(cityController.getById(2)).thenThrow(new CityNotexistException());
 
-        ResponseEntity<Rate> responseEntity = checkRateController.getRate("token",1,2);
+        ResponseEntity<Rate> responseEntity = checkRateController.getRate(1,2);
     }
+
 }

@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 @org.springframework.context.annotation.Configuration
-//@PropertySource("app.properties")
 @EnableScheduling
 public class Configuration {
 

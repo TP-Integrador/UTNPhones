@@ -19,18 +19,14 @@ import java.util.List;
 @RequestMapping("backoffice/invoices")
 public class CheckInvoicesClientController {
     private InvoiceController invoiceController;
-    private SessionManager sessionManager;
 
     @Autowired
-    public CheckInvoicesClientController(InvoiceController invoiceController, SessionManager sessionManager) {
+    public CheckInvoicesClientController(InvoiceController invoiceController) {
         this.invoiceController = invoiceController;
-        this.sessionManager = sessionManager;
     }
 
-    //TODO: GetInvoices (devolver todas las facturas de todos los clientes) otro endpoint, ver si hace falta.
-
     @GetMapping("/client/{id}")
-    public ResponseEntity<List<Invoice>> getInvoicesByClient(@RequestHeader("Authorization") String sessionToken, @PathVariable Integer id){
+    public ResponseEntity<List<Invoice>> getInvoicesByClient(@PathVariable Integer id){
         ResponseEntity<List<Invoice>> responseEntity = null;
         if (id != null) {
             List<Invoice> callList = invoiceController.getInvoicesByClient(id);
@@ -47,7 +43,7 @@ public class CheckInvoicesClientController {
     }
 
     @GetMapping("/client/{id}/date")
-    public ResponseEntity<List<Invoice>> getInvoicesByDate(@RequestHeader ("Authorization") String sessionToken, @RequestParam(value = "from" ) String from, @RequestParam(value = "to") String to, @PathVariable Integer id) throws UserNotexistException, ParseException {
+    public ResponseEntity<List<Invoice>> getInvoicesByDate(@RequestParam(value = "from" ) String from, @RequestParam(value = "to") String to, @PathVariable Integer id) throws UserNotexistException, ParseException {
         ResponseEntity<List<Invoice>> responseEntity = null;
         if ((from != null) && (to != null)) {
             Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(from);
@@ -63,6 +59,4 @@ public class CheckInvoicesClientController {
         }
         return responseEntity;
     }
-
-    //TODO: hacer test de controllerweb, controller y service
 }
