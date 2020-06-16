@@ -1,9 +1,11 @@
 package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.domain.PhoneLine;
+import edu.utn.utnphones.dto.StatusPhoneDto;
 import edu.utn.utnphones.exception.PhoneLineAlreadyExistsException;
 import edu.utn.utnphones.exception.PhoneLineNotExistException;
 import edu.utn.utnphones.exception.PhoneLineRemovedException;
+import edu.utn.utnphones.exception.StatusNotExistsException;
 import edu.utn.utnphones.service.PhoneLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,8 +35,8 @@ public class PhoneLineController {
         return linePhoneService.addPhone(phoneLine);
     }
 
-    public void updateStatus(PhoneLine phoneLine, int idphone) throws PhoneLineNotExistException, PhoneLineRemovedException {
-        linePhoneService.updateStatus(phoneLine,idphone);
+    public void updateStatus(StatusPhoneDto statusPhoneDto, int idphone) throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
+        linePhoneService.updateStatus(statusPhoneDto,idphone);
     }
 
     public void delete(int idphone) throws PhoneLineRemovedException, PhoneLineNotExistException {

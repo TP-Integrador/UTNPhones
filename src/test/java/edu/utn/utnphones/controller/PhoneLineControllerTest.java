@@ -1,9 +1,11 @@
 package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.domain.PhoneLine;
+import edu.utn.utnphones.dto.StatusPhoneDto;
 import edu.utn.utnphones.exception.PhoneLineAlreadyExistsException;
 import edu.utn.utnphones.exception.PhoneLineNotExistException;
 import edu.utn.utnphones.exception.PhoneLineRemovedException;
+import edu.utn.utnphones.exception.StatusNotExistsException;
 import edu.utn.utnphones.service.PhoneLineService;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,12 +54,6 @@ public class PhoneLineControllerTest {
         phoneLineController.getByNumber("123");
     }
 
-    /*
-    public PhoneLine addPhone(PhoneLine phoneLine) throws PhoneLineAlreadyExistsException, SQLException {
-        return linePhoneService.addPhone(phoneLine);
-    }
-    */
-
     @Test
     public void testAddPhoneOk() throws PhoneLineAlreadyExistsException, SQLException {
         PhoneLine phoneLine = PhoneLine.builder().id(1).build();
@@ -82,32 +78,41 @@ public class PhoneLineControllerTest {
     }
 
     @Test
-    public void testUpdateStatusOk() throws PhoneLineNotExistException, PhoneLineRemovedException {
-        PhoneLine phoneLine = PhoneLine.builder().id(1).build();
-        Mockito.doNothing().when(phoneLineService).updateStatus(phoneLine,1);
-        phoneLineController.updateStatus(phoneLine,1);
+    public void testUpdateStatusOk() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
+        StatusPhoneDto status = StatusPhoneDto.builder().status("Suspended").build();
+        Mockito.doNothing().when(phoneLineService).updateStatus(status,1);
+        phoneLineController.updateStatus(status,1);
 
-        verify(phoneLineService, times(1)).updateStatus(phoneLine,1);
+        verify(phoneLineService, times(1)).updateStatus(status,1);
     }
 
     @Test(expected = PhoneLineNotExistException.class)
-    public void testUpdateStatusNotExists() throws PhoneLineNotExistException, PhoneLineRemovedException {
-        PhoneLine phoneLine = PhoneLine.builder().id(1).build();
-        Mockito.doThrow(new PhoneLineNotExistException("")).when(phoneLineService).updateStatus(phoneLine,1);
-        phoneLineController.updateStatus(phoneLine,1);
+    public void testUpdateStatusNotExists() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
+        StatusPhoneDto status = StatusPhoneDto.builder().status("Suspended").build();
+        Mockito.doThrow(new PhoneLineNotExistException("")).when(phoneLineService).updateStatus(status,1);
+        phoneLineController.updateStatus(status,1);
 
-        verify(phoneLineService, times(1)).updateStatus(phoneLine,1);
+        verify(phoneLineService, times(1)).updateStatus(status,1);
     }
 
     @Test(expected = PhoneLineRemovedException.class)
-    public void testUpdateStatusRemoved() throws PhoneLineNotExistException, PhoneLineRemovedException {
+    public void testUpdateStatusRemoved() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
+        StatusPhoneDto status = StatusPhoneDto.builder().status("Active").build();
         PhoneLine phoneLine = PhoneLine.builder().lineStatus(PhoneLine.Status.Inactive).build();
-        Mockito.doThrow(new PhoneLineRemovedException()).when(phoneLineService).updateStatus(phoneLine,1);
-        phoneLineController.updateStatus(phoneLine,1);
+        Mockito.doThrow(new PhoneLineRemovedException()).when(phoneLineService).updateStatus(status,1);
+        phoneLineController.updateStatus(status,1);
 
-        verify(phoneLineService, times(1)).updateStatus(phoneLine,1);
+        verify(phoneLineService, times(1)).updateStatus(status,1);
     }
 
+    @Test(expected = StatusNotExistsException.class)
+    public void testUpdateStatusNotExist() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
+        StatusPhoneDto status = StatusPhoneDto.builder().status("Deleted").build();
+        Mockito.doThrow(new StatusNotExistsException()).when(phoneLineService).updateStatus(status,1);
+        phoneLineController.updateStatus(status,1);
+
+        verify(phoneLineService, times(1)).updateStatus(status,1);
+    }
 
     @Test
     public void testDeletePhoneOk() throws PhoneLineRemovedException, PhoneLineNotExistException {

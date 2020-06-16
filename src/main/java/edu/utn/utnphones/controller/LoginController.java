@@ -1,4 +1,4 @@
-package edu.utn.utnphones.controller.web;
+package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.controller.UserController;
 import edu.utn.utnphones.domain.User;

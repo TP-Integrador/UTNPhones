@@ -2,9 +2,11 @@ package edu.utn.utnphones.service;
 
 import edu.utn.utnphones.dao.PhoneLineDao;
 import edu.utn.utnphones.domain.PhoneLine;
+import edu.utn.utnphones.dto.StatusPhoneDto;
 import edu.utn.utnphones.exception.PhoneLineAlreadyExistsException;
 import edu.utn.utnphones.exception.PhoneLineNotExistException;
 import edu.utn.utnphones.exception.PhoneLineRemovedException;
+import edu.utn.utnphones.exception.StatusNotExistsException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +21,7 @@ public class PhoneLineServiceTest {
 
     private PhoneLineDao phoneLineDao;
     private PhoneLineService phoneLineService;
+
 
     @Before
     public void setUp(){
@@ -79,25 +82,36 @@ public class PhoneLineServiceTest {
 
 
     @Test
-    public void testUpdateStatusOk() throws PhoneLineNotExistException, PhoneLineRemovedException {
+    public void testUpdateStatusOk() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
         PhoneLine phoneLine = PhoneLine.builder().id(1).lineStatus(PhoneLine.Status.Active).build();
+        StatusPhoneDto status = StatusPhoneDto.builder().status("Suspended").build();
         when(phoneLineDao.findById(1)).thenReturn(Optional.of(phoneLine));
         Mockito.doNothing().when(phoneLineDao).updateStatus("Suspended",1);
-        phoneLineService.updateStatus(phoneLine,1);
+        phoneLineService.updateStatus(status,1);
     }
 
     @Test(expected = PhoneLineNotExistException.class)
-    public void testUpdateStatusNotExists() throws PhoneLineNotExistException, PhoneLineRemovedException {
+    public void testUpdateStatusNotExists() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
         PhoneLine phoneLine = null;
+        StatusPhoneDto status = StatusPhoneDto.builder().status("Suspended").build();
         when(phoneLineDao.findById(1)).thenReturn(Optional.ofNullable(phoneLine));
-        phoneLineService.updateStatus(phoneLine,1);
+        phoneLineService.updateStatus(status,1);
     }
 
     @Test(expected = PhoneLineRemovedException.class)
-    public void testUpdateStatusRemoved() throws PhoneLineNotExistException, PhoneLineRemovedException {
+    public void testUpdateStatusRemoved() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
         PhoneLine phoneLine = PhoneLine.builder().id(1).lineStatus(PhoneLine.Status.Inactive).build();
+        StatusPhoneDto status = StatusPhoneDto.builder().status("Suspended").build();
         when(phoneLineDao.findById(1)).thenReturn(Optional.of(phoneLine));
-        phoneLineService.updateStatus(phoneLine,1);
+        phoneLineService.updateStatus(status,1);
+    }
+
+    @Test(expected = StatusNotExistsException.class)
+    public void testUpdateStatusNotExistsEnum() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
+        PhoneLine phoneLine = PhoneLine.builder().id(1).lineStatus(PhoneLine.Status.Active).build();
+        StatusPhoneDto status = StatusPhoneDto.builder().status("sarasa").build();
+        when(phoneLineDao.findById(1)).thenReturn(Optional.of(phoneLine));
+        phoneLineService.updateStatus(status,1);
     }
 
     @Test

@@ -1,4 +1,4 @@
-package edu.utn.utnphones.controller.web;
+package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.dto.ErrorResponseDto;
 import edu.utn.utnphones.exception.*;
@@ -80,9 +80,22 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
         return new ErrorResponseDto(11, "Username already exists");
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(StatusNotExistsException.class)
+    public ErrorResponseDto handleStatusNotExistsException(StatusNotExistsException exc) {
+        return new ErrorResponseDto(12, "Status not allowed");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ErrorResponseDto handleIllegalArgumentException(IllegalArgumentException exc) {
+        return new ErrorResponseDto(13, exc.getMessage() + " . " + exc.toString()+ " . " + exc.getLocalizedMessage()+ " . " + exc.getCause().getMessage());
+    }
+
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(SQLException.class)
     public ErrorResponseDto handleSQLException(SQLException exc) {
-        return new ErrorResponseDto(12, "Internal error server");
+        return new ErrorResponseDto(13, "Internal error server");
     }
 }

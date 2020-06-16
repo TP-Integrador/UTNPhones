@@ -2,9 +2,11 @@ package edu.utn.utnphones.controller.backoffice;
 
 import edu.utn.utnphones.controller.PhoneLineController;
 import edu.utn.utnphones.domain.PhoneLine;
+import edu.utn.utnphones.dto.StatusPhoneDto;
 import edu.utn.utnphones.exception.PhoneLineAlreadyExistsException;
 import edu.utn.utnphones.exception.PhoneLineNotExistException;
 import edu.utn.utnphones.exception.PhoneLineRemovedException;
+import edu.utn.utnphones.exception.StatusNotExistsException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -90,26 +92,33 @@ public class PhoneLineABMControllerTest {
     }
 
     @Test
-    public void testUpdatePhoneLineOK() throws PhoneLineNotExistException, PhoneLineRemovedException {
-        PhoneLine phoneLine = PhoneLine.builder().id(1).build();
-        Mockito.doNothing().when(phoneLineController).updateStatus(phoneLine,1);
-        ResponseEntity responseEntity = phoneLinesABMController.UpdatePhoneline(1,phoneLine);
+    public void testUpdatePhoneLineOK() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
+        StatusPhoneDto status = StatusPhoneDto.builder().status("Suspended").build();
+        Mockito.doNothing().when(phoneLineController).updateStatus(status,1);
+        ResponseEntity responseEntity = phoneLinesABMController.UpdatePhoneline(1,status);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
     @Test(expected = PhoneLineNotExistException.class)
-    public void testUpdatePhoneLineNotExists() throws PhoneLineNotExistException, PhoneLineRemovedException {
-        PhoneLine phoneLine = PhoneLine.builder().id(1).build();
-        Mockito.doThrow(new PhoneLineNotExistException("")).when(phoneLineController).updateStatus(phoneLine,1);
-        phoneLinesABMController.UpdatePhoneline(1,phoneLine);
+    public void testUpdatePhoneLineNotExists() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
+        StatusPhoneDto status = StatusPhoneDto.builder().status("Suspended").build();
+        Mockito.doThrow(new PhoneLineNotExistException("")).when(phoneLineController).updateStatus(status,1);
+        phoneLinesABMController.UpdatePhoneline(1,status);
     }
 
     @Test(expected = PhoneLineRemovedException.class)
-    public void testUpdatePhoneLineRemoved() throws PhoneLineNotExistException, PhoneLineRemovedException {
-        PhoneLine phoneLine = PhoneLine.builder().id(1).build();
-        Mockito.doThrow(new PhoneLineRemovedException()).when(phoneLineController).updateStatus(phoneLine,1);
-        phoneLinesABMController.UpdatePhoneline(1,phoneLine);
+    public void testUpdatePhoneLineRemoved() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
+        StatusPhoneDto status = StatusPhoneDto.builder().status("Active").build();
+        Mockito.doThrow(new PhoneLineRemovedException()).when(phoneLineController).updateStatus(status,1);
+        phoneLinesABMController.UpdatePhoneline(1,status);
+    }
+
+    @Test(expected = PhoneLineRemovedException.class)
+    public void testUpdatePhoneLineStatusNotExist() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
+        StatusPhoneDto status = StatusPhoneDto.builder().status("Removed").build();
+        Mockito.doThrow(new PhoneLineRemovedException()).when(phoneLineController).updateStatus(status,1);
+        phoneLinesABMController.UpdatePhoneline(1,status);
     }
 
     @Test
