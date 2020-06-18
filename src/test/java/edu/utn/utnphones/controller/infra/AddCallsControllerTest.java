@@ -1,7 +1,6 @@
 package edu.utn.utnphones.controller.infra;
 
 
-import edu.utn.utnphones.config.LoginInfra;
 import edu.utn.utnphones.controller.CallController;
 import edu.utn.utnphones.controller.PhoneLineController;
 import edu.utn.utnphones.domain.PhoneLine;
@@ -27,7 +26,6 @@ public class AddCallsControllerTest {
     CallController callController;
     PhoneLineController phoneLineController;
     AddCallsController addCallsController;
-    LoginInfra loginInfra;
     CallDto callDto;
 
 
@@ -36,8 +34,7 @@ public class AddCallsControllerTest {
         callController = mock(CallController.class);
         phoneLineController = mock(PhoneLineController.class);
         callDto = mock(CallDto.class);
-        loginInfra = mock(LoginInfra.class);
-        addCallsController = new AddCallsController(callController,phoneLineController, loginInfra);
+        addCallsController = new AddCallsController(callController,phoneLineController);
     }
 
 
@@ -45,9 +42,6 @@ public class AddCallsControllerTest {
     public void testAddCallOk() throws PhoneLineNotExistException, ParseException, SQLException {
         String userconfig = "infra";
         String passconfig = "1234";
-
-        when(loginInfra.getUserconfig()).thenReturn(userconfig);
-        when(loginInfra.getPassconfig()).thenReturn(passconfig);
 
         Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2020-05-16 10:32:00");
         CallDto callDto = CallDto.builder().lineFrom("123").lineTo("456").seg(60).date("2020-05-16 10:32:00").build();
@@ -65,27 +59,10 @@ public class AddCallsControllerTest {
     }
 
 
-    @Test
-    public void testAddCallForbidden() throws PhoneLineNotExistException, ParseException, SQLException {
-        String userconfig = "infra";
-        String passconfig = "1234";
-
-        when(loginInfra.getUserconfig()).thenReturn(userconfig);
-        when(loginInfra.getPassconfig()).thenReturn(passconfig);
-
-        CallDto callDto = CallDto.builder().lineFrom("123").lineTo("456").seg(60).date("2020-05-16 10:32:00").build();
-        ResponseEntity responseEntity = addCallsController.addCall("infra2","1234",callDto);
-        assertEquals(HttpStatus.FORBIDDEN,responseEntity.getStatusCode());
-
-    }
-
     @Test(expected = PhoneLineNotExistException.class)
     public void testAddCallPhoneLineFromNotExists() throws PhoneLineNotExistException, ParseException, SQLException {
         String userconfig = "infra";
         String passconfig = "1234";
-
-        when(loginInfra.getUserconfig()).thenReturn(userconfig);
-        when(loginInfra.getPassconfig()).thenReturn(passconfig);
 
         Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2020-05-16 10:32:00");
         CallDto callDto = CallDto.builder().lineFrom("123").lineTo("456").seg(60).date("2020-05-16 10:32:00").build();
@@ -104,9 +81,6 @@ public class AddCallsControllerTest {
     public void testAddCallPhoneLineToNotExists() throws PhoneLineNotExistException, ParseException, SQLException {
         String userconfig = "infra";
         String passconfig = "1234";
-
-        when(loginInfra.getUserconfig()).thenReturn(userconfig);
-        when(loginInfra.getPassconfig()).thenReturn(passconfig);
 
         Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2020-05-16 10:32:00");
         CallDto callDto = CallDto.builder().lineFrom("123").lineTo("456").seg(60).date("2020-05-16 10:32:00").build();

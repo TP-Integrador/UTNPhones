@@ -3,6 +3,7 @@ package edu.utn.utnphones.config;
 
 import edu.utn.utnphones.session.SessionFilterBackoffice;
 import edu.utn.utnphones.session.SessionFilterClient;
+import edu.utn.utnphones.session.SessionFilterInfra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,9 @@ public class Configuration {
 
     @Autowired
     SessionFilterBackoffice sessionFilterBackOffice;
+
+    @Autowired
+    SessionFilterInfra sessionFilterInfra;
 
 
     @Bean
@@ -36,5 +40,12 @@ public class Configuration {
         return registration;
     }
 
+    @Bean
+    public FilterRegistrationBean FilterInfra() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(sessionFilterInfra);
+        registration.addUrlPatterns("/infra/*");
+        return registration;
+    }
 
 }
