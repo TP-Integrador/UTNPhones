@@ -2,6 +2,7 @@ package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.dto.ErrorResponseDto;
 import edu.utn.utnphones.exception.*;
+import org.hibernate.exception.GenericJDBCException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.DateTimeException;
 
 @RestControllerAdvice
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
@@ -92,10 +94,17 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
         return new ErrorResponseDto(13, exc.getMessage() + " . " + exc.toString()+ " . " + exc.getLocalizedMessage()+ " . " + exc.getCause().getMessage());
     }
 
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(GenericJDBCException.class)
+    public ErrorResponseDto handleDBException(GenericJDBCException exc) {
+        return new ErrorResponseDto(14, exc.getSQLException().getMessage());
+    }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(SQLException.class)
-    public ErrorResponseDto handleSQLException(SQLException exc) {
-        return new ErrorResponseDto(13, "Internal error server");
+    @ExceptionHandler(DateTimeException.class)
+    public ErrorResponseDto handleDateTimeException(DateTimeException exc) {
+        return new ErrorResponseDto(15, exc.getMessage());
     }
+
+
 }

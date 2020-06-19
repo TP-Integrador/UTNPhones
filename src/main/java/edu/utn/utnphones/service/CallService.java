@@ -5,10 +5,10 @@ import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.projections.MostCalledCities;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.projections.GetCalls;
+import org.hibernate.exception.GenericJDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -23,12 +23,9 @@ public class CallService {
         return callDao.findAll();
     }
 
-    public void add(String lineFrom, String lineTo, int seg , Date dateTime) throws SQLException {
-        try {
-            callDao.addCall(lineFrom, lineTo, seg, dateTime);
-        }catch (Exception e){
-            throw new SQLException();
-        }
+
+    public Call add(Call call) throws GenericJDBCException{
+        return callDao.save(call);
     }
 
     public Call getById(int id) throws ResourcesNotExistException {

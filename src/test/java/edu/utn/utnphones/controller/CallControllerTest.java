@@ -54,9 +54,12 @@ public class CallControllerTest {
         callController.getById(1);
     }
 
+
     @Test
-    public void testAddCallOk() throws SQLException {
-        callController.addCall("123","456",60,new Date());
+    public void testAddCallOK(){
+        Call call = Call.builder().Id(1).build();
+        when(callService.add(call)).thenReturn(call);
+        callController.addCall(call);
     }
 
     @Test

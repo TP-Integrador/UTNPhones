@@ -6,11 +6,11 @@ import edu.utn.utnphones.projections.MostCalledCities;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.projections.GetCalls;
 import edu.utn.utnphones.service.CallService;
+import edu.utn.utnphones.service.PhoneLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -27,8 +27,8 @@ public class CallController {
         return callService.getAll();
     }
 
-    public void addCall(String lineFrom, String lineTo, int seg , Date dateTime) throws SQLException {
-        callService.add(lineFrom,lineTo,seg,dateTime);
+    public Call addCall(Call call) {
+       return callService.add(call);
     }
 
     public Call getById(int id) throws ResourcesNotExistException {

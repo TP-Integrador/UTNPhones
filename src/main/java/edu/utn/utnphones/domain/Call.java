@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -33,12 +34,10 @@ public class Call {
     @JoinColumn(name = "call_line_id_to")
     private PhoneLine lineIdTo;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "call_invoice_id")
     private Invoice invoice;
 
-    @NotNull
     @Column(name = "call_minute_price")
     private float minutePrice;
 
@@ -48,5 +47,5 @@ public class Call {
 
     @NotNull
     @Column(name = "call_date")
-    private Date date;
+    private LocalDateTime date;
 }

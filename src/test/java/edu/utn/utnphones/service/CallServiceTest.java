@@ -6,8 +6,10 @@ import edu.utn.utnphones.domain.PhoneLine;
 import edu.utn.utnphones.exception.ResourcesNotExistException;
 import edu.utn.utnphones.projections.GetCalls;
 import edu.utn.utnphones.projections.MostCalledCities;
+import org.hibernate.exception.GenericJDBCException;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -59,15 +61,6 @@ public class CallServiceTest {
     }
 
     @Test
-    public void testAddOk() throws SQLException {
-        PhoneLine phoneLineFrom = PhoneLine.builder().id(123).build();
-        PhoneLine phoneLineTo = PhoneLine.builder().id(456).build();
-        Call call = Call.builder().Id(1).lineIdFrom(phoneLineFrom).lineIdTo(phoneLineTo).duration(60).date(new Date()).build();
-        when(callDao.save(call)).thenReturn(call);
-        callService.add("123","456",60,new Date());
-    }
-
-    @Test
     public void testGetCallsByDate() throws ParseException {
         List<GetCalls> listCall = new ArrayList<>();
         listCall.add(getCalls);
@@ -87,10 +80,11 @@ public class CallServiceTest {
         assertEquals(listCall,callService.getCallsByClient(1));
     }
 
-    @Test(expected = SQLException.class)
-    public void testAddSQLException() throws SQLException {
-        doThrow(new SQLException()).doNothing();
-        callService.add("123","456",60,new Date());
+    @Test
+    public void testAddOK() throws GenericJDBCException {
+        Call call = Call.builder().Id(1).build();
+        when(callDao.save(call)).thenReturn(call);
+        callService.add(call);
     }
 
     @Test

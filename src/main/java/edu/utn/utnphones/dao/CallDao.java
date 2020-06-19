@@ -14,9 +14,6 @@ import java.util.List;
 @Repository
 public interface CallDao extends JpaRepository<Call,Integer> {
 
-    @Procedure(value = "sp_insertcall")
-    void addCall(String lineFrom, String lineTo, int seg, Date date);
-
     @Query(value = "select plo.line_number as OriginNumber, cio.city_name as OriginCity, pld.line_number as DestinationNumber, cid.city_name as DestinationCity, (co.call_minute_price * (co.call_duration_seg/60)) as TotalPrice, co.call_duration_seg as Duration, co.call_date as CallDate\n" +
             "from users uo inner join phone_lines plo on plo.line_user_id = uo.user_id\n" +
             "inner join calls co on co.call_line_id_from = plo.line_id\n" +
