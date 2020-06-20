@@ -34,7 +34,7 @@ public class LoginController {
             String token = sessionManager.createSession(u);
             response = ResponseEntity.ok().headers(createHeaders(token)).build();
         } catch (UserNotexistException e) {
-            throw new InvalidLoginException(e);
+            throw new InvalidLoginException();
         }
         return response;
     }

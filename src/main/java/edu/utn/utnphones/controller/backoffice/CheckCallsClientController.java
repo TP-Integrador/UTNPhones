@@ -27,36 +27,29 @@ public class CheckCallsClientController {
         this.callController = callController;
     }
 
-    @GetMapping("/client/{id}")
-    public ResponseEntity<List<GetCalls>> getCallsByClient(@PathVariable Integer id){
-       ResponseEntity<List<GetCalls>> responseEntity = null;
-       if (id != null) {
-           List<GetCalls> callList = callController.getCallsByClient(id);
-           if (!callList.isEmpty()) {
-               responseEntity = ResponseEntity.ok().body(callList);
-           } else {
-               responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-           }
-       }else{
-           responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-       }
-       return responseEntity;
-    }
-
     @GetMapping("/client/{id}/date")
-    public ResponseEntity<List<GetCalls>> getCallsByDate(@RequestParam(value = "from" ) String from, @RequestParam(value = "to") String to, @PathVariable Integer id) throws UserNotexistException, ParseException {
+    public ResponseEntity<List<GetCalls>> getCallsByClientDate(@RequestParam(value = "from",required = false) String from, @RequestParam(value = "to",required = false) String to, @PathVariable Integer id) throws UserNotexistException, ParseException {
         ResponseEntity<List<GetCalls>> responseEntity = null;
-        if ((from != null) && (to != null)) {
-            Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(from);
-            Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse(to);
-            List<GetCalls> callList = callController.getCallsByDate(dateFrom, dateTo, id);
+        if (from == null && to == null && id != null){
+            List<GetCalls> callList = callController.getCallsByClient(id);
             if (!callList.isEmpty()) {
                 responseEntity = ResponseEntity.ok().body(callList);
             } else {
                 responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
         } else {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            if ((from != null) && (to != null)) {
+                Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(from);
+                Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse(to);
+                List<GetCalls> callList = callController.getCallsByDate(dateFrom, dateTo, id);
+                if (!callList.isEmpty()) {
+                    responseEntity = ResponseEntity.ok().body(callList);
+                } else {
+                    responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+                }
+            } else {
+                responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
         }
         return responseEntity;
     }
