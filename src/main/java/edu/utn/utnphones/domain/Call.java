@@ -41,6 +41,9 @@ public class Call {
     @Column(name = "call_minute_price")
     private float minutePrice;
 
+    @Column(name = "call_minute_cost")
+    private float minuteCost;
+
     @NotNull
     @Column(name = "call_duration_seg")
     private int duration;

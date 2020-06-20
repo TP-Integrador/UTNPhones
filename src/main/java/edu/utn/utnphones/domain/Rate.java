@@ -36,4 +36,7 @@ public class Rate{
     @Column(name = "rate_value")
     private Float value;
 
+    @Column(name = "rate_cost")
+    private Float cost;
+
 }
