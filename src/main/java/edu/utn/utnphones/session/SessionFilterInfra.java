@@ -23,8 +23,12 @@ public class SessionFilterInfra extends OncePerRequestFilter {
     @Value("${passconfig}")
     String passconfig;
 
-    @Autowired
     private SessionManager sessionManager;
+
+    @Autowired
+    public SessionFilterInfra(SessionManager sessionManager) {
+        this.sessionManager = sessionManager;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

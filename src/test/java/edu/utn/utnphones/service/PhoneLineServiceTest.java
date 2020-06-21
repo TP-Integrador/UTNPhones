@@ -1,18 +1,20 @@
 package edu.utn.utnphones.service;
 
 import edu.utn.utnphones.dao.PhoneLineDao;
+import edu.utn.utnphones.dao.UserDao;
 import edu.utn.utnphones.domain.PhoneLine;
+import edu.utn.utnphones.domain.User;
+import edu.utn.utnphones.domain.UserType;
 import edu.utn.utnphones.dto.StatusPhoneDto;
-import edu.utn.utnphones.exception.PhoneLineAlreadyExistsException;
-import edu.utn.utnphones.exception.PhoneLineNotExistException;
-import edu.utn.utnphones.exception.PhoneLineRemovedException;
-import edu.utn.utnphones.exception.StatusNotExistsException;
+import edu.utn.utnphones.exception.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import javax.swing.text.html.Option;
 import java.sql.SQLException;
+import java.time.OffsetTime;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -21,12 +23,14 @@ public class PhoneLineServiceTest {
 
     private PhoneLineDao phoneLineDao;
     private PhoneLineService phoneLineService;
+    private UserDao userDao;
 
 
     @Before
     public void setUp(){
         phoneLineDao = mock(PhoneLineDao.class);
-        phoneLineService = new PhoneLineService(phoneLineDao);
+        userDao = mock(UserDao.class);
+        phoneLineService = new PhoneLineService(phoneLineDao, userDao);
     }
 
     @Test
@@ -59,27 +63,30 @@ public class PhoneLineServiceTest {
     }
 
     @Test
-    public void testAddPhoneOk() throws PhoneLineAlreadyExistsException, SQLException {
-        PhoneLine phoneLine = PhoneLine.builder().id(1).build();
+    public void testAddPhoneOk() throws PhoneLineAlreadyExistsException, UserNotexistException {
+        PhoneLine phoneLine = PhoneLine.builder().id(1).user(User.builder().userId(1).build()).build();
         when(phoneLineDao.findByNumber("123")).thenReturn(null);
+        User user = User.builder().userId(phoneLine.getUser().getUserId()).userType(UserType.builder().type("Client").build()).build();
+        when(userDao.findById(1)).thenReturn(Optional.of(user));
         when(phoneLineDao.save(phoneLine)).thenReturn(phoneLine);
         phoneLineService.addPhone(phoneLine);
     }
 
     @Test(expected = PhoneLineAlreadyExistsException.class)
-    public void testAddPhoneAlreadyExists() throws PhoneLineAlreadyExistsException, SQLException {
+    public void testAddPhoneAlreadyExists() throws PhoneLineAlreadyExistsException, UserNotexistException {
         PhoneLine phoneLine = PhoneLine.builder().lineNumber("123").build();
         when(phoneLineDao.findByNumber("123")).thenReturn(phoneLine);
         phoneLineService.addPhone(phoneLine);
     }
 
-    @Test(expected = SQLException.class)
-    public void testAddPhoneSQLException() throws PhoneLineAlreadyExistsException, SQLException {
-        PhoneLine phoneLine = PhoneLine.builder().lineNumber("123").build();
-        doThrow(new SQLException()).doNothing();
+    @Test(expected = UserNotexistException.class)
+    public void testAddPhoneUserNotExist() throws PhoneLineAlreadyExistsException, UserNotexistException {
+        PhoneLine phoneLine = PhoneLine.builder().id(1).user(User.builder().userId(1).build()).build();
+        when(phoneLineDao.findByNumber("123")).thenReturn(null);
+        User user = User.builder().userId(phoneLine.getUser().getUserId()).userType(UserType.builder().type("Employee").build()).build();
+        when(userDao.findById(1)).thenReturn(Optional.of(user));
         phoneLineService.addPhone(phoneLine);
     }
-
 
     @Test
     public void testUpdateStatusOk() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {

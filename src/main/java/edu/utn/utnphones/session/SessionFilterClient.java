@@ -16,8 +16,13 @@ import java.io.IOException;
 
 public class SessionFilterClient extends OncePerRequestFilter {
 
-    @Autowired
+
     private SessionManager sessionManager;
+
+    @Autowired
+    public SessionFilterClient(SessionManager sessionManager) {
+        this.sessionManager = sessionManager;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

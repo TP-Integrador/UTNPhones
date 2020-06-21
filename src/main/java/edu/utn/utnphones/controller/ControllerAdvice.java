@@ -31,7 +31,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(UserNotexistException.class)
     public ErrorResponseDto handleNotFoundException(UserNotexistException exc) {
-        return new ErrorResponseDto(3, exc.getMessage());
+        return new ErrorResponseDto(3, "User not exists");
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

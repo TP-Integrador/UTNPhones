@@ -2,10 +2,7 @@ package edu.utn.utnphones.controller;
 
 import edu.utn.utnphones.domain.PhoneLine;
 import edu.utn.utnphones.dto.StatusPhoneDto;
-import edu.utn.utnphones.exception.PhoneLineAlreadyExistsException;
-import edu.utn.utnphones.exception.PhoneLineNotExistException;
-import edu.utn.utnphones.exception.PhoneLineRemovedException;
-import edu.utn.utnphones.exception.StatusNotExistsException;
+import edu.utn.utnphones.exception.*;
 import edu.utn.utnphones.service.PhoneLineService;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +52,7 @@ public class PhoneLineControllerTest {
     }
 
     @Test
-    public void testAddPhoneOk() throws PhoneLineAlreadyExistsException, SQLException {
+    public void testAddPhoneOk() throws PhoneLineAlreadyExistsException, UserNotexistException {
         PhoneLine phoneLine = PhoneLine.builder().id(1).build();
         when(phoneLineService.addPhone(phoneLine)).thenReturn(phoneLine);
         phoneLineController.addPhone(phoneLine);
@@ -64,16 +61,9 @@ public class PhoneLineControllerTest {
     }
 
     @Test(expected = PhoneLineAlreadyExistsException.class)
-    public void testAddPhoneAlreadyExists() throws PhoneLineAlreadyExistsException, SQLException {
+    public void testAddPhoneAlreadyExists() throws PhoneLineAlreadyExistsException, UserNotexistException {
         PhoneLine phoneLine = PhoneLine.builder().id(1).build();
         when(phoneLineService.addPhone(phoneLine)).thenThrow(new PhoneLineAlreadyExistsException());
-        phoneLineController.addPhone(phoneLine);
-    }
-
-    @Test(expected = SQLException.class)
-    public void testAddPhoneSQLException() throws PhoneLineAlreadyExistsException, SQLException {
-        PhoneLine phoneLine = PhoneLine.builder().id(1).build();
-        when(phoneLineService.addPhone(phoneLine)).thenThrow(new SQLException());
         phoneLineController.addPhone(phoneLine);
     }
 

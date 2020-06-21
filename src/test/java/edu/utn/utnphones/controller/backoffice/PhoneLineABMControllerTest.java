@@ -2,11 +2,10 @@ package edu.utn.utnphones.controller.backoffice;
 
 import edu.utn.utnphones.controller.PhoneLineController;
 import edu.utn.utnphones.domain.PhoneLine;
+import edu.utn.utnphones.domain.User;
+import edu.utn.utnphones.domain.UserType;
 import edu.utn.utnphones.dto.StatusPhoneDto;
-import edu.utn.utnphones.exception.PhoneLineAlreadyExistsException;
-import edu.utn.utnphones.exception.PhoneLineNotExistException;
-import edu.utn.utnphones.exception.PhoneLineRemovedException;
-import edu.utn.utnphones.exception.StatusNotExistsException;
+import edu.utn.utnphones.exception.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -64,7 +63,7 @@ public class PhoneLineABMControllerTest {
 
 
     @Test
-    public void testAddPhoneLineOK() throws PhoneLineAlreadyExistsException, SQLException {
+    public void testAddPhoneLineOK() throws PhoneLineAlreadyExistsException, UserNotexistException {
         PhoneLine phoneLine = PhoneLine.builder().id(1).build();
         when(phoneLineController.addPhone(phoneLine)).thenReturn(phoneLine);
         ResponseEntity responseEntity = phoneLinesABMController.addPhoneLine(phoneLine);
@@ -74,7 +73,7 @@ public class PhoneLineABMControllerTest {
     }
 
     @Test(expected = PhoneLineAlreadyExistsException.class)
-    public void testAddPhoneLineAlreadyExist() throws PhoneLineAlreadyExistsException, SQLException {
+    public void testAddPhoneLineAlreadyExist() throws PhoneLineAlreadyExistsException, UserNotexistException {
         PhoneLine phoneLine = PhoneLine.builder().id(1).build();
         when(phoneLineController.addPhone(phoneLine)).thenThrow(new PhoneLineAlreadyExistsException());
         ResponseEntity responseEntity = phoneLinesABMController.addPhoneLine(phoneLine);
@@ -82,14 +81,6 @@ public class PhoneLineABMControllerTest {
         verify(phoneLineController, times(1)).addPhone(phoneLine);
     }
 
-    @Test(expected = SQLException.class)
-    public void testAddPhoneLineSQLException() throws PhoneLineAlreadyExistsException, SQLException {
-        PhoneLine phoneLine = PhoneLine.builder().id(1).build();
-        when(phoneLineController.addPhone(phoneLine)).thenThrow(new SQLException());
-        ResponseEntity responseEntity = phoneLinesABMController.addPhoneLine(phoneLine);
-
-        verify(phoneLineController, times(1)).addPhone(phoneLine);
-    }
 
     @Test
     public void testUpdatePhoneLineOK() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {

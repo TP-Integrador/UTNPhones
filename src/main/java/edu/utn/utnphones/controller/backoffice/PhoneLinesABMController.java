@@ -3,10 +3,7 @@ package edu.utn.utnphones.controller.backoffice;
 import edu.utn.utnphones.controller.PhoneLineController;
 import edu.utn.utnphones.domain.PhoneLine;
 import edu.utn.utnphones.dto.StatusPhoneDto;
-import edu.utn.utnphones.exception.PhoneLineAlreadyExistsException;
-import edu.utn.utnphones.exception.PhoneLineNotExistException;
-import edu.utn.utnphones.exception.PhoneLineRemovedException;
-import edu.utn.utnphones.exception.StatusNotExistsException;
+import edu.utn.utnphones.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,14 +32,14 @@ public class PhoneLinesABMController {
         return ResponseEntity.ok().body(phoneLine);
     }
 
-    //TODO verificar si el usuario es Client
+
     @PostMapping
-    public ResponseEntity addPhoneLine(@RequestBody @Valid PhoneLine phoneLine) throws PhoneLineAlreadyExistsException, SQLException {
+    public ResponseEntity addPhoneLine(@RequestBody @Valid PhoneLine phoneLine) throws PhoneLineAlreadyExistsException, UserNotexistException {
         PhoneLine ph = phoneLineController.addPhone(phoneLine);
         return ResponseEntity.created(getLocation(ph)).build();
     }
 
-    //TODO verificar si el usuario es Client
+
     @PutMapping("/{idphone}")
     public ResponseEntity UpdatePhoneline(@PathVariable int idphone, @RequestBody StatusPhoneDto statusPhoneDto) throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
         phoneLineController.updateStatus(statusPhoneDto,idphone);
