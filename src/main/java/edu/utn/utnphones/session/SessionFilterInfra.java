@@ -1,7 +1,9 @@
 package edu.utn.utnphones.session;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,21 +15,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Data
 @org.springframework.context.annotation.Configuration
 @PropertySource("infra.properties")
 @Service
 public class SessionFilterInfra extends OncePerRequestFilter {
 
     @Value("${userconfig}")
-    String userconfig;
+    public String userconfig;
     @Value("${passconfig}")
-    String passconfig;
-
-    private SessionManager sessionManager;
+    public String passconfig;
 
     @Autowired
-    public SessionFilterInfra(SessionManager sessionManager) {
-        this.sessionManager = sessionManager;
+    public SessionFilterInfra() {
+        this.userconfig = getUserconfig();
+        this.passconfig = getPassconfig();
     }
 
     @Override
@@ -43,4 +45,6 @@ public class SessionFilterInfra extends OncePerRequestFilter {
             response.setStatus(HttpStatus.FORBIDDEN.value());
         }
     }
+
+
 }
