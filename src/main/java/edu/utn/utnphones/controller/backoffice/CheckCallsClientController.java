@@ -30,7 +30,7 @@ public class CheckCallsClientController {
     @GetMapping("/client/{id}/date")
     public ResponseEntity<List<GetCalls>> getCallsByClientDate(@RequestParam(value = "from",required = false) String from, @RequestParam(value = "to",required = false) String to, @PathVariable Integer id) throws UserNotexistException, ParseException {
         ResponseEntity<List<GetCalls>> responseEntity = null;
-        if (from == null && to == null && id != null){
+        if (from == null && to == null && id > 0){
             List<GetCalls> callList = callController.getCallsByClient(id);
             if (!callList.isEmpty()) {
                 responseEntity = ResponseEntity.ok().body(callList);
