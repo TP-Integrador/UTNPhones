@@ -104,6 +104,15 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.2</version>
+				<configuration>
+					<excludes>
+						<exclude>**/config/**</exclude>
+						<exclude>**/domain/**</exclude>
+						<exclude>**/dto/**</exclude>
+						<exclude>**/projections/**</exclude>
+						<exclude>**/utils/**</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -131,7 +140,7 @@
 										<limit>
 											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.70</minimum>
+											<minimum>1.00</minimum>
 										</limit>
 									</limits>
 								</rule>

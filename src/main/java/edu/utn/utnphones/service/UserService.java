@@ -5,10 +5,17 @@ import edu.utn.utnphones.domain.User;
 import edu.utn.utnphones.domain.UserType;
 import edu.utn.utnphones.dto.ClientDto;
 import edu.utn.utnphones.exception.*;
+import edu.utn.utnphones.utils.HashPwd;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.MessageDigest;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 @Service
 public class UserService {
@@ -23,8 +30,8 @@ public class UserService {
     public User login(String username, String password) throws UserNotexistException, ValidationException {
         User us = null;
         if ((username != null) && (password != null)) {
-
-             us = userDao.getByUsername(username, password);
+            String passEnc =  HashPwd.Encriptar(password);
+            us = userDao.getByUsername(username, passEnc);
             if (us == null){
                 throw new UserNotexistException();
             }
@@ -57,6 +64,8 @@ public class UserService {
             if ( user1 != null) {
                 throw new UserNameAlreadyExists();
             }
+
+            client.setPassword(HashPwd.Encriptar(client.getPassword()));
             client.setUserType(UserType.builder().Id(1).build());
             return userDao.save(client);
         }catch (Exception e){
@@ -76,6 +85,7 @@ public class UserService {
             clientAux.setUsername(client.getUsername());
             clientAux.setPassword(client.getPassword());
             clientAux.setCity(client.getCity());
+            clientAux.setPassword(HashPwd.Encriptar(client.getPassword()));
             return userDao.save(clientAux);
         }catch (Exception e){
             throw new SQLException(e);
