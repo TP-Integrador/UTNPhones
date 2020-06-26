@@ -56,7 +56,7 @@ public class CheckCallsControllerTest {
         callList.add(getCalls);
         when(callController.getCallsByDate(from,to,1)).thenReturn(callList);
 
-        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCallsByDate("token","2020-05-28","2020-06-30");
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCalls("token","2020-05-28","2020-06-30");
 
         assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
         assertEquals(callList,responseEntity.getBody());
@@ -72,7 +72,7 @@ public class CheckCallsControllerTest {
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
         when(callController.getCallsByDate(from,to,1)).thenReturn(callList);
 
-        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCallsByDate("token","2020-05-28","2020-06-30");
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCalls("token","2020-05-28","2020-06-30");
 
         assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
 
@@ -83,12 +83,13 @@ public class CheckCallsControllerTest {
         User user = User.builder().userId(1).build();
         user.setUserType(UserType.builder().type("Client").build());
         List<GetCalls> callList = new ArrayList<>();
+        callList.add(getCalls);
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
-        when(callController.getCallsByDate(null,null,1)).thenReturn(callList);
+        when(callController.getCallsByClient(1)).thenReturn(callList);
 
-        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCallsByDate("token",null,null);
-        assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
-
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCalls("token",null,null);
+        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
+        assertEquals(callList,responseEntity.getBody());
     }
 
     @Test

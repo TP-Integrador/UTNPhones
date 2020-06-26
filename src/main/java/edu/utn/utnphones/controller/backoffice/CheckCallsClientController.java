@@ -27,28 +27,26 @@ public class CheckCallsClientController {
         this.callController = callController;
     }
 
-    @GetMapping("/client/{id}/date")
-    public ResponseEntity<List<GetCalls>> getCallsByClientDate(@RequestParam(value = "from",required = false) String from, @RequestParam(value = "to",required = false) String to, @PathVariable Integer id) throws UserNotexistException, ParseException {
+    @GetMapping("/client/{id}")
+    public ResponseEntity<List<GetCalls>> getCalls(@RequestParam(value = "from",required = false) String from, @RequestParam(value = "to",required = false) String to, @PathVariable Integer id) throws UserNotexistException, ParseException {
         ResponseEntity<List<GetCalls>> responseEntity = null;
+        List<GetCalls> callList = null;
         if (from == null && to == null && id > 0){
-            List<GetCalls> callList = callController.getCallsByClient(id);
-            if (!callList.isEmpty()) {
-                responseEntity = ResponseEntity.ok().body(callList);
-            } else {
-                responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            }
+            callList = callController.getCallsByClient(id);
         } else {
             if ((from != null) && (to != null)) {
                 Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(from);
                 Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse(to);
-                List<GetCalls> callList = callController.getCallsByDate(dateFrom, dateTo, id);
-                if (!callList.isEmpty()) {
-                    responseEntity = ResponseEntity.ok().body(callList);
-                } else {
-                    responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-                }
+                callList = callController.getCallsByDate(dateFrom, dateTo, id);
             } else {
                 responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+        }
+        if (responseEntity == null){
+            if (!callList.isEmpty()) {
+                responseEntity = ResponseEntity.ok().body(callList);
+            } else {
+                responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
         }
         return responseEntity;

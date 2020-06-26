@@ -47,7 +47,7 @@ public class CheckInvoicesControllerTest {
         invoiceList.add(invoice);
         when(invoiceController.getInvoicesByDate(from,to,1)).thenReturn(invoiceList);
 
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoicesByDate("token","2020-05-28","2020-06-30");
+        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoices("token","2020-05-28","2020-06-30");
 
         assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
         assertEquals(invoiceList,responseEntity.getBody());
@@ -64,7 +64,7 @@ public class CheckInvoicesControllerTest {
 
         when(invoiceController.getInvoicesByDate(from,to,1)).thenReturn(invoiceList);
 
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoicesByDate("token","2020-05-28","2020-06-30");
+        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoices("token","2020-05-28","2020-06-30");
 
         assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
     }
@@ -74,11 +74,13 @@ public class CheckInvoicesControllerTest {
         User user = User.builder().userId(1).build();
         user.setUserType(UserType.builder().type("Client").build());
         List<Invoice> invoicesList = new ArrayList<>();
+        invoicesList.add(invoice);
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
-        when(invoiceController.getInvoicesByDate(null,null,1)).thenReturn(invoicesList);
+        when(invoiceController.getInvoicesByClient(1)).thenReturn(invoicesList);
 
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoicesByDate("token",null,null);
-        assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
+        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoices("token",null,null);
+        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
+        assertEquals(invoicesList,responseEntity.getBody());
     }
 
 }

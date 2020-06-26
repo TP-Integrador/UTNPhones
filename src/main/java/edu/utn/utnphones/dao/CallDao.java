@@ -6,6 +6,7 @@ import edu.utn.utnphones.projections.MostCalledCities;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -15,25 +16,23 @@ import java.util.List;
 public interface CallDao extends JpaRepository<Call,Integer> {
 
     @Query(value = "select plo.line_number as OriginNumber, cio.city_name as OriginCity, pld.line_number as DestinationNumber, cid.city_name as DestinationCity, (co.call_minute_price * (co.call_duration_seg/60)) as TotalPrice, co.call_duration_seg as Duration, co.call_date as CallDate\n" +
-            "from users uo inner join phone_lines plo on plo.line_user_id = uo.user_id\n" +
-            "inner join calls co on co.call_line_id_from = plo.line_id\n" +
-            "inner join cities cio on cio.city_id = uo.user_city_id\n" +
-            "left outer join phone_lines pld on pld.line_id = co.call_line_id_to\n" +
-            "left outer join users ud on ud.user_id = pld.line_user_id\n" +
-            "left outer join cities cid on cid.city_id = ud.user_city_id \n" +
-            "where (co.call_date between ?1 and ?2) and uo.user_id = ?3 \n" +
-            "order by co.call_date",nativeQuery = true)
+            "from calls co inner join phone_lines plo on plo.line_id = co.call_line_id_from\n" +
+            "inner join cities cio on cio.city_prefix = (SELECT SUBSTRING(plo.line_number,1,LENGTH(plo.line_number)-7))\n" +
+            "inner join phone_lines pld on pld.line_id = co.call_line_id_to\n" +
+            "inner join cities cid on cid.city_prefix = (SELECT SUBSTRING(pld.line_number,1,LENGTH(pld.line_number)-7))\n" +
+            "inner join users u on u.user_id = plo.line_user_id\n" +
+            "where (co.call_date between ?1 and ?2) and u.user_id = ?3 \n" +
+            "order by co.call_date;",nativeQuery = true)
     List<GetCalls> getCallsByDate(Date dateFrom, Date dateTo, int userId);
 
     @Query(value = "select plo.line_number as OriginNumber, cio.city_name as OriginCity, pld.line_number as DestinationNumber, cid.city_name as DestinationCity, (co.call_minute_price * (co.call_duration_seg/60)) as TotalPrice, co.call_duration_seg as Duration, co.call_date as CallDate\n" +
-            "from users uo inner join phone_lines plo on plo.line_user_id = uo.user_id\n" +
-            "inner join calls co on co.call_line_id_from = plo.line_id \n" +
-            "inner join cities cio on cio.city_id = uo.user_city_id \n" +
-            "left outer join phone_lines pld on pld.line_id = co.call_line_id_to\n" +
-            "left outer join users ud on ud.user_id = pld.line_user_id \n" +
-            "left outer join cities cid on cid.city_id = ud.user_city_id \n" +
-            "where uo.user_id = ?1\n"+
-            "order by uo.user_id",nativeQuery = true)
+            "from calls co inner join phone_lines plo on plo.line_id = co.call_line_id_from\n" +
+            "inner join cities cio on cio.city_prefix = (SELECT SUBSTRING(plo.line_number,1,LENGTH(plo.line_number)-7))\n" +
+            "inner join phone_lines pld on pld.line_id = co.call_line_id_to\n" +
+            "inner join cities cid on cid.city_prefix = (SELECT SUBSTRING(pld.line_number,1,LENGTH(pld.line_number)-7))\n" +
+            "inner join users u on u.user_id = plo.line_user_id\n" +
+            "where u.user_id = ?1 \n" +
+            "order by co.call_date;" ,nativeQuery = true)
     List<GetCalls> getCallsByClient(int id);
 
     @Query(value = "select ci.city_name City, count(ph.line_number) Calls from calls c\n" +

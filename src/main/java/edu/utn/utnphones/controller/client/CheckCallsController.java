@@ -31,33 +31,38 @@ public class CheckCallsController {
         this.sessionManager = sessionManager;
     }
 
-    @GetMapping("/date")
-    public ResponseEntity<List<GetCalls>> getCallsByDate(@RequestHeader ("Authorization") String sessionToken, @RequestParam(value = "from" ) String from, @RequestParam(value = "to") String to) throws UserNotexistException, ParseException {
+    @GetMapping
+    public ResponseEntity<List<GetCalls>> getCalls(@RequestHeader("Authorization") String sessionToken, @RequestParam(value = "from", required = false) String from, @RequestParam(value = "to", required = false) String to) throws UserNotexistException, ParseException {
         ResponseEntity<List<GetCalls>> responseEntity = null;
         User currentUser = getCurrentUser(sessionToken);
-            if ((from != null) && (to != null)) {
-                Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(from);
-                Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse(to);
-                List<GetCalls> callList = callController.getCallsByDate(dateFrom, dateTo, currentUser.getUserId());
-                if (!callList.isEmpty()) {
-                    responseEntity = ResponseEntity.ok().body(callList);
-                } else {
-                    responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-                }
-            } else {
-                responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
+        List<GetCalls> callList = null;
+        if (from == null && to == null) {
+            callList = callController.getCallsByClient(currentUser.getUserId());
+        } else if ((from != null) && (to != null)) {
+            Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(from);
+            Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse(to);
+            callList = callController.getCallsByDate(dateFrom, dateTo, currentUser.getUserId());
+        } else {
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        if (responseEntity == null) {
+            if (!callList.isEmpty())
+                responseEntity = ResponseEntity.ok().body(callList);
+            else
+                responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
         return responseEntity;
     }
 
     @GetMapping("/mostCalledCities")
-    public ResponseEntity<List<MostCalledCities>> getMostCalledCities(@RequestHeader ("Authorization") String sessionToken) throws UserNotexistException {
+    public ResponseEntity<List<MostCalledCities>> getMostCalledCities(@RequestHeader("Authorization") String
+                                                                              sessionToken) throws UserNotexistException {
         ResponseEntity<List<MostCalledCities>> responseEntity = null;
         User currentUser = getCurrentUser(sessionToken);
         List<MostCalledCities> mostCalledCities = callController.getMostCalledCities(currentUser.getUserId());
-        if(mostCalledCities.size() > 0){
+        if (mostCalledCities.size() > 0) {
             responseEntity = ResponseEntity.ok(mostCalledCities);
-        }else {
+        } else {
             responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return responseEntity;

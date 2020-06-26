@@ -26,31 +26,28 @@ public class CheckInvoicesClientController {
         this.invoiceController = invoiceController;
     }
 
-    @GetMapping("/client/{id}/date")
-    public ResponseEntity<List<Invoice>> getInvoicesByClientDate(@RequestParam(value = "from" ) String from, @RequestParam(value = "to") String to, @PathVariable Integer id) throws ParseException {
+    @GetMapping("/client/{id}")
+    public ResponseEntity<List<Invoice>> getInvoices(@RequestParam(value = "from", required = false) String from, @RequestParam(value = "to", required = false) String to, @PathVariable Integer id) throws ParseException {
         ResponseEntity<List<Invoice>> responseEntity = null;
+        List<Invoice> callList = null;
         if (from == null && to == null && id > 0){
-            List<Invoice> callList = invoiceController.getInvoicesByClient(id);
+            callList = invoiceController.getInvoicesByClient(id);
+        } else {
+            if ((from != null) && (to != null)) {
+                Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(from);
+                Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse(to);
+                callList = invoiceController.getInvoicesByDate(dateFrom, dateTo, id);
+            } else {
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+        }
+        if (responseEntity == null){
             if (!callList.isEmpty()) {
                 responseEntity = ResponseEntity.ok().body(callList);
             } else {
                 responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
-        } else {
-            if ((from != null) && (to != null)) {
-                Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(from);
-                Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse(to);
-                List<Invoice> callList = invoiceController.getInvoicesByDate(dateFrom, dateTo, id);
-                if (!callList.isEmpty()) {
-                    responseEntity = ResponseEntity.ok().body(callList);
-                } else {
-                    responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-                }
-            } else {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
         }
         return responseEntity;
     }
-
 }

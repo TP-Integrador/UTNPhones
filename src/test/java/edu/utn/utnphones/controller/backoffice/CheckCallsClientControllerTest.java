@@ -4,7 +4,6 @@ import edu.utn.utnphones.controller.CallController;
 import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.exception.UserNotexistException;
 import edu.utn.utnphones.projections.GetCalls;
-import edu.utn.utnphones.session.SessionManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
@@ -42,7 +41,7 @@ public class CheckCallsClientControllerTest {
         listCall.add(getCalls);
         when(callController.getCallsByClient(1)).thenReturn(listCall);
 
-        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCallsByClientDate(null,null,1);
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCalls(null,null,1);
 
         assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
         assertEquals(listCall,responseEntity.getBody());
@@ -54,7 +53,7 @@ public class CheckCallsClientControllerTest {
         List<GetCalls> listCall = Collections.emptyList();
         when(callController.getCallsByClient(1)).thenReturn(listCall);
 
-        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCallsByClientDate(null,null,1);
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCalls(null,null,1);
 
         assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
 
@@ -68,7 +67,7 @@ public class CheckCallsClientControllerTest {
         callList.add(getCalls);
         when(callController.getCallsByDate(from,to,1)).thenReturn(callList);
 
-        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCallsByClientDate("2020-05-28","2020-06-30",1);
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCalls("2020-05-28","2020-06-30",1);
 
         assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
         assertEquals(callList,responseEntity.getBody());
@@ -82,7 +81,7 @@ public class CheckCallsClientControllerTest {
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
         when(callController.getCallsByDate(from,to,1)).thenReturn(callList);
 
-        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCallsByClientDate("2020-05-28","2020-06-30",1);
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCalls("2020-05-28","2020-06-30",1);
 
         assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
 
@@ -95,7 +94,7 @@ public class CheckCallsClientControllerTest {
         callList.add(getCalls);
         when(callController.getCallsByDate(null,to,1)).thenReturn(callList);
 
-        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCallsByClientDate(null,"2020-06-30",1);
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCalls(null,"2020-06-30",1);
 
         assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
 
@@ -108,7 +107,7 @@ public class CheckCallsClientControllerTest {
         callList.add(getCalls);
         when(callController.getCallsByDate(from,null,1)).thenReturn(callList);
 
-        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCallsByClientDate("2020-05-28",null,1);
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsClientController.getCalls("2020-05-28",null,1);
 
         assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
 
