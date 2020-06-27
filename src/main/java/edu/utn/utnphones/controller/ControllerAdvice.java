@@ -3,12 +3,14 @@ package edu.utn.utnphones.controller;
 import edu.utn.utnphones.dto.ErrorResponseDto;
 import edu.utn.utnphones.exception.*;
 import org.hibernate.exception.GenericJDBCException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.DateTimeException;
 
@@ -105,5 +107,9 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
         return new ErrorResponseDto(15, exc.getMessage());
     }
 
-
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(SQLException.class)
+    public ErrorResponseDto handleSQLException(SQLException exc) {
+        return new ErrorResponseDto(16, exc.getMessage());
+    }
 }
