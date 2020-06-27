@@ -30,7 +30,7 @@ public interface CallDao extends JpaRepository<Call, Integer> {
             "inner join cities cid on cid.city_prefix = (SELECT SUBSTRING(pld.line_number,1,LENGTH(pld.line_number)-7))\n" +
             "inner join users u on u.user_id = plo.line_user_id\n" +
             "where u.user_id = ?1 \n" +
-            "order by co.call_date;", nativeQuery = true)
+            "order by u.user_id;", nativeQuery = true)
     List<GetCalls> getCallsByClient(int id);
 
     @Query(value = "select ci.city_name City, count(ph.line_number) Calls from calls c\n" +
