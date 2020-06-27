@@ -11,7 +11,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.sql.SQLException;
 
 @RestController
 @RequestMapping("backoffice/phonelines")
@@ -42,9 +41,9 @@ public class PhoneLinesABMController {
 
     @PutMapping("/{idphone}")
     public ResponseEntity UpdatePhoneline(@PathVariable int idphone, @RequestBody StatusPhoneDto statusPhoneDto) throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
-        phoneLineController.updateStatus(statusPhoneDto,idphone);
+        phoneLineController.updateStatus(statusPhoneDto, idphone);
         return ResponseEntity.ok().build();
-     }
+    }
 
     @DeleteMapping("/{idphone}")
     public ResponseEntity<?> deletePhoneLine(@PathVariable int idphone) throws PhoneLineNotExistException, PhoneLineRemovedException {

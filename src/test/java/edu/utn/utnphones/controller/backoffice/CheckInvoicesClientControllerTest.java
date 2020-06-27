@@ -26,7 +26,7 @@ public class CheckInvoicesClientControllerTest {
     private Invoice invoice;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         invoiceController = mock(InvoiceController.class);
         invoice = mock(Invoice.class);
         checkInvoicesClientController = new CheckInvoicesClientController(invoiceController);
@@ -38,10 +38,10 @@ public class CheckInvoicesClientControllerTest {
         listInvoices.add(invoice);
         when(invoiceController.getInvoicesByClient(1)).thenReturn(listInvoices);
 
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesClientController.getInvoices(null,null,1);
+        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesClientController.getInvoices(null, null, 1);
 
-        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
-        assertEquals(listInvoices,responseEntity.getBody());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(listInvoices, responseEntity.getBody());
     }
 
     @Test
@@ -49,9 +49,9 @@ public class CheckInvoicesClientControllerTest {
         List<Invoice> listInvoices = Collections.emptyList();
         when(invoiceController.getInvoicesByClient(1)).thenReturn(listInvoices);
 
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesClientController.getInvoices(null,null,1);
+        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesClientController.getInvoices(null, null, 1);
 
-        assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
     }
 
     @Test
@@ -60,12 +60,12 @@ public class CheckInvoicesClientControllerTest {
         Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-28");
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
         invoiceList.add(invoice);
-        when(invoiceController.getInvoicesByDate(from,to,1)).thenReturn(invoiceList);
+        when(invoiceController.getInvoicesByDate(from, to, 1)).thenReturn(invoiceList);
 
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesClientController.getInvoices("2020-05-28","2020-06-30",1);
+        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesClientController.getInvoices("2020-05-28", "2020-06-30", 1);
 
-        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
-        assertEquals(invoiceList,responseEntity.getBody());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(invoiceList, responseEntity.getBody());
     }
 
     @Test
@@ -73,11 +73,11 @@ public class CheckInvoicesClientControllerTest {
         List<Invoice> invoiceList = Collections.emptyList();
         Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-28");
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
-        when(invoiceController.getInvoicesByDate(from,to,1)).thenReturn(invoiceList);
+        when(invoiceController.getInvoicesByDate(from, to, 1)).thenReturn(invoiceList);
 
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesClientController.getInvoices("2020-05-28","2020-06-30",1);
+        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesClientController.getInvoices("2020-05-28", "2020-06-30", 1);
 
-        assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
     }
 
     @Test
@@ -85,11 +85,11 @@ public class CheckInvoicesClientControllerTest {
         List<Invoice> invoiceList = new ArrayList<>();
         invoiceList.add(invoice);
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
-        when(invoiceController.getInvoicesByDate(null,to,1)).thenReturn(invoiceList);
+        when(invoiceController.getInvoicesByDate(null, to, 1)).thenReturn(invoiceList);
 
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesClientController.getInvoices(null,"2020-06-30",1);
+        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesClientController.getInvoices(null, "2020-06-30", 1);
 
-        assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
     @Test
@@ -97,10 +97,10 @@ public class CheckInvoicesClientControllerTest {
         List<Invoice> invoiceList = new ArrayList<>();
         invoiceList.add(invoice);
         Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
-        when(invoiceController.getInvoicesByDate(from,null,1)).thenReturn(invoiceList);
+        when(invoiceController.getInvoicesByDate(from, null, 1)).thenReturn(invoiceList);
 
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesClientController.getInvoices("2020-05-28",null,1);
+        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesClientController.getInvoices("2020-05-28", null, 1);
 
-        assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 }

@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.Date;
 
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
 
 
 public class SessionFilterClientTest {
@@ -27,7 +26,7 @@ public class SessionFilterClientTest {
     private FilterChain filterChain;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         sessionManager = mock(SessionManager.class);
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
@@ -40,13 +39,13 @@ public class SessionFilterClientTest {
         String sessionToken = "token";
         User user = User.builder().userId(1).userType(UserType.builder().type("Client").build()).build();
         when(request.getHeader("Authorization")).thenReturn(sessionToken);
-        Session session = new Session("token",user, new Date());
+        Session session = new Session("token", user, new Date());
         when(sessionManager.getSession("token")).thenReturn(session);
 
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
-        doNothing().when(filterChain).doFilter(request,response);
+        doNothing().when(filterChain).doFilter(request, response);
 
-        sessionFilterClient.doFilterInternal(request,response,filterChain);
+        sessionFilterClient.doFilterInternal(request, response, filterChain);
 
     }
 
@@ -55,12 +54,12 @@ public class SessionFilterClientTest {
         String sessionToken = "token";
         when(request.getHeader("Authorization")).thenReturn(sessionToken);
         User user = User.builder().userId(1).userType(UserType.builder().type("Employee").build()).build();
-        Session session = new Session("token",user, new Date());
+        Session session = new Session("token", user, new Date());
         when(sessionManager.getSession("token")).thenReturn(session);
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
         Mockito.doNothing().when(response).setStatus(HttpStatus.FORBIDDEN.value());
 
-        sessionFilterClient.doFilterInternal(request,response,filterChain);
+        sessionFilterClient.doFilterInternal(request, response, filterChain);
 
     }
 
@@ -69,10 +68,10 @@ public class SessionFilterClientTest {
         String sessionToken = "token";
         when(request.getHeader("Authorization")).thenReturn(sessionToken);
         User user = User.builder().userId(1).userType(UserType.builder().type("Client").build()).build();
-        Session session = new Session("token",user, new Date());
+        Session session = new Session("token", user, new Date());
         when(sessionManager.getSession("token")).thenReturn(null);
 
-        sessionFilterClient.doFilterInternal(request,response,filterChain);
+        sessionFilterClient.doFilterInternal(request, response, filterChain);
 
     }
 }

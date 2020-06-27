@@ -8,8 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.sql.SQLException;
-
 import static org.mockito.Mockito.*;
 
 public class PhoneLineControllerTest {
@@ -18,7 +16,7 @@ public class PhoneLineControllerTest {
     private PhoneLineController phoneLineController;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         phoneLineService = mock(PhoneLineService.class);
         phoneLineController = new PhoneLineController(phoneLineService);
     }
@@ -57,7 +55,7 @@ public class PhoneLineControllerTest {
         when(phoneLineService.addPhone(phoneLine)).thenReturn(phoneLine);
         phoneLineController.addPhone(phoneLine);
 
-        verify(phoneLineService,times(1)).addPhone(phoneLine);
+        verify(phoneLineService, times(1)).addPhone(phoneLine);
     }
 
     @Test(expected = PhoneLineAlreadyExistsException.class)
@@ -70,38 +68,38 @@ public class PhoneLineControllerTest {
     @Test
     public void testUpdateStatusOk() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
         StatusPhoneDto status = StatusPhoneDto.builder().status("Suspended").build();
-        Mockito.doNothing().when(phoneLineService).updateStatus(status,1);
-        phoneLineController.updateStatus(status,1);
+        Mockito.doNothing().when(phoneLineService).updateStatus(status, 1);
+        phoneLineController.updateStatus(status, 1);
 
-        verify(phoneLineService, times(1)).updateStatus(status,1);
+        verify(phoneLineService, times(1)).updateStatus(status, 1);
     }
 
     @Test(expected = PhoneLineNotExistException.class)
     public void testUpdateStatusNotExists() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
         StatusPhoneDto status = StatusPhoneDto.builder().status("Suspended").build();
-        Mockito.doThrow(new PhoneLineNotExistException("")).when(phoneLineService).updateStatus(status,1);
-        phoneLineController.updateStatus(status,1);
+        Mockito.doThrow(new PhoneLineNotExistException("")).when(phoneLineService).updateStatus(status, 1);
+        phoneLineController.updateStatus(status, 1);
 
-        verify(phoneLineService, times(1)).updateStatus(status,1);
+        verify(phoneLineService, times(1)).updateStatus(status, 1);
     }
 
     @Test(expected = PhoneLineRemovedException.class)
     public void testUpdateStatusRemoved() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
         StatusPhoneDto status = StatusPhoneDto.builder().status("Active").build();
         PhoneLine phoneLine = PhoneLine.builder().lineStatus(PhoneLine.Status.Inactive).build();
-        Mockito.doThrow(new PhoneLineRemovedException()).when(phoneLineService).updateStatus(status,1);
-        phoneLineController.updateStatus(status,1);
+        Mockito.doThrow(new PhoneLineRemovedException()).when(phoneLineService).updateStatus(status, 1);
+        phoneLineController.updateStatus(status, 1);
 
-        verify(phoneLineService, times(1)).updateStatus(status,1);
+        verify(phoneLineService, times(1)).updateStatus(status, 1);
     }
 
     @Test(expected = StatusNotExistsException.class)
     public void testUpdateStatusNotExist() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
         StatusPhoneDto status = StatusPhoneDto.builder().status("Deleted").build();
-        Mockito.doThrow(new StatusNotExistsException()).when(phoneLineService).updateStatus(status,1);
-        phoneLineController.updateStatus(status,1);
+        Mockito.doThrow(new StatusNotExistsException()).when(phoneLineService).updateStatus(status, 1);
+        phoneLineController.updateStatus(status, 1);
 
-        verify(phoneLineService, times(1)).updateStatus(status,1);
+        verify(phoneLineService, times(1)).updateStatus(status, 1);
     }
 
     @Test

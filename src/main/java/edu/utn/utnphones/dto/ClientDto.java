@@ -1,12 +1,12 @@
 package edu.utn.utnphones.dto;
 
-import javax.validation.constraints.NotNull;
-
 import edu.utn.utnphones.domain.City;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor

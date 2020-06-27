@@ -2,8 +2,6 @@ package edu.utn.utnphones.controller.backoffice;
 
 import edu.utn.utnphones.controller.PhoneLineController;
 import edu.utn.utnphones.domain.PhoneLine;
-import edu.utn.utnphones.domain.User;
-import edu.utn.utnphones.domain.UserType;
 import edu.utn.utnphones.dto.StatusPhoneDto;
 import edu.utn.utnphones.exception.*;
 import org.junit.After;
@@ -17,7 +15,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -49,7 +46,7 @@ public class PhoneLineABMControllerTest {
         when(phoneLineController.getById(1)).thenReturn(phoneLine);
         ResponseEntity<PhoneLine> responseEntity = phoneLinesABMController.getPhonelineById(1);
 
-        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(phoneLine, responseEntity.getBody());
 
     }
@@ -69,7 +66,7 @@ public class PhoneLineABMControllerTest {
         ResponseEntity responseEntity = phoneLinesABMController.addPhoneLine(phoneLine);
 
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-        assertEquals("http://localhost/1",responseEntity.getHeaders().getFirst("Location"));
+        assertEquals("http://localhost/1", responseEntity.getHeaders().getFirst("Location"));
     }
 
     @Test(expected = PhoneLineAlreadyExistsException.class)
@@ -85,8 +82,8 @@ public class PhoneLineABMControllerTest {
     @Test
     public void testUpdatePhoneLineOK() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
         StatusPhoneDto status = StatusPhoneDto.builder().status("Suspended").build();
-        Mockito.doNothing().when(phoneLineController).updateStatus(status,1);
-        ResponseEntity responseEntity = phoneLinesABMController.UpdatePhoneline(1,status);
+        Mockito.doNothing().when(phoneLineController).updateStatus(status, 1);
+        ResponseEntity responseEntity = phoneLinesABMController.UpdatePhoneline(1, status);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
@@ -94,22 +91,22 @@ public class PhoneLineABMControllerTest {
     @Test(expected = PhoneLineNotExistException.class)
     public void testUpdatePhoneLineNotExists() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
         StatusPhoneDto status = StatusPhoneDto.builder().status("Suspended").build();
-        Mockito.doThrow(new PhoneLineNotExistException("")).when(phoneLineController).updateStatus(status,1);
-        phoneLinesABMController.UpdatePhoneline(1,status);
+        Mockito.doThrow(new PhoneLineNotExistException("")).when(phoneLineController).updateStatus(status, 1);
+        phoneLinesABMController.UpdatePhoneline(1, status);
     }
 
     @Test(expected = PhoneLineRemovedException.class)
     public void testUpdatePhoneLineRemoved() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
         StatusPhoneDto status = StatusPhoneDto.builder().status("Active").build();
-        Mockito.doThrow(new PhoneLineRemovedException()).when(phoneLineController).updateStatus(status,1);
-        phoneLinesABMController.UpdatePhoneline(1,status);
+        Mockito.doThrow(new PhoneLineRemovedException()).when(phoneLineController).updateStatus(status, 1);
+        phoneLinesABMController.UpdatePhoneline(1, status);
     }
 
     @Test(expected = PhoneLineRemovedException.class)
     public void testUpdatePhoneLineStatusNotExist() throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
         StatusPhoneDto status = StatusPhoneDto.builder().status("Removed").build();
-        Mockito.doThrow(new PhoneLineRemovedException()).when(phoneLineController).updateStatus(status,1);
-        phoneLinesABMController.UpdatePhoneline(1,status);
+        Mockito.doThrow(new PhoneLineRemovedException()).when(phoneLineController).updateStatus(status, 1);
+        phoneLinesABMController.UpdatePhoneline(1, status);
     }
 
     @Test

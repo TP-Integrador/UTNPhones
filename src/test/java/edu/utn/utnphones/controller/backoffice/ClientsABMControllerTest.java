@@ -51,7 +51,7 @@ public class ClientsABMControllerTest {
         when(userController.getClientById(1)).thenReturn(user);
         ResponseEntity<User> responseEntity = clientsABMController.getClient(1);
 
-        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(user, responseEntity.getBody());
     }
 
@@ -69,7 +69,7 @@ public class ClientsABMControllerTest {
         ResponseEntity<User> responseEntity = clientsABMController.addClient(user);
 
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-        assertEquals("http://localhost/1",responseEntity.getHeaders().getFirst("Location"));
+        assertEquals("http://localhost/1", responseEntity.getHeaders().getFirst("Location"));
 
     }
 
@@ -101,8 +101,8 @@ public class ClientsABMControllerTest {
     public void testUpdateClientOK() throws ClientNotExistsException, SQLException, UserNameAlreadyExists {
         User user = User.builder().userId(1).build();
         ClientDto clientDto = ClientDto.builder().name("name").build();
-        when(userController.updateClient(1,clientDto)).thenReturn(user);
-        ResponseEntity<User> responseEntity = clientsABMController.updateClient(1,clientDto);
+        when(userController.updateClient(1, clientDto)).thenReturn(user);
+        ResponseEntity<User> responseEntity = clientsABMController.updateClient(1, clientDto);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
@@ -112,8 +112,8 @@ public class ClientsABMControllerTest {
     public void testUpdateClientNotExist() throws ClientNotExistsException, SQLException, UserNameAlreadyExists {
         User user = User.builder().userId(1).build();
         ClientDto clientDto = ClientDto.builder().name("name").build();
-        when(userController.updateClient(1,clientDto)).thenThrow(new ClientNotExistsException());
-        ResponseEntity<User> responseEntity = clientsABMController.updateClient(1,clientDto);
+        when(userController.updateClient(1, clientDto)).thenThrow(new ClientNotExistsException());
+        ResponseEntity<User> responseEntity = clientsABMController.updateClient(1, clientDto);
 
     }
 
@@ -121,8 +121,8 @@ public class ClientsABMControllerTest {
     public void testUpdateClientSQLException() throws ClientNotExistsException, SQLException, UserNameAlreadyExists {
         User user = User.builder().userId(1).build();
         ClientDto clientDto = ClientDto.builder().name("name").build();
-        when(userController.updateClient(1,clientDto)).thenThrow(new SQLException());
-        ResponseEntity<User> responseEntity = clientsABMController.updateClient(1,clientDto);
+        when(userController.updateClient(1, clientDto)).thenThrow(new SQLException());
+        ResponseEntity<User> responseEntity = clientsABMController.updateClient(1, clientDto);
     }
 
     @Test

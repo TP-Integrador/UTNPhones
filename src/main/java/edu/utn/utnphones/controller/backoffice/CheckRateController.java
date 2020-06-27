@@ -5,11 +5,13 @@ import edu.utn.utnphones.controller.RateController;
 import edu.utn.utnphones.domain.City;
 import edu.utn.utnphones.domain.Rate;
 import edu.utn.utnphones.exception.CityNotexistException;
-import edu.utn.utnphones.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class CheckRateController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Rate>> getAllRates(){
+    public ResponseEntity<List<Rate>> getAllRates() {
         ResponseEntity<List<Rate>> responseEntity = null;
         List<Rate> rateList = rateController.getAllRates();
         if (!rateList.isEmpty()) {

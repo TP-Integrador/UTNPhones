@@ -29,11 +29,11 @@ public class CheckInvoicesControllerTest {
     private Invoice invoice;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         invoiceController = mock(InvoiceController.class);
         sessionManager = mock(SessionManager.class);
         invoice = mock(Invoice.class);
-        checkInvoicesController = new CheckInvoicesController(invoiceController,sessionManager);
+        checkInvoicesController = new CheckInvoicesController(invoiceController, sessionManager);
     }
 
     @Test
@@ -45,12 +45,12 @@ public class CheckInvoicesControllerTest {
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
         invoiceList.add(invoice);
-        when(invoiceController.getInvoicesByDate(from,to,1)).thenReturn(invoiceList);
+        when(invoiceController.getInvoicesByDate(from, to, 1)).thenReturn(invoiceList);
 
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoices("token","2020-05-28","2020-06-30");
+        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoices("token", "2020-05-28", "2020-06-30");
 
-        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
-        assertEquals(invoiceList,responseEntity.getBody());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(invoiceList, responseEntity.getBody());
     }
 
     @Test
@@ -59,14 +59,14 @@ public class CheckInvoicesControllerTest {
         user.setUserType(UserType.builder().type("Client").build());
         List<Invoice> invoiceList = Collections.emptyList();
         Date from = new Date();
-        Date to = new Date(2) ;
+        Date to = new Date(2);
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
 
-        when(invoiceController.getInvoicesByDate(from,to,1)).thenReturn(invoiceList);
+        when(invoiceController.getInvoicesByDate(from, to, 1)).thenReturn(invoiceList);
 
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoices("token","2020-05-28","2020-06-30");
+        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoices("token", "2020-05-28", "2020-06-30");
 
-        assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
     }
 
     @Test
@@ -78,9 +78,9 @@ public class CheckInvoicesControllerTest {
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
         when(invoiceController.getInvoicesByClient(1)).thenReturn(invoicesList);
 
-        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoices("token",null,null);
-        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
-        assertEquals(invoicesList,responseEntity.getBody());
+        ResponseEntity<List<Invoice>> responseEntity = checkInvoicesController.getInvoices("token", null, null);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(invoicesList, responseEntity.getBody());
     }
 
 }

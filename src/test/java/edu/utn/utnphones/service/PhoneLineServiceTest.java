@@ -12,12 +12,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import javax.swing.text.html.Option;
-import java.sql.SQLException;
-import java.time.OffsetTime;
 import java.util.Optional;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class PhoneLineServiceTest {
 
@@ -27,7 +25,7 @@ public class PhoneLineServiceTest {
 
 
     @Before
-    public void setUp(){
+    public void setUp() {
         phoneLineDao = mock(PhoneLineDao.class);
         userDao = mock(UserDao.class);
         phoneLineService = new PhoneLineService(phoneLineDao, userDao);
@@ -93,8 +91,8 @@ public class PhoneLineServiceTest {
         PhoneLine phoneLine = PhoneLine.builder().id(1).lineStatus(PhoneLine.Status.Active).build();
         StatusPhoneDto status = StatusPhoneDto.builder().status("Suspended").build();
         when(phoneLineDao.findById(1)).thenReturn(Optional.of(phoneLine));
-        Mockito.doNothing().when(phoneLineDao).updateStatus("Suspended",1);
-        phoneLineService.updateStatus(status,1);
+        Mockito.doNothing().when(phoneLineDao).updateStatus("Suspended", 1);
+        phoneLineService.updateStatus(status, 1);
     }
 
     @Test(expected = PhoneLineNotExistException.class)
@@ -102,7 +100,7 @@ public class PhoneLineServiceTest {
         PhoneLine phoneLine = null;
         StatusPhoneDto status = StatusPhoneDto.builder().status("Suspended").build();
         when(phoneLineDao.findById(1)).thenReturn(Optional.ofNullable(phoneLine));
-        phoneLineService.updateStatus(status,1);
+        phoneLineService.updateStatus(status, 1);
     }
 
     @Test(expected = PhoneLineRemovedException.class)
@@ -110,7 +108,7 @@ public class PhoneLineServiceTest {
         PhoneLine phoneLine = PhoneLine.builder().id(1).lineStatus(PhoneLine.Status.Inactive).build();
         StatusPhoneDto status = StatusPhoneDto.builder().status("Suspended").build();
         when(phoneLineDao.findById(1)).thenReturn(Optional.of(phoneLine));
-        phoneLineService.updateStatus(status,1);
+        phoneLineService.updateStatus(status, 1);
     }
 
     @Test(expected = StatusNotExistsException.class)
@@ -118,7 +116,7 @@ public class PhoneLineServiceTest {
         PhoneLine phoneLine = PhoneLine.builder().id(1).lineStatus(PhoneLine.Status.Active).build();
         StatusPhoneDto status = StatusPhoneDto.builder().status("sarasa").build();
         when(phoneLineDao.findById(1)).thenReturn(Optional.of(phoneLine));
-        phoneLineService.updateStatus(status,1);
+        phoneLineService.updateStatus(status, 1);
     }
 
     @Test

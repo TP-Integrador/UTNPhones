@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.DateTimeException;
 
@@ -91,7 +90,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     public ErrorResponseDto handleIllegalArgumentException(IllegalArgumentException exc) {
-        return new ErrorResponseDto(13, exc.getMessage() + " . " + exc.toString()+ " . " + exc.getLocalizedMessage()+ " . " + exc.getCause().getMessage());
+        return new ErrorResponseDto(13, exc.getMessage() + " . " + exc.toString() + " . " + exc.getLocalizedMessage() + " . " + exc.getCause().getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -42,7 +42,7 @@ public class CheckCallsControllerTest {
         mostCalledCities = mock(MostCalledCities.class);
         call = mock(Call.class);
         getCalls = mock(GetCalls.class);
-        checkCallsController = new CheckCallsController(callController,sessionManager);
+        checkCallsController = new CheckCallsController(callController, sessionManager);
     }
 
     @Test
@@ -54,12 +54,12 @@ public class CheckCallsControllerTest {
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
         callList.add(getCalls);
-        when(callController.getCallsByDate(from,to,1)).thenReturn(callList);
+        when(callController.getCallsByDate(from, to, 1)).thenReturn(callList);
 
-        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCalls("token","2020-05-28","2020-06-30");
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCalls("token", "2020-05-28", "2020-06-30");
 
-        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
-        assertEquals(callList,responseEntity.getBody());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(callList, responseEntity.getBody());
     }
 
     @Test
@@ -68,13 +68,13 @@ public class CheckCallsControllerTest {
         user.setUserType(UserType.builder().type("Client").build());
         List<GetCalls> callList = Collections.emptyList();
         Date from = new Date();
-        Date to = new Date(2) ;
+        Date to = new Date(2);
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
-        when(callController.getCallsByDate(from,to,1)).thenReturn(callList);
+        when(callController.getCallsByDate(from, to, 1)).thenReturn(callList);
 
-        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCalls("token","2020-05-28","2020-06-30");
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCalls("token", "2020-05-28", "2020-06-30");
 
-        assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
 
     }
 
@@ -87,9 +87,9 @@ public class CheckCallsControllerTest {
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
         when(callController.getCallsByClient(1)).thenReturn(callList);
 
-        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCalls("token",null,null);
-        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
-        assertEquals(callList,responseEntity.getBody());
+        ResponseEntity<List<GetCalls>> responseEntity = checkCallsController.getCalls("token", null, null);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(callList, responseEntity.getBody());
     }
 
     @Test
@@ -103,8 +103,8 @@ public class CheckCallsControllerTest {
         when(callController.getMostCalledCities(user.getUserId())).thenReturn(list);
 
         ResponseEntity<List<MostCalledCities>> responseEntity = checkCallsController.getMostCalledCities("token");
-        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
-        assertEquals(list,responseEntity.getBody());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(list, responseEntity.getBody());
 
     }
 

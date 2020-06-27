@@ -25,7 +25,7 @@ public class SessionFilterBackofficeTest {
     private FilterChain filterChain;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         sessionManager = mock(SessionManager.class);
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
@@ -39,13 +39,13 @@ public class SessionFilterBackofficeTest {
         String sessionToken = "token";
         User user = User.builder().userId(1).userType(UserType.builder().type("Employee").build()).build();
         when(request.getHeader("Authorization")).thenReturn(sessionToken);
-        Session session = new Session("token",user, new Date());
+        Session session = new Session("token", user, new Date());
         when(sessionManager.getSession("token")).thenReturn(session);
 
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
-        doNothing().when(filterChain).doFilter(request,response);
+        doNothing().when(filterChain).doFilter(request, response);
 
-        sessionFilterBackoffice.doFilterInternal(request,response,filterChain);
+        sessionFilterBackoffice.doFilterInternal(request, response, filterChain);
 
     }
 
@@ -54,12 +54,12 @@ public class SessionFilterBackofficeTest {
         String sessionToken = "token";
         when(request.getHeader("Authorization")).thenReturn(sessionToken);
         User user = User.builder().userId(1).userType(UserType.builder().type("Client").build()).build();
-        Session session = new Session("token",user, new Date());
+        Session session = new Session("token", user, new Date());
         when(sessionManager.getSession("token")).thenReturn(session);
         when(sessionManager.getCurrentUser("token")).thenReturn(user);
         Mockito.doNothing().when(response).setStatus(HttpStatus.FORBIDDEN.value());
 
-        sessionFilterBackoffice.doFilterInternal(request,response,filterChain);
+        sessionFilterBackoffice.doFilterInternal(request, response, filterChain);
 
     }
 
@@ -68,10 +68,10 @@ public class SessionFilterBackofficeTest {
         String sessionToken = "token";
         when(request.getHeader("Authorization")).thenReturn(sessionToken);
         User user = User.builder().userId(1).userType(UserType.builder().type("Client").build()).build();
-        Session session = new Session("token",user, new Date());
+        Session session = new Session("token", user, new Date());
         when(sessionManager.getSession("token")).thenReturn(null);
 
-        sessionFilterBackoffice.doFilterInternal(request,response,filterChain);
+        sessionFilterBackoffice.doFilterInternal(request, response, filterChain);
 
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 
 @Repository
-public interface UserDao extends JpaRepository<User,Integer> {
+public interface UserDao extends JpaRepository<User, Integer> {
 
     @Query(value = "SELECT * FROM users u WHERE u.username = ?1 and u.userpass = ?2", nativeQuery = true)
     User getByUsername(String username, String password);
@@ -17,7 +17,7 @@ public interface UserDao extends JpaRepository<User,Integer> {
     @Query(value = "SELECT * FROM users u WHERE u.user_dni = ?1", nativeQuery = true)
     User findByDni(String dni);
 
-    @Query(value = "SELECT * FROM users u WHERE u.user_type_id = 1 and u.user_id = ?1",nativeQuery = true)
+    @Query(value = "SELECT * FROM users u WHERE u.user_type_id = 1 and u.user_id = ?1", nativeQuery = true)
     User findByIdAndUserType(int idClient);
 
     @Query(value = "SELECT * FROM users u WHERE u.username = ?1", nativeQuery = true)

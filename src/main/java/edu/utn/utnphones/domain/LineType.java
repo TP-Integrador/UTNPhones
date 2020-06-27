@@ -1,7 +1,6 @@
 package edu.utn.utnphones.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.databind.annotation.JacksonStdImpl;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

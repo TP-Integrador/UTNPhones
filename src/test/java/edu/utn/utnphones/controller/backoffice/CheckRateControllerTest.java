@@ -5,7 +5,6 @@ import edu.utn.utnphones.controller.RateController;
 import edu.utn.utnphones.domain.City;
 import edu.utn.utnphones.domain.Rate;
 import edu.utn.utnphones.exception.CityNotexistException;
-import edu.utn.utnphones.session.SessionManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
@@ -29,12 +28,12 @@ public class CheckRateControllerTest {
     public void setUp() {
         rateController = mock(RateController.class);
         cityController = mock(CityController.class);
-        checkRateController = new CheckRateController(rateController,cityController);
+        checkRateController = new CheckRateController(rateController, cityController);
     }
 
 
     @Test
-    public void testGetAllRatesOk(){
+    public void testGetAllRatesOk() {
         List<Rate> rateList = new ArrayList<>();
         City from = City.builder().cityId(1).build();
         City to = City.builder().cityId(2).build();
@@ -46,19 +45,19 @@ public class CheckRateControllerTest {
         ResponseEntity<List<Rate>> responseEntity = checkRateController.getAllRates();
 
 
-        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
-        assertEquals(rateList,responseEntity.getBody());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(rateList, responseEntity.getBody());
 
     }
 
     @Test
-    public void testGetAllRatesNoContent(){
+    public void testGetAllRatesNoContent() {
         List<Rate> rateList = new ArrayList<>();
         rateList.clear();
         when(rateController.getAllRates()).thenReturn(rateList);
 
         ResponseEntity<List<Rate>> responseEntity = checkRateController.getAllRates();
-        assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
     }
 
     @Test
@@ -74,8 +73,8 @@ public class CheckRateControllerTest {
 
         ResponseEntity<List<Rate>> responseEntity = checkRateController.getByIdFrom(1);
 
-        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
-        assertEquals(rateList,responseEntity.getBody());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(rateList, responseEntity.getBody());
 
     }
 
@@ -93,7 +92,7 @@ public class CheckRateControllerTest {
 
         ResponseEntity<List<Rate>> responseEntity = checkRateController.getByIdFrom(1);
 
-        assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
 
     }
 
@@ -115,12 +114,12 @@ public class CheckRateControllerTest {
 
         when(cityController.getById(1)).thenReturn(from);
         when(cityController.getById(2)).thenReturn(to);
-        when(rateController.getRate(1,2)).thenReturn(rate);
+        when(rateController.getRate(1, 2)).thenReturn(rate);
 
-        ResponseEntity<Rate> responseEntity = checkRateController.getRate(1,2);
+        ResponseEntity<Rate> responseEntity = checkRateController.getRate(1, 2);
 
-        assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
-        assertEquals(rate,responseEntity.getBody());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(rate, responseEntity.getBody());
 
     }
 
@@ -131,11 +130,11 @@ public class CheckRateControllerTest {
 
         when(cityController.getById(1)).thenReturn(from);
         when(cityController.getById(2)).thenReturn(to);
-        when(rateController.getRate(1,2)).thenReturn(null);
+        when(rateController.getRate(1, 2)).thenReturn(null);
 
-        ResponseEntity<Rate> responseEntity = checkRateController.getRate(1,2);
+        ResponseEntity<Rate> responseEntity = checkRateController.getRate(1, 2);
 
-        assertEquals(HttpStatus.NO_CONTENT,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
 
     }
 
@@ -146,7 +145,7 @@ public class CheckRateControllerTest {
         when(cityController.getById(1)).thenThrow(new CityNotexistException());
         when(cityController.getById(2)).thenReturn(to);
 
-        ResponseEntity<Rate> responseEntity = checkRateController.getRate(1,2);
+        ResponseEntity<Rate> responseEntity = checkRateController.getRate(1, 2);
     }
 
     @Test(expected = CityNotexistException.class)
@@ -156,7 +155,7 @@ public class CheckRateControllerTest {
         when(cityController.getById(1)).thenReturn(from);
         when(cityController.getById(2)).thenThrow(new CityNotexistException());
 
-        ResponseEntity<Rate> responseEntity = checkRateController.getRate(1,2);
+        ResponseEntity<Rate> responseEntity = checkRateController.getRate(1, 2);
     }
 
 }

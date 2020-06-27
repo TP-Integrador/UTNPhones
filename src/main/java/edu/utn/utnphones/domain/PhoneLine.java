@@ -29,7 +29,6 @@ public class PhoneLine {
     private String lineNumber;
 
     @Enumerated(EnumType.STRING)
-    //@NotNull
     @Column(name = "line_status")
     private Status lineStatus;
 
@@ -55,7 +54,7 @@ public class PhoneLine {
     @JsonBackReference(value = "lineIdFrom")
     private List<Call> callsFrom;
 
-    public enum Status{
+    public enum Status {
         Active,
         Inactive,
         Suspended

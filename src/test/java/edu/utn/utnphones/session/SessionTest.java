@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 public class SessionTest {
     private String token;
@@ -17,48 +17,48 @@ public class SessionTest {
 
 
     @Before
-    public void setUp(){
+    public void setUp() {
         user = mock(User.class);
-        session = new Session(token,user,date);
+        session = new Session(token, user, date);
     }
 
     @Test
-    public void testGetToken(){
+    public void testGetToken() {
         session.setToken("token");
         String token = session.getToken();
-        assertEquals("token",token);
+        assertEquals("token", token);
     }
 
     @Test
-    public void testSetToken(){
+    public void testSetToken() {
         session.setToken("token");
-        assertEquals("token",session.getToken());
+        assertEquals("token", session.getToken());
     }
 
     @Test
-    public void testGetLoggedUser(){
+    public void testGetLoggedUser() {
         session.setLoggedUser(user);
         User userLogged = session.getLoggedUser();
-        assertEquals(userLogged,session.getLoggedUser());
+        assertEquals(userLogged, session.getLoggedUser());
     }
 
     @Test
-    public void testSetLoggedUser(){
+    public void testSetLoggedUser() {
         session.setLoggedUser(user);
-        assertEquals(user,session.getLoggedUser());
+        assertEquals(user, session.getLoggedUser());
     }
 
     @Test
-    public void testGetLastAction(){
+    public void testGetLastAction() {
         session.setLastAction(date);
         Date dateLast = session.getLastAction();
-        assertEquals(dateLast,session.getLastAction());
+        assertEquals(dateLast, session.getLastAction());
     }
 
     @Test
-    public void testSetLastAction(){
+    public void testSetLastAction() {
         session.setLastAction(date);
-        assertEquals(date,session.getLastAction());
+        assertEquals(date, session.getLastAction());
     }
 
 }

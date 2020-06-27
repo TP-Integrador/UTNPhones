@@ -3,7 +3,10 @@ package edu.utn.utnphones.controller.backoffice;
 import edu.utn.utnphones.controller.UserController;
 import edu.utn.utnphones.domain.User;
 import edu.utn.utnphones.dto.ClientDto;
-import edu.utn.utnphones.exception.*;
+import edu.utn.utnphones.exception.ClientDniAlreadyExists;
+import edu.utn.utnphones.exception.ClientNotExistsException;
+import edu.utn.utnphones.exception.ClientRemovedException;
+import edu.utn.utnphones.exception.UserNameAlreadyExists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +41,8 @@ public class ClientsABMController {
 
 
     @PutMapping("/{idClient}")
-    public ResponseEntity<User> updateClient(@PathVariable int idClient, @RequestBody ClientDto client) throws ClientNotExistsException, UserNameAlreadyExists ,SQLException{
-        userController.updateClient(idClient,client);
+    public ResponseEntity<User> updateClient(@PathVariable int idClient, @RequestBody ClientDto client) throws ClientNotExistsException, UserNameAlreadyExists, SQLException {
+        userController.updateClient(idClient, client);
         return ResponseEntity.ok().build();
     }
 

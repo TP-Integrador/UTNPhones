@@ -22,18 +22,18 @@ public class InvoicesControllerTest {
     private Invoice invoice;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         invoiceService = mock(InvoiceService.class);
         invoice = mock(Invoice.class);
         invoiceController = new InvoiceController(invoiceService);
     }
 
     @Test
-    public void testGetAllInvoices(){
+    public void testGetAllInvoices() {
         List<Invoice> listInvoices = new ArrayList<>();
         when(invoiceController.getAllInvoice()).thenReturn(listInvoices);
 
-        assertEquals(listInvoices,listInvoices);
+        assertEquals(listInvoices, listInvoices);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class InvoicesControllerTest {
         when(invoiceService.add(invoice)).thenReturn(invoice);
         invoiceController.addInvoice(invoice);
 
-        verify(invoiceService,times(1)).add(invoice);
+        verify(invoiceService, times(1)).add(invoice);
 
     }
 
@@ -62,17 +62,17 @@ public class InvoicesControllerTest {
         List<Invoice> listInvoices = new ArrayList<>();
         Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-28");
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
-        when(invoiceService.getInvoicesByDate(from,to,1)).thenReturn(listInvoices);
-        invoiceController.getInvoicesByDate(from,to,1);
-        verify(invoiceService,times(1)).getInvoicesByDate(from,to,1);
+        when(invoiceService.getInvoicesByDate(from, to, 1)).thenReturn(listInvoices);
+        invoiceController.getInvoicesByDate(from, to, 1);
+        verify(invoiceService, times(1)).getInvoicesByDate(from, to, 1);
     }
 
     @Test
-    public void testGetInvoicesByClient(){
+    public void testGetInvoicesByClient() {
         List<Invoice> listInvoices = new ArrayList<>();
         when(invoiceService.getInvoicesByClient(1)).thenReturn(listInvoices);
         invoiceController.getInvoicesByClient(1);
-        verify(invoiceService,times(1)).getInvoicesByClient(1);
+        verify(invoiceService, times(1)).getInvoicesByClient(1);
     }
 
 }

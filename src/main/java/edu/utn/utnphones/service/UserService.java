@@ -6,16 +6,10 @@ import edu.utn.utnphones.domain.UserType;
 import edu.utn.utnphones.dto.ClientDto;
 import edu.utn.utnphones.exception.*;
 import edu.utn.utnphones.utils.HashPwd;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.MessageDigest;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 @Service
 public class UserService {
@@ -30,9 +24,9 @@ public class UserService {
     public User login(String username, String password) throws UserNotexistException, ValidationException {
         User us = null;
         if ((username != null) && (password != null)) {
-            String passEnc =  HashPwd.Encriptar(password);
+            String passEnc = HashPwd.Encriptar(password);
             us = userDao.getByUsername(username, passEnc);
-            if (us == null){
+            if (us == null) {
                 throw new UserNotexistException();
             }
         } else {
@@ -42,12 +36,12 @@ public class UserService {
     }
 
     public User getUser(Integer userId) throws UserNotexistException {
-       return userDao.findById(userId).orElseThrow(UserNotexistException::new);
+        return userDao.findById(userId).orElseThrow(UserNotexistException::new);
     }
 
     public User getClientById(int idClient) throws ClientNotExistsException {
-        User client= userDao.findByIdAndUserType(idClient);
-        if(client == null){
+        User client = userDao.findByIdAndUserType(idClient);
+        if (client == null) {
             throw new ClientNotExistsException();
         }
         return client;
@@ -61,14 +55,14 @@ public class UserService {
                 throw new ClientDniAlreadyExists();
             }
             User user1 = userDao.findByUserName(client.getUsername());
-            if ( user1 != null) {
+            if (user1 != null) {
                 throw new UserNameAlreadyExists();
             }
 
             client.setPassword(HashPwd.Encriptar(client.getPassword()));
             client.setUserType(UserType.builder().Id(1).build());
             return userDao.save(client);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new SQLException(e);
         }
     }
@@ -77,7 +71,7 @@ public class UserService {
         try {
             User clientAux = userDao.findById(idClient).orElseThrow(ClientNotExistsException::new);
             User client2 = userDao.findByUserName(client.getUsername());
-            if ( client2 != null && clientAux.getUserId() != client2.getUserId()) {
+            if (client2 != null && clientAux.getUserId() != client2.getUserId()) {
                 throw new UserNameAlreadyExists();
             }
             clientAux.setName(client.getName());
@@ -87,7 +81,7 @@ public class UserService {
             clientAux.setCity(client.getCity());
             clientAux.setPassword(HashPwd.Encriptar(client.getPassword()));
             return userDao.save(clientAux);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new SQLException(e);
         }
     }

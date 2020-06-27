@@ -1,6 +1,5 @@
 package edu.utn.utnphones.controller;
 
-import edu.utn.utnphones.controller.UserController;
 import edu.utn.utnphones.domain.User;
 import edu.utn.utnphones.dto.LoginRequestDto;
 import edu.utn.utnphones.exception.InvalidLoginException;

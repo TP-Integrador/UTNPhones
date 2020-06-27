@@ -1,12 +1,8 @@
 package edu.utn.utnphones.controller.backoffice;
 
 import edu.utn.utnphones.controller.CallController;
-import edu.utn.utnphones.domain.Call;
-import edu.utn.utnphones.domain.User;
 import edu.utn.utnphones.exception.UserNotexistException;
-import edu.utn.utnphones.exception.ValidationException;
 import edu.utn.utnphones.projections.GetCalls;
-import edu.utn.utnphones.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +24,10 @@ public class CheckCallsClientController {
     }
 
     @GetMapping("/client/{id}")
-    public ResponseEntity<List<GetCalls>> getCalls(@RequestParam(value = "from",required = false) String from, @RequestParam(value = "to",required = false) String to, @PathVariable Integer id) throws UserNotexistException, ParseException {
+    public ResponseEntity<List<GetCalls>> getCalls(@RequestParam(value = "from", required = false) String from, @RequestParam(value = "to", required = false) String to, @PathVariable Integer id) throws UserNotexistException, ParseException {
         ResponseEntity<List<GetCalls>> responseEntity = null;
         List<GetCalls> callList = null;
-        if (from == null && to == null && id > 0){
+        if (from == null && to == null && id > 0) {
             callList = callController.getCallsByClient(id);
         } else {
             if ((from != null) && (to != null)) {
@@ -42,7 +38,7 @@ public class CheckCallsClientController {
                 responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         }
-        if (responseEntity == null){
+        if (responseEntity == null) {
             if (!callList.isEmpty()) {
                 responseEntity = ResponseEntity.ok().body(callList);
             } else {

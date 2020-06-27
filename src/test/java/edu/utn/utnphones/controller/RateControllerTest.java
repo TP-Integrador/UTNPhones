@@ -19,13 +19,13 @@ public class RateControllerTest {
     private RateController rateController;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         rateService = mock(RateService.class);
         rateController = new RateController(rateService);
     }
 
     @Test
-    public void testGetAllRates(){
+    public void testGetAllRates() {
         List<Rate> rateList = new ArrayList<>();
         City from = City.builder().cityId(1).build();
         City to = City.builder().cityId(2).build();
@@ -33,12 +33,12 @@ public class RateControllerTest {
         rateList.add(rate);
         when(rateController.getAllRates()).thenReturn(rateList);
 
-        assertEquals(rateList.size(),rateList.size());
+        assertEquals(rateList.size(), rateList.size());
     }
 
 
     @Test
-    public void testGetByIdFrom(){
+    public void testGetByIdFrom() {
         List<Rate> rateList = new ArrayList<>();
         City from = City.builder().cityId(1).build();
         City to = City.builder().cityId(2).build();
@@ -46,16 +46,16 @@ public class RateControllerTest {
         rateList.add(rate);
         when(rateController.getByIdFrom(1)).thenReturn(rateList);
 
-        assertEquals(rateList.size(),rateList.size());
+        assertEquals(rateList.size(), rateList.size());
     }
 
     @Test
-    public void testGetRate(){
+    public void testGetRate() {
         City from = City.builder().cityId(1).build();
         City to = City.builder().cityId(2).build();
         Rate rate = Rate.builder().cityFrom(from).cityTo(to).value((float) 2).build();
-        when(rateController.getRate(1,2)).thenReturn(rate);
+        when(rateController.getRate(1, 2)).thenReturn(rate);
 
-        assertEquals(rate,rate);
+        assertEquals(rate, rate);
     }
 }

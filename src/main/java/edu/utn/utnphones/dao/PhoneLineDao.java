@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 
 @Repository
-public interface PhoneLineDao extends JpaRepository<PhoneLine,Integer> {
+public interface PhoneLineDao extends JpaRepository<PhoneLine, Integer> {
 
     @Query(value = "SELECT * FROM phone_lines where line_number = ?1", nativeQuery = true)
     PhoneLine findByNumber(String line);

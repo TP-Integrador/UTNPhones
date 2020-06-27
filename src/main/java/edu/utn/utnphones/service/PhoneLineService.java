@@ -1,7 +1,6 @@
 package edu.utn.utnphones.service;
 
 
-import com.sun.xml.bind.v2.runtime.CompositeStructureBeanInfo;
 import edu.utn.utnphones.dao.PhoneLineDao;
 import edu.utn.utnphones.dao.UserDao;
 import edu.utn.utnphones.domain.PhoneLine;
@@ -9,11 +8,9 @@ import edu.utn.utnphones.domain.PhoneLine.Status;
 import edu.utn.utnphones.domain.User;
 import edu.utn.utnphones.dto.StatusPhoneDto;
 import edu.utn.utnphones.exception.*;
-import org.hibernate.exception.GenericJDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.Optional;
 
 @Service
@@ -34,7 +31,7 @@ public class PhoneLineService {
             throw new PhoneLineAlreadyExistsException();
         }
         Optional<User> user = userDao.findById(phoneLine.getUser().getUserId());
-        if (user.get() == null || !user.get().getUserType().getType().matches("Client")){
+        if (user.get() == null || !user.get().getUserType().getType().matches("Client")) {
             throw new UserNotexistException();
         }
         return linePhoneDao.save(phoneLine);

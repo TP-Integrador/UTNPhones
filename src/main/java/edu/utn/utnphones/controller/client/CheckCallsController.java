@@ -1,11 +1,10 @@
 package edu.utn.utnphones.controller.client;
 
 import edu.utn.utnphones.controller.CallController;
-import edu.utn.utnphones.domain.Call;
 import edu.utn.utnphones.domain.User;
+import edu.utn.utnphones.exception.UserNotexistException;
 import edu.utn.utnphones.projections.GetCalls;
 import edu.utn.utnphones.projections.MostCalledCities;
-import edu.utn.utnphones.exception.UserNotexistException;
 import edu.utn.utnphones.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -16,7 +16,7 @@ public class CityServiceTest {
     private CityService cityService;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         cityDao = mock(CityDao.class);
         cityService = new CityService(cityDao);
     }
@@ -27,7 +27,7 @@ public class CityServiceTest {
         when(cityDao.findById(1)).thenReturn(city);
 
         cityService.getById(1);
-        verify(cityDao,times(1)).findById(1);
+        verify(cityDao, times(1)).findById(1);
 
     }
 

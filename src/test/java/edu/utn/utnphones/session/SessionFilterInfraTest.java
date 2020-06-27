@@ -21,7 +21,7 @@ public class SessionFilterInfraTest {
 
 
     @Before
-    public void setUp(){
+    public void setUp() {
         sessionManager = mock(SessionManager.class);
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
@@ -54,9 +54,9 @@ public class SessionFilterInfraTest {
         when(request.getHeader("Pass")).thenReturn(pass);
         sessionFilterInfra.setUserconfig("infra");
         sessionFilterInfra.setPassconfig("1234");
-        doNothing().when(filterChain).doFilter(request,response);
+        doNothing().when(filterChain).doFilter(request, response);
 
-        sessionFilterInfra.doFilterInternal(request,response,filterChain);
+        sessionFilterInfra.doFilterInternal(request, response, filterChain);
 
     }
 
@@ -69,9 +69,9 @@ public class SessionFilterInfraTest {
         when(request.getHeader("Pass")).thenReturn(pass);
         sessionFilterInfra.setUserconfig("infra");
         sessionFilterInfra.setPassconfig("1234");
-        doNothing().when(filterChain).doFilter(request,response);
+        doNothing().when(filterChain).doFilter(request, response);
 
-        sessionFilterInfra.doFilterInternal(request,response,filterChain);
+        sessionFilterInfra.doFilterInternal(request, response, filterChain);
 
     }
 }

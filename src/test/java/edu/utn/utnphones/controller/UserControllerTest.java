@@ -31,7 +31,7 @@ public class UserControllerTest {
 
     @Test
     public void testLoginOk() throws UserNotexistException, ValidationException {
-        User loggedUser = new User(1, "nme", "lastname", "12345678", "username", "password", true, City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null);
+        User loggedUser = new User(1, "nme", "lastname", "12345678", "username", "password", true, City.builder().cityId(1).build(), UserType.builder().Id(1).build(), null);
         //Cuando llame al mock service.login devuelvo el logged user
         when(service.login("user", "pwd")).thenReturn(loggedUser);
         User returnedUser = userController.login("user", "pwd");
@@ -49,14 +49,14 @@ public class UserControllerTest {
     }
 
     @Test(expected = ValidationException.class)
-    public void testLoginInvalidData() throws UserNotexistException, ValidationException{
+    public void testLoginInvalidData() throws UserNotexistException, ValidationException {
         when(service.login(null, "pwd")).thenThrow(new ValidationException("username and password must have a value"));
         userController.login(null, "pwd");
     }
 
     @Test
     public void testGetUserByIdOk() throws UserNotexistException {
-        User user = new User(1, "name", "lastname", "12345678", "username", "password", true, City.builder().cityId(1).build(), UserType.builder().Id(1).build(),null);
+        User user = new User(1, "name", "lastname", "12345678", "username", "password", true, City.builder().cityId(1).build(), UserType.builder().Id(1).build(), null);
         when(service.getUser(1)).thenReturn(user);
         userController.getUserById(1);
     }
@@ -106,24 +106,24 @@ public class UserControllerTest {
     public void testupdateClientOK() throws UserNameAlreadyExists, SQLException, ClientNotExistsException {
         User user = User.builder().userId(1).build();
         ClientDto clientDto = ClientDto.builder().name("name").build();
-        when(service.updateClient(1,clientDto)).thenReturn(user);
-        userController.updateClient(1,clientDto);
+        when(service.updateClient(1, clientDto)).thenReturn(user);
+        userController.updateClient(1, clientDto);
     }
 
     @Test(expected = UserNameAlreadyExists.class)
     public void testUpdateClientUsernameAlreadyExists() throws UserNameAlreadyExists, SQLException, ClientNotExistsException {
         User user = User.builder().userId(1).build();
         ClientDto clientDto = ClientDto.builder().name("name").build();
-        when(service.updateClient(1,clientDto)).thenThrow(new UserNameAlreadyExists());
-        userController.updateClient(1,clientDto);
+        when(service.updateClient(1, clientDto)).thenThrow(new UserNameAlreadyExists());
+        userController.updateClient(1, clientDto);
     }
 
     @Test(expected = ClientNotExistsException.class)
     public void testaddClientNotExists() throws UserNameAlreadyExists, SQLException, ClientNotExistsException {
         User user = User.builder().userId(1).build();
         ClientDto clientDto = ClientDto.builder().name("name").build();
-        when(service.updateClient(1,clientDto)).thenThrow(new ClientNotExistsException());
-        userController.updateClient(1,clientDto);
+        when(service.updateClient(1, clientDto)).thenThrow(new ClientNotExistsException());
+        userController.updateClient(1, clientDto);
     }
 
     /*

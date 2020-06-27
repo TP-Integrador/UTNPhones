@@ -18,7 +18,7 @@ public class RateController {
         this.rateService = rateService;
     }
 
-    public List<Rate> getAllRates(){
+    public List<Rate> getAllRates() {
         return rateService.getAll();
     }
 

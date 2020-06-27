@@ -23,17 +23,17 @@ public class InvoiceServiceTest {
     private InvoiceService invoiceService;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         invoiceDao = mock(InvoiceDao.class);
         invoiceService = new InvoiceService(invoiceDao);
     }
 
     @Test
-    public void testGetAll(){
+    public void testGetAll() {
         List<Invoice> listInvoices = new ArrayList<>();
         when(invoiceService.getAll()).thenReturn(listInvoices);
 
-        assertEquals(listInvoices,listInvoices);
+        assertEquals(listInvoices, listInvoices);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class InvoiceServiceTest {
         Optional<Invoice> invoices = Optional.ofNullable(Invoice.builder().id(1).build());
         when(invoiceDao.findById(1)).thenReturn(invoices);
 
-        assertEquals(invoices,Optional.of(invoiceService.getById(1)));
+        assertEquals(invoices, Optional.of(invoiceService.getById(1)));
     }
 
 
@@ -64,16 +64,16 @@ public class InvoiceServiceTest {
         List<Invoice> listInvoices = new ArrayList<>();
         Date from = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-28");
         Date to = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-30");
-        when(invoiceDao.getInvoicesByDate(from,to,1)).thenReturn(listInvoices);
+        when(invoiceDao.getInvoicesByDate(from, to, 1)).thenReturn(listInvoices);
 
-        assertEquals(listInvoices,invoiceService.getInvoicesByDate(from,to,1));
+        assertEquals(listInvoices, invoiceService.getInvoicesByDate(from, to, 1));
     }
 
     @Test
-    public void testGetInvoiceByClient(){
+    public void testGetInvoiceByClient() {
         List<Invoice> listInvoices = new ArrayList<>();
         when(invoiceDao.getInvoicesByClient(1)).thenReturn(listInvoices);
 
-        assertEquals(listInvoices,invoiceService.getInvoicesByClient(1));
+        assertEquals(listInvoices, invoiceService.getInvoicesByClient(1));
     }
 }

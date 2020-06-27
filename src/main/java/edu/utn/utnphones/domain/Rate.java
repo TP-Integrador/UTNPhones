@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +15,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "rates")
 @IdClass(value = RateCompositeKey.class)
-public class Rate{
+public class Rate {
 
 
     @Id

@@ -14,7 +14,7 @@ public class CityControllerTest {
     private CityController cityController;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         cityService = mock(CityService.class);
         cityController = new CityController(cityService);
     }
@@ -25,13 +25,13 @@ public class CityControllerTest {
         when(cityService.getById(1)).thenReturn(city);
 
         cityController.getById(1);
-        verify(cityService,times(1)).getById(1);
+        verify(cityService, times(1)).getById(1);
     }
 
     @Test(expected = CityNotexistException.class)
     public void testGetByIdException() throws CityNotexistException {
         when(cityService.getById(1)).thenThrow(new CityNotexistException());
         cityController.getById(1);
-        verify(cityService,times(1)).getById(1);
+        verify(cityService, times(1)).getById(1);
     }
 }

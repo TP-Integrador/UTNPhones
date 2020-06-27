@@ -7,8 +7,6 @@ import edu.utn.utnphones.service.PhoneLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import java.sql.SQLException;
-
 @Controller
 public class PhoneLineController {
 
@@ -33,7 +31,7 @@ public class PhoneLineController {
     }
 
     public void updateStatus(StatusPhoneDto statusPhoneDto, int idphone) throws PhoneLineNotExistException, PhoneLineRemovedException, StatusNotExistsException {
-        linePhoneService.updateStatus(statusPhoneDto,idphone);
+        linePhoneService.updateStatus(statusPhoneDto, idphone);
     }
 
     public void delete(int idphone) throws PhoneLineRemovedException, PhoneLineNotExistException {

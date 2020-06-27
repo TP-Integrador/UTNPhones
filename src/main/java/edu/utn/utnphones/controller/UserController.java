@@ -19,6 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
+
     public User login(String username, String password) throws UserNotexistException, ValidationException {
         if ((username != null) && (password != null)) {
             return userService.login(username, password);
