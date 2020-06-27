@@ -1,0 +1,359 @@
+use utn_phones
+
+db.createCollection("provinces")
+
+db.provinces.insert({
+	"id": "1",
+	"name": "Buenos Aires"
+})
+
+db.createCollection("cities")
+
+db.cities.insert({
+	"id":"1",
+	"prefix": "11",
+	"name": "Buenos Aires",
+	"province": { "id": "1",
+				"name": "Buenos Aires"
+	}
+})
+
+db.cities.insert({
+	"id":"2",
+	"prefix": "223",
+	"name": "Mar del Plata",
+	"province": { "id": "1",
+				"name": "Buenos Aires"
+	}
+})
+
+db.cities.insert({
+	"id":"3",
+	"prefix": "2262",
+	"name": "Necochea",
+	"province": { "id": "1",
+				"name": "Buenos Aires"
+	}
+})
+
+db.createCollection("user_types")
+
+db.user_types.insert({
+	"id": "1",
+	"type": "Client"
+})
+
+db.user_types.insert({
+	"id": "1",
+	"type": "Employee"
+})
+
+
+db.createCollection("users")
+
+db.users.insert({
+	"id": "1",
+	"name": "Nicolas",
+	"lastname": "Pettinato",
+	"dni": "33189203",
+	"username": "nico",
+	"password": "1234",
+
+	"city": {
+		"id":"2",
+		"prefix": "223",
+		"name": "Mar del Plata",
+		"province": { "id": "1",
+			        "name": "Buenos Aires"
+		},
+	"user_type": {"id": "1",
+			    "type": "Client"
+	},
+	"active": "true"
+	}
+})
+
+db.users.insert({
+	"id": "2",
+	"name": "Angel",
+	"lastname": "Lattanzio",
+	"dni": "38244676",
+	"username": "angel",
+	"password": "1234",
+
+	"city": {
+		"id":"3",
+		"prefix": "2262",
+		"name": "Necochea",
+		"province": { "id": "1",
+			        "name": "Buenos Aires"
+		},
+	"user_type": {"id": "1",
+			    "type": "Employee"
+	},
+	"active": "true"
+	}
+})
+
+db.createCollection("line_types")
+
+db.line_types.insert({
+	"id": "1",
+	"type": "Mobile"
+})
+
+db.line_types.insert({
+	"id": "1",
+	"type": "Residential"
+})
+
+db.createCollection("rates")
+
+db.rates.insert({
+	"city_from": {"id":"2",
+		"prefix": "223",
+		"name": "Mar del Plata",
+		"province": { "id": "1",
+		      "name": "Buenos Aires"
+		}
+	},
+	"city_to": {"id":"3",
+		"prefix": "2262",
+		"name": "Necochea",
+		"province": { "id": "1",
+		      "name": "Buenos Aires"
+		}
+	},
+	"value": "0.75",
+	"cost": "0.25"
+})
+
+db.createCollection("phone_lines")
+
+db.phone_lines.insert({
+	"id": "1",
+	"number": "2234548725",
+	"status": ['Active'],
+	"line_type": {"id": "1",
+				"type": "Mobile"
+	},
+	"user": {"id": "1",
+			"name": "Nicolas",
+			"lastname": "Pettinato",
+			"dni": "33189203",
+			"username": "nico",
+			"password": "1234",
+			"city": {
+				"id":"2",
+				"prefix": "223",
+				"name": "Mar del Plata",
+				"province": { "id": "1",
+							"name": "Buenos Aires"
+				},
+				"user_type": {"id": "1",
+							"type": "Client"
+				},
+				"active": "true"
+			}
+	}
+	
+})
+
+db.phone_lines.insert({
+	"id": "2",
+	"number": "2234744250",
+	"status": ['Active'],
+	"line_type": {"id": "2",
+				"type": "Residential"
+	},
+	"user": {"id": "1",
+			"name": "Nicolas",
+			"lastname": "Pettinato",
+			"dni": "33189203",
+			"username": "nico",
+			"password": "1234",
+			"city": {
+				"id":"2",
+				"prefix": "223",
+				"name": "Mar del Plata",
+				"province": { "id": "1",
+							"name": "Buenos Aires"
+				},
+				"user_type": {"id": "1",
+							"type": "Client"
+				},
+				"active": "true"
+			}
+	}
+	
+})
+
+db.phone_lines.insert({
+	"id": "3",
+	"number": "2262506826",
+	"status": ['Active'],
+	"line_type": {"id": "1",
+				"type": "Mobile"
+	},
+	"user": {"id": "2",
+			"name": "Angel",
+			"lastname": "Lattanzio",
+			"dni": "38244676",
+			"username": "angel",
+			"password": "1234",
+			"city": {
+				"id":"3",
+				"prefix": "2262",
+				"name": "Necochea",
+				"province": { "id": "1",
+							"name": "Buenos Aires"
+				},
+				"user_type": {"id": "1",
+							"type": "Employee"
+				},
+				"active": "true"
+			}
+	}
+	
+})
+
+db.createCollection("invoices")
+
+db.invoices.insert({
+	"id": "1",
+	"quantity_calls": "1",
+	"cost_price": "0.75",
+	"total_price": "0.25",
+	"date": "2020-06-26",
+	"due_date": "2020-07-10",
+	"line_id": {
+		"id": "1",
+		"number": "2234548725",
+		"status": ['Active'],
+		"line_type": {"id": "1",
+					"type": "Mobile"
+		},
+		"user": {"id": "1",
+			"name": "Nicolas",
+			"lastname": "Pettinato",
+			"dni": "33189203",
+			"username": "nico",
+			"password": "1234",
+			"city": {
+				"id":"2",
+				"prefix": "223",
+				"name": "Mar del Plata",
+				"province": { "id": "1",
+							"name": "Buenos Aires"
+				},
+				"user_type": {"id": "1",
+							"type": "Client"
+				},
+				"active": "true"
+			}
+		}		
+	}
+})
+
+db.createCollection("calls")
+
+db.calls.insert({
+	"id": "1",
+	"minute_price": "0.75",
+	"cost_price": "0.25",
+	"duration": "60",
+	"date": "2020-06-22",
+	
+	"line_id_from": {
+		"id": "1",
+		"number": "2234548725",
+		"status": ['Active'],
+		"line_type": {"id": "1",
+					"type": "Mobile"
+		},
+		"user": {"id": "1",
+			"name": "Nicolas",
+			"lastname": "Pettinato",
+			"dni": "33189203",
+			"username": "nico",
+			"password": "1234",
+			"city": {
+				"id":"2",
+				"prefix": "223",
+				"name": "Mar del Plata",
+				"province": { "id": "1",
+							"name": "Buenos Aires"
+				},
+				"user_type": {"id": "1",
+							"type": "Client"
+				},
+				"active": "true"
+			}
+		}
+		
+	}
+	"line_id_to": {
+		"id": "3",
+		"number": "2262506826",
+		"status": ['Active'],
+		"line_type": {"id": "1",
+					"type": "Mobile"
+		},
+		"user": {"id": "2",
+			"name": "Angel",
+			"lastname": "Lattanzio",
+			"dni": "38244676",
+			"username": "angel",
+			"password": "1234",
+			"city": {
+				"id":"3",
+				"prefix": "2262",
+				"name": "Necochea",
+				"province": { "id": "1",
+							"name": "Buenos Aires"
+				},
+				"user_type": {"id": "1",
+							"type": "Employee"
+				},
+				"active": "true"
+			}
+		}
+		
+	},
+	"invoice": {
+		"id": "1",
+		"quantity_calls": "1",
+		"cost_price": "0.75",
+		"total_price": "0.25",
+		"date": "2020-06-26",
+		"due_date": "2020-07-10",
+		"line_id": {
+			"id": "1",
+			"number": "2234548725",
+			"status": ['Active'],
+			"line_type": {"id": "1",
+						"type": "Mobile"
+			},
+			"user": {"id": "1",
+				"name": "Nicolas",
+				"lastname": "Pettinato",
+				"dni": "33189203",
+				"username": "nico",
+				"password": "1234",
+				"city": {
+					"id":"2",
+					"prefix": "223",
+					"name": "Mar del Plata",
+					"province": { "id": "1",
+								"name": "Buenos Aires"
+					},
+					"user_type": {"id": "1",
+								"type": "Client"
+					},
+					"active": "true"
+				}
+			}		
+		}
+	}
+})
+
