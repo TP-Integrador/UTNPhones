@@ -1,5 +1,6 @@
 package edu.utn.utnphones.session;
 
+import edu.utn.utnphones.utils.HashPwd;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,7 +39,7 @@ public class SessionFilterInfra extends OncePerRequestFilter {
 
         String user = request.getHeader("User");
         String pass = request.getHeader("Pass");
-        if (user.matches(userconfig) && pass.matches(passconfig)) {
+        if (user.matches(userconfig) && HashPwd.Encriptar(pass).matches(passconfig)) {
             filterChain.doFilter(request, response);
         } else {
             response.setStatus(HttpStatus.FORBIDDEN.value());
